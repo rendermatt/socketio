@@ -6,10 +6,25 @@
     <link rel="stylesheet" href="/chat.css" />
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <!--
+      <iframe id="cont" name="cont" hidden />
+    <div id="head">
+      <a href="//github.com/nomorenotes/nomorenotes" target="cont">GitHub</a>
+      <a href="//dashboard.heroku.com/apps/nomorenotes/deploy/github" target="cont">Heroku</a>
+    </div>
+    -->
+    <div id="chat">
+      <ul id="messages"></ul>
+      <form action="" id="send">
+        <input id="m" autocomplete="off" /><button><code>Send</code></button>
+      </form>
+    </div>
+    <div id="logond" hidden>
+      <form id="logonf" action="">
+        <input id="username" placeholder="Username" />
+        <input id="password" placeholder="Password" type="password" />
+      </form>
+    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/chat.js"></script>

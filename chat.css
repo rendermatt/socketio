@@ -2,28 +2,37 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	background-color: white;
 }
 body {
-	font: 13px Helvetica, Arial;
+	/*/ background-image: url(https://www.ouruniverseforkids.com/wp-content/uploads/2018/09/shooting-768x323.png); /**/
+	background-repeat: no-repeat;
+	background-size: 100%;
 }
-form {
-	background: #000;
+#send {
 	padding: 3px;
 	position: fixed;
 	bottom: 0;
 	width: 100%;
 }
-form input {
+#send input {
 	border: 0;
 	padding: 10px;
 	width: 90%;
-	margin-right: .5%;
+	margin: 0px;
+	color: inherit;
+	background: inherit;
 }
-form button {
-	width: 9%;
-	background: rgb(130, 224, 255);
+#send button {
+	width: 10%;
+	/*/ background: rgb(130, 224, 255); /**/
 	border: none;
-	padding: 10px;
+	padding: 0px;
+	margin: 0px;
+	position: absolute;
+	bottom: 0px;
+	height: 100%;
+	right: 0px;
 }
 #messages {
 	list-style-type: none;
@@ -33,10 +42,21 @@ form button {
 #messages li {
 	padding: 5px 10px;
 	background: rgba(0, 0, 0, 0);
+	color: black;
 }
+/*
 #messages li:nth-child(odd) {
 	background: rgba(238, 238, 238, 10);
-}
+}*/
 #messages {
 	margin-bottom: 40px 
+}
+
+dialog {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+li, button, input {
+	font-family: /*/32px Helvetica, Arial/**/monospace;
 }
