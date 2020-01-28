@@ -1,6 +1,6 @@
 $(function () {
   var socket = io();
-  $('form').submit(function(){
+  $('#send').submit(function(){
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
@@ -9,4 +9,5 @@ $(function () {
     $('#messages').append($('<li>').text(msg));
     window.scrollTo(0, document.body.scrollHeight);
   });
+  
 });
