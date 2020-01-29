@@ -38,9 +38,8 @@ const magic = (sender, msg) => {
       apply_name(sender, "RootUser213"); return true;
     case "/iam Freshdude":
       apply_name(sender, "DarkWolf129"); return true;
-    case "/iam Adam":
-      sender.disconnect(); return true;
-      //apply_name(sender, "PoopyFace"); return true;
+    case "/iam Adam"
+      apply_name(sender, "Adam"); return true;
     case "/iam pokepat12":
       apply_name(sender, "Poképat12"); return true;
     default:
