@@ -43,6 +43,7 @@ const magic = (sender, msg) => {
       apply_name(sender, "Adam"); return true;
     case "/iam pokepat12":
       apply_name(sender, "Poképat12"); return true;
+    case "/len":
     case "/who":
       sender.emit("chat message", `% There are ${names.keys().length} people online.`);
     default:
