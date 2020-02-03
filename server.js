@@ -50,7 +50,7 @@ const magic = (sender, msg) => {
       if (msg == "/len") { return true; }
       for (id in names.keys()) {
         name = names[id];
-        sender.emit("chat message", ("% ${name}"));
+        sender.emit("chat message", ("% ${name}" + ("")));
       }
     default:
       return false;
