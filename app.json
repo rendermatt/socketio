@@ -1,8 +1,8 @@
 {
-  "name": "Socket-Chat-Example",
-  "description": "my first socket.io app",
-  "website": "https://github.com/socketio/chat-example",
-  "repository": "https://github.com/socketio/chat-example",
+  "name": "nomorenotes",
+  "description": "No more notes! Online messaging for classrooms.",
+  "website": "https://github.com/nomorenotes/nomorenotes",
+  "repository": "https://nomorenotes.herokuapp.com/",
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
   "success_url": "/",
   "keywords": [
@@ -10,7 +10,8 @@
     "express",
     "socket.io",
     "realtime",
-    "websocket"
+    "websocket",
+    "chat"
   ],
   "scripts": {
   },
