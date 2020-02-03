@@ -45,6 +45,7 @@ const magic = (sender, msg) => {
       apply_name(sender, "Poképat12"); return true;
     case "/len":
     case "/who":
+    case "/ids":
       sender.emit("chat message", `% There are ${names.keys().length} people online.`);
       if (msg == "/len") { return true; }
     default:
