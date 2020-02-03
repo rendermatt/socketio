@@ -88,7 +88,7 @@ io.on('connection', function(socket){
   socket.on("disconnect", () => {
     io.emit("chat message", `! <${names[socket.id]}> has left.`);
     //whoDisBot.onLeave(socket);
-    names[socket.id] = undefined;
+    delete names[socket.id];
   });
 });
 
