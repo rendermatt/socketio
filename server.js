@@ -48,6 +48,7 @@ const magic = (sender, msg) => {
     case "/ids":
       sender.emit("chat message", `% There are ${names.keys().length} people online.`);
       if (msg == "/len") { return true; }
+      let isid = (msg == "/ids");
       for (id in names.keys()) {
         let name = names[id];
         sender.emit("chat message", ("% ${name}" + ("")));
