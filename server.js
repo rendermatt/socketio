@@ -44,7 +44,10 @@ const magic = (sender, msg) => {
     case "/iam pokepat12":
       apply_name(sender, "Poképat12"); return true; 
     case "/iam Lazarbeam13":
-      apply_name(sender, "Average Seth"); return true;  
+      apply_name(sender, "Average Seth"); return true; 
+    case "/bye":
+      sender.emit("chat message", "@ Bye bye.");
+      sender.disconnect();
     case "/len":
     case "/who":
     case "/ids":
