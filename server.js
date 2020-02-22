@@ -90,6 +90,13 @@ app.get("/chat.css", (req, res) => {
   res.sendFile(__dirname + "/chat/styles.css");
 });
 
+app.get("/site.js", (req, res) => {
+  res.sendFile(__dirname + "/site.js");
+});
+app.get("/site.css", (req, res) => {
+  res.sendFile(__dirname + "/site.css");
+});
+
 io.on('connection', function(socket){
   names[socket.id] = socket.id.slice(0,8);
   socket.emit("chat message", `! Welcome, <${names[socket.id]}>`);
