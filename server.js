@@ -71,7 +71,7 @@ const format_msg = msg => msg.replace("\\\\", "\f") // temp rm \\
                              .split("<br/>");
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/site.html");
+  res.sendFile(__dirname + "/site/site.html");
 });
 
 app.get('/chat', function(req, res){
@@ -91,10 +91,10 @@ app.get("/chat.css", (req, res) => {
 });
 
 app.get("/site.js", (req, res) => {
-  res.sendFile(__dirname + "/site.js");
+  res.sendFile(__dirname + "/site/site.js");
 });
 app.get("/site.css", (req, res) => {
-  res.sendFile(__dirname + "/site.css");
+  res.sendFile(__dirname + "/site/site.css");
 });
 
 io.on('connection', function(socket){
