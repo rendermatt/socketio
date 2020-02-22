@@ -75,7 +75,7 @@ app.get("/", (req, res) => {
 });
 
 app.get('/chat', function(req, res){
-  res.sendFile(__dirname + '/chat.html');
+  res.sendFile(__dirname + '/chat/chat.html');
 });
 
 app.get("/favicon.ico", (req, res) => {
@@ -84,10 +84,10 @@ app.get("/favicon.ico", (req, res) => {
 
 // static content
 app.get("/chat.js", (req, res) => {
-  res.sendFile(__dirname + "/chat.js");
+  res.sendFile(__dirname + "/chat/chat.js");
 });
 app.get("/chat.css", (req, res) => {
-  res.sendFile(__dirname + "/chat.css");
+  res.sendFile(__dirname + "/chat/chat.css");
 });
 
 io.on('connection', function(socket){
