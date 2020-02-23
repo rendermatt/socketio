@@ -51,10 +51,10 @@ const magic = (sender, msg) => {
     case "/len":
     case "/who":
     case "/ids":
-      sender.emit("chat message", `% There are ${names.keys().length} people online.`);
+      sender.emit("chat message", `% There are ${Object.keys(names).length} people online.`);
       if (msg == "/len") { return true; }
       let isid = (msg == "/ids");
-      for (id in names.keys()) {
+      for (id in Object.keys(names)) {
         let name = names[id];
         sender.emit("chat message", ("% " + (isid ? `[${id}]: ` : "") + $(names[id])));
       }
