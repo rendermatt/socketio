@@ -56,7 +56,7 @@ const magic = (sender, msg) => {
       let isid = (msg == "/ids");
       for (id in names.keys()) {
         let name = names[id];
-        sender.emit("chat message", ("% " + (isid ? `[${id}]: ` : "") + $(names[id]));
+        sender.emit("chat message", ("% " + (isid ? `[${id}]: ` : "") + $(names[id])));
       }
     default:
       return false;
