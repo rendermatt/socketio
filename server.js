@@ -80,6 +80,8 @@ app.get("/favicon.ico", (req, res) => {
   res.sendFile(__dirname + "/favicon/drive.ico");
 });
 
+require("./site/module.js")(app); // site urls
+
 // static content
 app.get("/chat.js", (req, res) => {
   res.sendFile(__dirname + "/chat/main.js");
@@ -94,7 +96,6 @@ app.get("/login.js", (req, res) => {
 app.get("/login.css", (req, res) => {
   res.sendFile(__dirname + "/login/styles.css");
 });
-
 
 
 io.on('connection', function(socket){
