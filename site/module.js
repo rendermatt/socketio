@@ -1,11 +1,11 @@
 module.exports = (app) => {
   app.get("/site.js", (req, res) => {
-    res.sendFile(__dirname + "/site/main.js");
+    res.sendFile(__dirname + "/main.js");
   });
   app.get("/site.css", (req, res) => {
-    res.sendFile(__dirname + "/site/styles.css");
+    res.sendFile(__dirname + "/styles.css");
   });
   app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/site/index.html");
+    res.sendFile(__dirname + "/index.html");
   });
 };
