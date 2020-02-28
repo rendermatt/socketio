@@ -90,6 +90,13 @@ app.get("/chat.css", (req, res) => {
   res.sendFile(__dirname + "/chat/styles.css");
 });
 
+app.get("/login.js", (req, res) => {
+  res.sendFile(__dirname + "/login/main.js");
+});
+app.get("/login.css", (req, res) => {
+  res.sendFile(__dirname + "/login/styles.css");
+});
+
 app.get("/site.js", (req, res) => {
   res.sendFile(__dirname + "/site/main.js");
 });
