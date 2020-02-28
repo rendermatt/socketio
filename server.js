@@ -7,8 +7,6 @@ iom.main(io);
 
 const users = process.env.USERS ? JSON.parse(process.env.USERS) : {"admin": "adminpassword", "user": "userpassword"};
 
-
-
 /*
 const whoDisBot = {
   botName: "WhoDisBot",
@@ -28,28 +26,12 @@ const whoDisBot = {
 };
 */
 
-
-
-
-
-app.get('/chat', function(req, res){
-  res.sendFile(__dirname + '/chat/index.html');
-});
-
 app.get("/favicon.ico", (req, res) => {
   res.sendFile(__dirname + "/favicon/drive.ico");
 });
 
 require("./site/module.js")(app); // site urls
-
-// static content
-app.get("/chat.js", (req, res) => {
-  res.sendFile(__dirname + "/chat/main.js");
-});
-app.get("/chat.css", (req, res) => {
-  res.sendFile(__dirname + "/chat/styles.css");
-});
-
+require("./chat/module.js")(app); // chat urls
 
 http.listen(port, function(){
   console.log('listening on *:' + port);
