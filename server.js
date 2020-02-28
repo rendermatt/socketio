@@ -70,9 +70,7 @@ const format_msg = msg => msg.replace("\\\\", "\f") // temp rm \\
                              .replace("\f", "\\\\")
                              .split("<br/>");
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/site/index.html");
-});
+
 
 app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/chat/index.html');
@@ -97,12 +95,7 @@ app.get("/login.css", (req, res) => {
   res.sendFile(__dirname + "/login/styles.css");
 });
 
-app.get("/site.js", (req, res) => {
-  res.sendFile(__dirname + "/site/main.js");
-});
-app.get("/site.css", (req, res) => {
-  res.sendFile(__dirname + "/site/styles.css");
-});
+
 
 io.on('connection', function(socket){
   names[socket.id] = socket.id.slice(0,8);
