@@ -33,7 +33,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
                                                        .replace("\f", "\\\\")
                                                        .split("<br/>");
 
-module.exports.main = (io) =>
+module.exports.main = (io) => {
   io.on('connection', function(socket){
     names[socket.id] = socket.id.slice(0,8);
     socket.emit("chat message", `! Welcome, <${names[socket.id]}>`);
