@@ -1,11 +1,11 @@
 module.exports = (app) => {
   app.get('/chat', function(req, res){
-    res.sendFile(__dirname + '/chat/index.html');
+    res.sendFile(__dirname + '/index.html');
   });
   app.get("/chat.js", (req, res) => {
-    res.sendFile(__dirname + "/chat/main.js");
+    res.sendFile(__dirname + "/main.js");
   });
   app.get("/chat.css", (req, res) => {
-    res.sendFile(__dirname + "/chat/styles.css");
+    res.sendFile(__dirname + "/styles.css");
   });
 }
