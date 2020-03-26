@@ -1,9 +1,10 @@
 module.exports = {};
+const pf = require("./prefixes.js");
 const names = {};
 const apply_name = module.exports.apply_name = (who, name) => {
-  who.broadcast.emit("chat message", `! ${names[who.id]} has applied name ${name}.`);
+  who.broadcast.emit("chat message", `${pf.alert} ${names[who.id]} has applied name ${name}.`);
   names[who.id] = name;
-  who.emit("chat message", "@ Name applied successfully.");
+  who.emit("chat message", `${pf.cmdresp} Name applied successfully.`);
 };
 
 
@@ -36,16 +37,16 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
 module.exports.main = (io) => {
   io.on('connection', function(socket){
     names[socket.id] = socket.id.slice(0,8);
-    socket.emit("chat message", `! Welcome, <${names[socket.id]}>`);
-    socket.broadcast.emit("chat message", `! <${names[socket.id]}> has joined.`);
+    socket.emit("chat message", `${pf.alert} Welcome, <${names[socket.id]}>`);
+    socket.broadcast.emit("chat message", `${pf.alert} <${names[socket.id]}> has joined.`);
     //whoDisBot.onJoin(socket);
     socket.on('chat message', msg => (
                                      magic(socket, msg) ?
                                      undefined :
-                                     format_msg(msg).map((m) => {io.emit("chat message", `% <${names[socket.id]}> ${m}`);})
+                                     format_msg(msg).map((m) => {io.emit("chat message", `${pf.msg} <${names[socket.id]}> ${m}`);})
                                      ));
     socket.on("disconnect", () => {
-      io.emit("chat message", `! <${names[socket.id]}> has left.`);
+      io.emit("chat message", `${pf.alert} <${names[socket.id]}> has left.`);
       //whoDisBot.onLeave(socket);
       names[socket.id] = undefined;
     });
