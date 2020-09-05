@@ -12,4 +12,4 @@ You can also spin up a free Heroku dyno to test it out:
 
 Besides, the application is deployed on [Now](https://zeit.co/now): https://socketio-chat-example.now.sh/
 
-bump
+buump
