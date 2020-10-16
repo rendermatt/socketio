@@ -23,7 +23,7 @@ const magic = module.exports.magic = (sender, msg) => {
     case "":
       return true;
     case "/moo":
-      sender.emit("chat message", `${pf.cmdresp} There are no easter eggs in this program.`);
+      sender.emit("chat message", `${pf.cmdresp} There are no easter eggs in this program.`); return true;
     default:
       return false;
   }
