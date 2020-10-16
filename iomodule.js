@@ -7,6 +7,8 @@ const apply_name = module.exports.apply_name = (who, name) => {
   who.emit("chat message", `${pf.cmdresp} Name applied successfully.`);
 };
 
+const ipToSocket = {};
+
 socket.use((client, next) => {
   console.log(socket.request.connection.remoteAddress);
   client.ipAddress = socket.request.connection.remoteAddress;
@@ -53,6 +55,11 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
 module.exports.main = (io) => {
   io.on('connection', function(socket){
     names[socket.id] = socket.id.slice(0,8);
+    if (ipToSocket[socket.ipAddress]) {
+      socket.emit("chat message", `${pf.alert} There already is a connection from your IP address. Type "here" to log in here instead, or type "bye" to disconnect.`);
+      socket.on("chat message", altMsgHandler(socket));
+      return;
+    }
     socket.emit("chat message", `${pf.alert} Welcome, <${names[socket.id]}>`);
     socket.broadcast.emit("chat message", `${pf.alert} <${names[socket.id]}> has joined.`);
     //whoDisBot.onJoin(socket);
