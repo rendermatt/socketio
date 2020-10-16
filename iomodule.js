@@ -7,6 +7,12 @@ const apply_name = module.exports.apply_name = (who, name) => {
   who.emit("chat message", `${pf.cmdresp} Name applied successfully.`);
 };
 
+socket.use((client, next) => {
+  console.log(socket.request.connection.remoteAddress);
+  client.ipAddress = socket.request.connection.remoteAddress;
+  next();
+});
+
 const magic = module.exports.magic = (sender, msg) => {
   switch (msg) {
     case "/iam AFilledPool":
