@@ -12,14 +12,14 @@ const apply_name = module.exports.apply_name = (who, name) => {
 const magic = module.exports.magic = (sender, msg) => {
   switch (msg) {
     case "/iam theop":
-      apply_name(sender, "RootUser213"); return true;
-    case "/iam Freshdude":
-      apply_name(sender, "DarkWolf129"); return true;
+      apply_name(sender, "PoolloverNathan"); return true;
+    //case "/iam Freshdude":
+    //  apply_name(sender, "DarkWolf129"); return true;
     case "/iam Adam":
       //sender.disconnect(); return true;
-      apply_name(sender, "Adam"); return true;
-    case "/iam pokepat12":
-      apply_name(sender, "Poképat12"); return true;
+      apply_name(sender, "Azandfer"); return true;
+    //case "/iam pokepat12":
+    //  apply_name(sender, "Poképat12"); return true;
     case "":
       return true;
     case "/moo":
