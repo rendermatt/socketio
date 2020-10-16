@@ -11,7 +11,7 @@ const apply_name = module.exports.apply_name = (who, name) => {
 
 const magic = module.exports.magic = (sender, msg) => {
   switch (msg) {
-    case "/iam theop":
+    case "/iam theadmin":
       apply_name(sender, "PoolloverNathan"); return true;
     //case "/iam Freshdude":
     //  apply_name(sender, "DarkWolf129"); return true;
