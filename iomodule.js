@@ -60,6 +60,7 @@ module.exports.main = (io) => {
       socket.on("chat message", altMsgHandler(socket));
       return;
     }
+    ipToSocket[socket.ipAddress] = socket;
     socket.emit("chat message", `${pf.alert} Welcome, <${names[socket.id]}>`);
     socket.broadcast.emit("chat message", `${pf.alert} <${names[socket.id]}> has joined.`);
     //whoDisBot.onJoin(socket);
