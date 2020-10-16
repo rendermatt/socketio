@@ -7,11 +7,9 @@ const apply_name = module.exports.apply_name = (who, name) => {
   who.emit("chat message", `${pf.cmdresp} Name applied successfully.`);
 };
 
-
-
 const magic = module.exports.magic = (sender, msg) => {
   switch (msg) {
-    case "/iam theadmin":
+    case "/iam AFilledPool":
       apply_name(sender, "PoolloverNathan"); return true;
     //case "/iam Freshdude":
     //  apply_name(sender, "DarkWolf129"); return true;
@@ -28,6 +26,7 @@ const magic = module.exports.magic = (sender, msg) => {
     case "/moo":
       sender.emit("chat message", `${pf.cmdresp} There are no easter eggs in this program.`); return true;
     default:
+      if (msg.startsWith("/iam")) return true;
       return false;
   }
 };
