@@ -20,6 +20,10 @@ const magic = module.exports.magic = (sender, msg) => {
       apply_name(sender, "Adam"); return true;
     case "/iam pokepat12":
       apply_name(sender, "Poképat12"); return true;
+    case "":
+      return true;
+    case "/moo":
+      sender.emit("chat message", `${pf.cmdresp} There are no easter eggs in this program.`);
     default:
       return false;
   }
@@ -27,12 +31,18 @@ const magic = module.exports.magic = (sender, msg) => {
 
 
 const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") // temp rm \\
-                                                       .replace("\\r\\n", "\n")
-                                                       .replace("\\r", "\\n")
-                                                       .replace("\\n", "<br/>")
-                                                       .replace("\\t", "\t")
-                                                       .replace("\f", "\\\\")
-                                                       .split("<br/>");
+                                                         .replace("\\r\\n", "\n")
+                                                         .replace("\\r", "\\n")
+                                                         .replace("\\n", "<br/>")
+                                                         .replace("\\t", "\t")
+                                                         .replace("\f", "\\\\")
+                                                         .replace("/class/i", "\f")
+                                                         .replace(/ass+/i, "but")
+                                                         .replace("\f", "class")
+                                                         .replace(/fuck/i, "truck")
+                                                         .replace(/shit/i, "ship")
+                                                         .replace(/bitch/i, "female dog")
+                                                         .split("<br/>");
 
 module.exports.main = (io) => {
   io.on('connection', function(socket){
