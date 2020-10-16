@@ -21,7 +21,7 @@ const magic = module.exports.magic = (sender, msg) => {
     //case "/iam pokepat12":
     //  apply_name(sender, "Poképat12"); return true;
     case "/imnot":
-      names[who.id] = who.id;
+      names[sender.id] = sender.id;
       who.emit("chat message", `${pf.cmdresp} You are now annonymous.`);
     case "":
       return true;
