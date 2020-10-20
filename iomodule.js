@@ -1,5 +1,6 @@
 module.exports = {};
 const pf = require("./prefixes.js");
+const cmdmod = require("./command-processor.js");
 const names = {};
 const apply_name = module.exports.apply_name = (who, name) => {
   who.broadcast.emit("chat message", `${pf.alert} ${names[who.id]} has applied name ${name}.`);
@@ -16,6 +17,7 @@ socket.use((client, next) => {
 });
 
 const magic = module.exports.magic = (sender, msg) => {
+  cmdmod(msg, sender);
   switch (msg) {
     case "/iam AFilledPool":
       apply_name(sender, "PoolloverNathan"); return true;
