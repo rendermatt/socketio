@@ -55,9 +55,9 @@ module.exports.main = (io) => {
     console.log(io.request.connection.remoteAddress);
     client.ipAddress = io.request.connection.remoteAddress;
     next();
-  });
+  });*/
   io.on('connection', function(socket){
-    names[socket.id] = socket.id.slice(0,8);
+    /*names[socket.id] = socket.id.slice(0,8);
     if (ipToSocket[socket.ipAddress]) {
       socket.emit("chat message", `${pf.alert} There already is a connection from your IP address. Type "here" to log in here instead, or type "bye" to disconnect.`);
       socket.on("chat message", altMsgHandler(socket));
