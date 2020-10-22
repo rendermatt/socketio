@@ -10,8 +10,6 @@ const apply_name = module.exports.apply_name = (who, name) => {
 
 const ipToSocket = {};
 
-const mes = (to, prefix, message) => {to.emit("chat message", `${new Date().getTime()} ${pf[prefix]} ${message}`);}
-
 const magic = module.exports.magic = (sender, msg) => {
   cmdmod(msg, sender);
   switch (msg) {
@@ -26,11 +24,11 @@ const magic = module.exports.magic = (sender, msg) => {
     //  apply_name(sender, "Poképat12"); return true;
     case "/imnot":
       names[sender.id] = sender.id.slice(0,8);
-      sender.emit("chat message", `${pf.cmdresp} You are now annonymous.`);
+      mes(sender, "cmdresp", `You are now annonymous.`);
     case "":
       return true;
     case "/moo":
-      sender.emit("chat message", `${pf.cmdresp} There are no easter eggs in this program.`); return true;
+      mes(sender, "cmdresp", `There are no easter eggs in this program.`); return true;
     default:
       if (msg.startsWith("/iam")) return true;
       return false;
@@ -66,16 +64,16 @@ module.exports.main = (io) => {
       return;
     }
     ipToSocket[socket.ipAddress] = socket;*/
-    socket.emit("chat message", `${pf.alert} Welcome, <${names[socket.id]}>`);
-    socket.broadcast.emit("chat message", `${pf.alert} <${names[socket.id]}> has joined.`);
+    mes(socket, "alert", `Welcome, <${names[socket.id]}>`);
+    mes(socket, "alert", `<${names[socket.id]}> has joined.`);
     //whoDisBot.onJoin(socket);
     socket.on('chat message', msg => (
                                      magic(socket, msg) ?
                                      undefined :
-                                     format_msg(msg).map((m) => {io.emit("chat message", `${pf.msg} <${names[socket.id]}> ${m}`);})
+                                     format_msg(msg).map((m) => {mes(io, "msg", `<${names[socket.id]}> ${m}`);})
                                      ));
     socket.on("disconnect", () => {
-      io.emit("chat message", `${pf.alert} <${names[socket.id]}> has left.`);
+      mes("alert", `<${names[socket.id]}> has left.`);
       //whoDisBot.onLeave(socket);
       names[socket.id] = undefined;
     });
