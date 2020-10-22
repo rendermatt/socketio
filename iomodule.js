@@ -51,7 +51,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
 
 module.exports.main = (io) => {
   
-  io.use((client, next) => {
+  /*io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
     client.ipAddress = io.request.connection.remoteAddress;
     next();
@@ -63,7 +63,7 @@ module.exports.main = (io) => {
       socket.on("chat message", altMsgHandler(socket));
       return;
     }
-    ipToSocket[socket.ipAddress] = socket;
+    ipToSocket[socket.ipAddress] = socket;*/
     socket.emit("chat message", `${pf.alert} Welcome, <${names[socket.id]}>`);
     socket.broadcast.emit("chat message", `${pf.alert} <${names[socket.id]}> has joined.`);
     //whoDisBot.onJoin(socket);
