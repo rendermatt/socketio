@@ -3,12 +3,14 @@ const pf = require("./prefixes.js");
 const cmdmod = require("./command-processor.js");
 const names = {};
 const apply_name = module.exports.apply_name = (who, name) => {
-  who.broadcast.emit("chat message", `${pf.alert} ${names[who.id]} has applied name ${name}.`);
+  mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
   names[who.id] = name;
-  who.emit("chat message", `${pf.cmdresp} Name applied successfully.`);
+  mes(who, "cmdresp", `Name ${name} applied successfully.`);
 };
 
 const ipToSocket = {};
+
+const mes = (to, prefix, message) => {to.emit("chat message", `${new Date().getTime()} ${pf[prefix]} ${message}`);}
 
 const magic = module.exports.magic = (sender, msg) => {
   cmdmod(msg, sender);
@@ -57,8 +59,8 @@ module.exports.main = (io) => {
     next();
   });*/
   io.on('connection', function(socket){
-    /*names[socket.id] = socket.id.slice(0,8);
-    if (ipToSocket[socket.ipAddress]) {
+    names[socket.id] = socket.id.slice(0,8);
+    /*if (ipToSocket[socket.ipAddress]) {
       socket.emit("chat message", `${pf.alert} There already is a connection from your IP address. Type "here" to log in here instead, or type "bye" to disconnect.`);
       socket.on("chat message", altMsgHandler(socket));
       return;
