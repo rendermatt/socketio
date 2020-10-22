@@ -10,6 +10,8 @@ const apply_name = module.exports.apply_name = (who, name) => {
 
 const ipToSocket = {};
 
+const mes = (who, prefix, msg) => {who.emit("chat message", `${pf[prefix]} ${msg}`);}
+
 const magic = module.exports.magic = (sender, msg) => {
   cmdmod(msg, sender);
   switch (msg) {
