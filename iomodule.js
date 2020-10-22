@@ -10,12 +10,6 @@ const apply_name = module.exports.apply_name = (who, name) => {
 
 const ipToSocket = {};
 
-socket.use((client, next) => {
-  console.log(socket.request.connection.remoteAddress);
-  client.ipAddress = socket.request.connection.remoteAddress;
-  next();
-});
-
 const magic = module.exports.magic = (sender, msg) => {
   cmdmod(msg, sender);
   switch (msg) {
@@ -55,6 +49,12 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
                                                          .split("<br/>");
 
 module.exports.main = (io) => {
+  
+  io.use((client, next) => {
+    console.log(io.request.connection.remoteAddress);
+    client.ipAddress = io.request.connection.remoteAddress;
+    next();
+  });
   io.on('connection', function(socket){
     names[socket.id] = socket.id.slice(0,8);
     if (ipToSocket[socket.ipAddress]) {
