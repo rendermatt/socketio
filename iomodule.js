@@ -81,3 +81,4 @@ module.exports.main = (io) => {
     });
   });
 }
+module.exports.mes = mes;
