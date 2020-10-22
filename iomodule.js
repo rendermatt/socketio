@@ -46,6 +46,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
                                                          .replace(/fuck/i, "truck")
                                                          .replace(/shit/i, "ship")
                                                          .replace(/bitch/i, "female dog")
+                                                         .replace(/shut up/i, "shut down")
                                                          .split("<br/>");
 
 module.exports.main = (io) => {
