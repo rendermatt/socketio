@@ -1,5 +1,6 @@
 module.exports = {};
-const pf = require("./prefixes.js");
+const r = {};
+r.pf = require("./prefixes.js");
 const names = {};
 const apply_name = module.exports.apply_name = (who, name) => {
   mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
@@ -14,7 +15,7 @@ const ipToSocket = {};
 
 
 const magic = module.exports.magic = (sender, msg) => {
-  cmdmod(msg, sender);
+  r.cmdmod(msg, sender);
   switch (msg) {
     case "/iam AFilledPool":
       apply_name(sender, "PoolloverNathan"); return true;
@@ -53,7 +54,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
                                                          .split("<br/>");
 
 module.exports.main = (io) => {
-  const cmdmod = require("./command-processor.js")(mes);
+  r.cmdmod = require("./command-processor.js")(mes);
   /*io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
     client.ipAddress = io.request.connection.remoteAddress;
