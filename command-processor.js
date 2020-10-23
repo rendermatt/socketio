@@ -1,6 +1,7 @@
-const mes = require("./iomodule.js").mes;
 const cdict = {};
-const main = module.exports = (msg, from) => {
+let mes = null;
+const main = module.exports = (_mes) => (msg, from) => {
+  mes = _mes;
   if (msg.startsWith("/")) {
     const args = msg.slice(1).split(" ");
     const cmd = args.shift();
