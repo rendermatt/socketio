@@ -1,6 +1,5 @@
 module.exports = {};
 const pf = require("./prefixes.js");
-const cmdmod = require("./command-processor.js");
 const names = {};
 const apply_name = module.exports.apply_name = (who, name) => {
   mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
@@ -8,9 +7,11 @@ const apply_name = module.exports.apply_name = (who, name) => {
   mes(who, "cmdresp", `Name ${name} applied successfully.`);
 };
 
+const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8)%24}:${d.getMinutes()} ${pf[prefix]} ${msg}`);}
+
 const ipToSocket = {};
 
-const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8)%24}:${d.getMinutes()} ${pf[prefix]} ${msg}`);}
+
 
 const magic = module.exports.magic = (sender, msg) => {
   cmdmod(msg, sender);
@@ -52,7 +53,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
                                                          .split("<br/>");
 
 module.exports.main = (io) => {
-  
+  const cmdmod = require("./command-processor.js")(mes);
   /*io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
     client.ipAddress = io.request.connection.remoteAddress;
@@ -81,4 +82,3 @@ module.exports.main = (io) => {
     });
   });
 }
-module.exports.mes = mes;
