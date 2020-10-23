@@ -1,4 +1,4 @@
-const {mes} = require("iomodule");
+const {mes} = require("./iomodule.js");
 const cdict = {};
 const main = module.exports = (msg, from) => {
   if (msg.startsWith("/")) {
