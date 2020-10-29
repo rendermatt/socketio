@@ -77,7 +77,7 @@ module.exports.main = (io) => {
                                      format_msg(msg).map((m) => {mes(io, "msg", `<${names[socket.id]}> ${m}`);})
                                      ));
     socket.on("disconnect", () => {
-      mes("alert", `<${names[socket.id]}> has left.`);
+      mes(socket.broadcast, "alert", `<${names[socket.id]}> has left.`);
       //whoDisBot.onLeave(socket);
       names[socket.id] = undefined;
     });
