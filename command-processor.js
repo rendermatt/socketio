@@ -9,7 +9,7 @@ const main = module.exports = (_mes) => (msg, from) => {
     switch(cmd) {
       case "funpie":
         mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`); return true;
-      default: mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); re
+      default: mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return true;
     }
     return true;
   }
