@@ -8,7 +8,7 @@ const apply_name = module.exports.apply_name = (who, name) => {
   mes(who, "cmdresp", `Name ${name} applied successfully.`);
 };
 
-const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8)%24}:${d.getMinutes()} ${r.pf[prefix]} ${msg}`);}
+const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8+12)%24}:${d.getMinutes()} ${r.pf[prefix]} ${msg}`);}
 
 const ipToSocket = {};
 
