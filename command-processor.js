@@ -1,7 +1,7 @@
 const cdict = {};
 let mes = null;
 const catchBadCommand = false;
-const {r} = require("iomodule");
+const {r} = require("./iomodule.js");
 const main = module.exports = (_mes) => (msg, from) => {
   mes = _mes;
   if (msg.startsWith("/")) {
