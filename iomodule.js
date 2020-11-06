@@ -4,13 +4,13 @@ r.pf = require("./prefixes.js");
 const names = {};
 const apply_name = module.exports.apply_name = (who, name) => {
   if (rnames == undefined) {
+    mes(who, "cmdresp", `Name ${name} already authenticated to userid ${rnames[name].id}`);
+  } else {
     mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
     rnames[names[who.id]] = undefined;
     rnames[name] = who;
     names[who.id] = name;
     mes(who, "cmdresp", `Name ${name} applied successfully.`);
-  } else {
-    mes(who, "cmdresp", `Name ${name} already authenticated to userid ${rnames[name].id}`);
   }
 };
 
