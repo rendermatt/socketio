@@ -1,20 +1,21 @@
 const cdict = {};
-const silent = {missing:false,handled:true}
 let mes = null;
 const main = module.exports = (_mes) => (msg, from) => {
   mes = _mes;
   if (msg.startsWith("/")) {
     const args = msg.slice(1).split(" ");
     const cmd = args.shift();
-    from.emit("chat message", `Command detected! ${cmd}:${args}`);
+    if(from._debug_commamd_detection) {from.emit("chat message", `Command detected! ${cmd}:${args}`)};
     switch(cmd) {
       case "funpie":
-        mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`); return silent.handled;
+        mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`); return true;
       
       case "tellraw":
-        mes(from, "none", args.join(" ")); return silent.handled;
+        mes(from, "none", args.join(" ")); return true;
+      case "_debug_command_detection_enable":
+        from._debug_commamd_detection = true; return true;
       default:
-        mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return silent.missing;
+        mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return true;
     }
     return true;
   }
