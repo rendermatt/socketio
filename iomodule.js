@@ -23,6 +23,8 @@ const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", 
 
 const ipToSocket = {};
 
+r.names = names; r.rnames = rnames;
+
 const magic = module.exports.magic = (sender, msg) => {
   if(r.cmdmod(msg, sender)){return true;}
   switch (msg) {
