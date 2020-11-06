@@ -1,5 +1,6 @@
+
 const r = {};
-module.exports = {r};
+module.exports = {};
 
 r.io = null;
 r.pf = require("./prefixes.js");
@@ -20,11 +21,12 @@ const apply_name = module.exports.apply_name = (who, name) => {
 };
 
 const rnames = {};
-const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8+12)%24}:${d.getMinutes()} ${r.pf[prefix]}${msg}`);}
+const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8+12)%24}:${d.getMinutes()} ${r.pf[prefix]}${msg}`);};
 
 const ipToSocket = {};
 
 r.names = names; r.rnames = rnames;
+module.exports.r = r;
 
 const magic = module.exports.magic = (sender, msg) => {
   if(r.cmdmod(msg, sender)){return true;}
@@ -40,7 +42,7 @@ const magic = module.exports.magic = (sender, msg) => {
     //  apply_name(sender, "Poképat12"); return true;
     case "/imnot":
       names[sender.id] = sender.id.slice(0,8);
-      mes(sender, "cmdresp", `You are now annonymous.`);
+      mes(sender, "cmdresp", `You are now annonymous.`); return true;
     case "":
       return true;
     case "/moo":
@@ -68,7 +70,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
                                                          .split("<br/>");
 
 module.exports.main = (io) => {
-  r.io = io
+  r.io = io;
   r.cmdmod = require("./command-processor.js")(mes);
   /*io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
@@ -97,4 +99,4 @@ module.exports.main = (io) => {
       names[socket.id] = undefined;
     });
   });
-}
+};
