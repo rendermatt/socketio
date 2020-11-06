@@ -1,5 +1,6 @@
 const cdict = {};
 let mes = null;
+const catchBadCommand = false;
 const main = module.exports = (_mes) => (msg, from) => {
   mes = _mes;
   if (msg.startsWith("/")) {
@@ -15,9 +16,9 @@ const main = module.exports = (_mes) => (msg, from) => {
       case "_debug_command_detection_enable":
         from._debug_command_detection = true; return true;
       default:
-        mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return true;
+        mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return catchBadCommand;
     }
-    return true;
+    return catchBadCommand;
   }
   return false;
 }
