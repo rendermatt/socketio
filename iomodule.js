@@ -38,6 +38,8 @@ const magic = module.exports.magic = (sender, msg) => {
       return true;
     case "/moo":
       mes(sender, "cmdresp", `There are no easter eggs in this program.`); return true;
+    case "/_debug_dump_naming":
+      mes(sender, "cmdresp", `names: ${JSON.stringify(names)}\nrnames: ${JSON.stringify(names)}`);
     default:
       if (msg.startsWith("/iam")) return true;
       return false;
