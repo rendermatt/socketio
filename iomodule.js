@@ -3,11 +3,18 @@ const r = {};
 r.pf = require("./prefixes.js");
 const names = {};
 const apply_name = module.exports.apply_name = (who, name) => {
-  mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
-  names[who.id] = name;
-  mes(who, "cmdresp", `Name ${name} applied successfully.`);
+  if (rnames == undefined) {
+    mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
+    rnames[names[who.id]] = undefined;
+    rnames[name] = who;
+    names[who.id] = name;
+    mes(who, "cmdresp", `Name ${name} applied successfully.`);
+  } else {
+    mes(who, "cmdresp", `Name ${name} already authenticated to userid ${rnames[name].id}`);
+  }
 };
 
+const rnames = {};
 const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8+12)%24}:${d.getMinutes()} ${r.pf[prefix]}${msg}`);}
 
 const ipToSocket = {};
