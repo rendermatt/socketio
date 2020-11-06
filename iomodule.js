@@ -12,10 +12,8 @@ const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", 
 
 const ipToSocket = {};
 
-
-
 const magic = module.exports.magic = (sender, msg) => {
-  r.cmdmod(msg, sender);
+  if(r.cmdmod(msg, sender)){return;}
   switch (msg) {
     case "/iam AFilledPool":
       apply_name(sender, "PoolloverNathan"); return true;
