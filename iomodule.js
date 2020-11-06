@@ -1,5 +1,6 @@
-module.exports = {};
 const r = {};
+module.exports = {r};
+
 r.io = null;
 r.pf = require("./prefixes.js");
 const names = {};
