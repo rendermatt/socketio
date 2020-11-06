@@ -7,8 +7,11 @@ const apply_name = module.exports.apply_name = (who, name) => {
     mes(who, "cmdresp", `Name ${name} already authenticated.`);
   } else {
     mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
+    console.log(`setting rnames[${names[who.id]}] = undefined`);
     rnames[names[who.id]] = undefined;
+    console.log(`setting rnames[${name}] = ${who}`);
     rnames[name] = who;
+    console.log(`setting names[${who.id}] = ${name}`);
     names[who.id] = name;
     mes(who, "cmdresp", `Name ${name} applied successfully.`);
   }
