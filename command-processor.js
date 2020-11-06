@@ -13,7 +13,7 @@ const main = module.exports = (_mes) => (msg, from) => {
       case "tellraw":
         mes(from, "none", args.join(" ")); return true;
       default:
-        default: mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return true;
+        mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return true;
     }
     return true;
   }
