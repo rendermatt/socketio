@@ -1,6 +1,7 @@
 const cdict = {};
 let mes = null;
 const catchBadCommand = false;
+const {r} = require("iomodule");
 const main = module.exports = (_mes) => (msg, from) => {
   mes = _mes;
   if (msg.startsWith("/")) {
@@ -15,6 +16,8 @@ const main = module.exports = (_mes) => (msg, from) => {
         mes(from, "none", args.join(" ")); return true;
       case "_debug_command_detection_enable":
         from._debug_command_detection = true; return true;
+      case "release":
+        r.rname[args[0]] = 0;
       default:
         mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return catchBadCommand;
     }
