@@ -1,6 +1,7 @@
 module.exports = {
-	"cmdresp": "@",
-	"alert": "!",
-	"msg": "%",
-	"debug": "#"
+	"cmdresp": "@ ",
+	"alert": "! ",
+	"msg": "% ",
+	"debug": "# ",
+	"none": ""
 }
