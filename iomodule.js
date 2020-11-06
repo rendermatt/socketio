@@ -64,8 +64,8 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
                                                          .replace(/shut up/i, "shut down")
                                                          .split("<br/>");
 
-module.exports.main = (_io) => {
-  r.io = _io
+module.exports.main = (io) => {
+  r.io = io
   r.cmdmod = require("./command-processor.js")(mes);
   /*io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
