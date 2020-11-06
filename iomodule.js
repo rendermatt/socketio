@@ -1,5 +1,6 @@
 module.exports = {};
 const r = {};
+r.io = null;
 r.pf = require("./prefixes.js");
 const names = {};
 const apply_name = module.exports.apply_name = (who, name) => {
@@ -63,7 +64,8 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
                                                          .replace(/shut up/i, "shut down")
                                                          .split("<br/>");
 
-module.exports.main = (io) => {
+module.exports.main = (_io) => {
+  r.io = _io
   r.cmdmod = require("./command-processor.js")(mes);
   /*io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
