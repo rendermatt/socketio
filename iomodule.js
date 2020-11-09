@@ -72,7 +72,7 @@ module.exports.main = (io) => {
     }
     ipToSocket[socket.ipAddress] = socket;*/
     mes(socket, "alert", `Welcome, <${names[socket.id]}>`);
-    mes(socket, "alert", `<${names[socket.id]}> has joined.`);
+    mes(socket.broadcast, "alert", `<${names[socket.id]}> has joined.`);
     //whoDisBot.onJoin(socket);
     socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
     socket.on('chat message', msg => (
