@@ -88,6 +88,7 @@ module.exports.main = (io) => {
     mes(socket, "alert", `Welcome, <${names[socket.id]}>`);
     mes(socket, "alert", `<${names[socket.id]}> has joined.`);
     //whoDisBot.onJoin(socket);
+    socket.on("chat message", msg => console.log(`[CHAT] ${msg}`)); // who doesn't love log spam
     socket.on('chat message', msg => (
                                      magic(socket, msg) ?
                                      undefined :
