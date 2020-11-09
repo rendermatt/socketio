@@ -3,16 +3,16 @@ let mes = null;
 const catchBadCommand = false;
 const {r} = require("./iomodule.js");
 const apply_name = module.exports.apply_name = (who, name) => {
-  if (rnames[name]) {
+  if (r.rnames[name]) {
     mes(who, "cmdresp", `Name ${name} already authenticated.`);
   } else {
-    mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
-    console.log(`setting rnames[${names[who.id]}] = undefined`);
-    rnames[names[who.id]] = undefined;
-    console.log(`setting rnames[${name}] = ${who}`);
-    rnames[name] = who;
-    console.log(`setting names[${who.id}] = ${name}`);
-    names[who.id] = name;
+    mes(who.broadcast, "alert", `${r.names[who.id]} has applied name ${name}.`);
+    console.log(`setting rnames[${r.names[who.id]}] = undefined`);
+    r.rnames[r.names[who.id]] = undefined;
+    console.log(`setting r.rnames[${name}] = ${who}`);
+    r.rnames[name] = who;
+    console.log(`setting r.names[${who.id}] = ${name}`);
+    r.names[who.id] = name;
     mes(who, "cmdresp", `Name ${name} applied successfully.`);
   }
 };
