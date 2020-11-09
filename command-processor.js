@@ -17,7 +17,7 @@ const main = module.exports = (_mes) => (msg, from) => {
       case "_debug_command_detection_enable":
         from._debug_command_detection = true; return true;
       case "release":
-        r.rnames[args[0]] = 0;
+        r.rnames[args[0]] = 0; return true;
       default:
         mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return catchBadCommand;
     }
