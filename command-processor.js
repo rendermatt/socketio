@@ -2,6 +2,20 @@ const cdict = {};
 let mes = null;
 const catchBadCommand = false;
 const {r} = require("./iomodule.js");
+const apply_name = module.exports.apply_name = (who, name) => {
+  if (rnames[name]) {
+    mes(who, "cmdresp", `Name ${name} already authenticated.`);
+  } else {
+    mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
+    console.log(`setting rnames[${names[who.id]}] = undefined`);
+    rnames[names[who.id]] = undefined;
+    console.log(`setting rnames[${name}] = ${who}`);
+    rnames[name] = who;
+    console.log(`setting names[${who.id}] = ${name}`);
+    names[who.id] = name;
+    mes(who, "cmdresp", `Name ${name} applied successfully.`);
+  }
+};
 const main = module.exports = (_mes) => (msg, from) => {
   mes = _mes;
   if (msg.startsWith("/")) {
@@ -11,7 +25,8 @@ const main = module.exports = (_mes) => (msg, from) => {
     switch(cmd) {
       case "funpie":
         mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`); return true;
-      
+      case "iam":
+        apply_name(sender, args[0]); return true;
       case "tellraw":
         mes(from, "none", args.join(" ")); return true;
       case "_debug_command_detection_enable":
