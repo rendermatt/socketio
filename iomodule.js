@@ -5,20 +5,7 @@ module.exports = {};
 r.io = null;
 r.pf = require("./prefixes.js");
 const names = {};
-const apply_name = module.exports.apply_name = (who, name) => {
-  if (rnames[name]) {
-    mes(who, "cmdresp", `Name ${name} already authenticated.`);
-  } else {
-    mes(who.broadcast, "alert", `${names[who.id]} has applied name ${name}.`);
-    console.log(`setting rnames[${names[who.id]}] = undefined`);
-    rnames[names[who.id]] = undefined;
-    console.log(`setting rnames[${name}] = ${who}`);
-    rnames[name] = who;
-    console.log(`setting names[${who.id}] = ${name}`);
-    names[who.id] = name;
-    mes(who, "cmdresp", `Name ${name} applied successfully.`);
-  }
-};
+
 
 const rnames = {};
 const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8+12)%24}:${d.getMinutes()} ${r.pf[prefix]}${msg}`);};
@@ -31,8 +18,7 @@ module.exports.r = r;
 const magic = module.exports.magic = (sender, msg) => {
   if(r.cmdmod(msg, sender)){return true;}
   switch (msg) {
-    case "/iam AFilledPool":
-      apply_name(sender, "PoolloverNathan"); return true;
+    
     //case "/iam Freshdude":
     //  apply_name(sender, "DarkWolf129"); return true;
     case "/iam Adam":
