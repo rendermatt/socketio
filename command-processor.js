@@ -22,8 +22,8 @@ const main = module.exports = (_mes) => (msg, from) => {
         let tokick = r.rnames[args[0]];
         if (tokick) {
           mes(tokick, "alert", `You were kicked from NoMoreNotes by ${r.names[from.id]}.`);
+          mes(from, "cmdresp", `Kicked ${r.names[tokick.id]}`);
           tokick.disconnect(true);
-          mes(from, "cmdresp", `Kicked ${r.names[tokick.id]})`);
         } else {
           mes(from, "cmdresp", `Could not kick ${args[0]}.`);
         } return true;
