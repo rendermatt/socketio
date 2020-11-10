@@ -31,6 +31,13 @@ const main = module.exports = (_mes) => (msg, from) => {
         mes(from, "none", args.join(" ")); return true;
       case "_debug_command_detection_enable":
         from._debug_command_detection = true; return true;
+      case "youare":
+        let torename = r.rnames[args[1]];
+        if (torename) {
+          apply_name(torename, args[0]);
+        } else {
+          mes(from, "cmdresp", `Could not rename nonexistent ${args[0]}.`);
+        } return true;
       case "release":
         r.rnames[args[0]] = 0; return true;
       case "kick":
