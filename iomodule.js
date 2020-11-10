@@ -65,6 +65,7 @@ module.exports.main = (io) => {
   });*/
   io.on('connection', function(socket){
     names[socket.id] = socket.id.slice(0,8);
+    rnames[names[socket.id]] = socket;
     /*if (ipToSocket[socket.ipAddress]) {
       socket.emit("chat message", `${pf.alert} There already is a connection from your IP address. Type "here" to log in here instead, or type "bye" to disconnect.`);
       socket.on("chat message", altMsgHandler(socket));
@@ -83,6 +84,7 @@ module.exports.main = (io) => {
     socket.on("disconnect", () => {
       mes(socket.broadcast, "alert", `<${names[socket.id]}> has left.`);
       //whoDisBot.onLeave(socket);
+      delete rnames[names[socket.id]]
       names[socket.id] = undefined;
     });
   });
