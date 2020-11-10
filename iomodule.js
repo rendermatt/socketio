@@ -63,18 +63,12 @@ module.exports.main = (io) => {
     client.ipAddress = io.request.connection.remoteAddress;
     next();
   });*/
-  io.on('connection', function(socket){
+  io.on("connection", (socket)=>{
+  socket.on('authenticate', (sesion)=>{
     names[socket.id] = socket.id.slice(0,8);
     rnames[names[socket.id]] = socket;
-    /*if (ipToSocket[socket.ipAddress]) {
-      socket.emit("chat message", `${pf.alert} There already is a connection from your IP address. Type "here" to log in here instead, or type "bye" to disconnect.`);
-      socket.on("chat message", altMsgHandler(socket));
-      return;
-    }
-    ipToSocket[socket.ipAddress] = socket;*/
     mes(socket, "alert", `Welcome, <${names[socket.id]}>`);
     mes(socket.broadcast, "alert", `<${names[socket.id]}> has joined.`);
-    //whoDisBot.onJoin(socket);
     socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
     socket.on('chat message', msg => (
                                      magic(socket, msg) ?
@@ -87,5 +81,6 @@ module.exports.main = (io) => {
       delete rnames[names[socket.id]]
       names[socket.id] = undefined;
     });
+    ]);
   });
 };
