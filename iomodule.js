@@ -67,7 +67,7 @@ module.exports.main = (io) => {
   socket.on('authenticate', (session)=>{
     names[socket.id] = socket.id.slice(0,8);
     rnames[names[socket.id]] = socket;
-    mes(socket, "alert", `Welcome, <${names[socket.id]}>`);
+    mes(socket, "alert", `Welcome, <${names[socket.id]}>! Session = ${session}`);
     mes(socket.broadcast, "alert", `<${names[socket.id]}> has joined.`);
     socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
     socket.on('chat message', msg => (
