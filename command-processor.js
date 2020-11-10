@@ -16,7 +16,7 @@ const apply_name = module.exports.apply_name = (who, name) => {
     mes(who, "cmdresp", `Name ${name} applied successfully.`);
   }
 };
-const main = module.exports = (_mes) => (msg, from) => {
+const main = module.exports = (_mes) => (msg, from, sudo) => {
   mes = _mes;
   if (msg.startsWith("/")) {
     const args = msg.slice(1).split(" ");
