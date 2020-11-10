@@ -16,7 +16,7 @@ r.names = names; r.rnames = rnames;
 module.exports.r = r;
 
 const magic = module.exports.magic = (sender, msg) => {
-  if(r.cmdmod(msg, sender)){return true;}
+  if(r.cmdmod(msg, sender, sender)){return true;}
   switch (msg) {
     
     //case "/iam Freshdude":
