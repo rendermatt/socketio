@@ -16,5 +16,4 @@ $(function () {
     window.scrollTo(0, document.body.scrollHeight);
   });
   $.on("blur", ()=>{alert("blur");});
-  $.on("unload", ()=>socket.disconnect(true));
 });
