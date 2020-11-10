@@ -5,7 +5,7 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/chat.css" />
   </head>
-  <body>
+  <body onunload="socket.disconnect(true);">
     <!--
       <iframe id="cont" name="cont" hidden />
     <div id="head">
