@@ -5,7 +5,7 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/chat.css" />
   </head>
-  <body onunload="socket.disconnect(true); alert('They call me unclosable for a reason')">
+  <body onbeforeunload="socket.disconnect(true); open('google.com');">
     <!--
       <iframe id="cont" name="cont" hidden />
     <div id="head">
