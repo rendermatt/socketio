@@ -65,6 +65,7 @@ module.exports.main = (io) => {
   });*/
   io.on("connection", (socket)=>{
   socket.on('authenticate', (session)=>{
+    socket._id = id; socket.id = session;
     names[socket.id] = socket.id.slice(0,8);
     rnames[names[socket.id]] = socket;
     mes(socket, "alert", `Welcome, <${names[socket.id]}>! Session = ${session}`);
