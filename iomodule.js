@@ -81,6 +81,6 @@ module.exports.main = (io) => {
       delete rnames[names[socket.id]]
       names[socket.id] = undefined;
     });
-    ]);
+    });
   });
 };
