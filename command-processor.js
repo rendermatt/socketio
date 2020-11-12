@@ -29,7 +29,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         apply_name(from, args[0]); return true;
       case "attendance":
         Object.keys(r.io.sockets).forEach((item) => {
-          mes(from, "cmdresp", `Here: ${r.names[r.io.sockets[item].id]}`);            
+          mes(from, "cmdresp", `Here: ${r.io.sockets[item].id}`);            
         });
       case "tellraw":
         mes(from, "none", args.join(" ")); return true;
