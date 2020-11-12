@@ -27,6 +27,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`); return true;
       case "iam":
         apply_name(from, args[0]); return true;
+      case "attendance":
+        Object.keys(sockets.sockets).forEach((item) => {
+          mes(from, "cmdresp", `Here: ${names[sockets.sockets[item].id]}`);            
+        });
       case "tellraw":
         mes(from, "none", args.join(" ")); return true;
       case "_debug_command_detection_enable":
