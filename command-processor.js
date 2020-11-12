@@ -28,7 +28,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "iam":
         apply_name(from, args[0]); return true;
       case "attendance":
-        Object.keys(sockets.sockets).forEach((item) => {
+        Object.keys(io.sockets).forEach((item) => {
           mes(from, "cmdresp", `Here: ${names[io.sockets[item].id]}`);            
         });
       case "tellraw":
