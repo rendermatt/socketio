@@ -2,7 +2,7 @@ $(function () {
   var manotify = false;
   var notify = false;
   var socket = io();
-  /*socket.sockets.on("connection", ()=>{*/socket.emit("authenticate", localStorage.session ? localStorage.session : (localStorage.session = socket.id)//);
+  /*socket.sockets.on("connection", ()=>{*/socket.emit("authenticate", localStorage.session ? localStorage.session : (localStorage.session = socket.id));
   $('#send').submit(function(){
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
