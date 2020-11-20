@@ -44,6 +44,16 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         } return true;
       case "release":
         r.rnames[args[0]] = 0; return true;
+      case "w":
+        let toname = args.shift();
+        let to = r.rnames[toname];
+        let msg = args.join(" ");
+        if (to) {
+          mes(to, "msg", `(-> you) <${r.names[from]}> ${msg}`);
+          mes(to, "msg", `(-> ${toname}) <${r.names[from]}> ${msg}`);
+        } else {
+          mes(from, "cmdresp", `Cannot message a nonexistent user.`);
+        } return true;
       case "kick":
         let tokick = r.rnames[args[0]];
         if (tokick) {
