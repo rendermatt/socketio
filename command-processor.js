@@ -40,7 +40,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (torename) {
           apply_name(torename, args[0]);
         } else {
-          mes(from, "cmdresp", `Could not rename nonexistent ${args[0]}.`);
+          mes(from, "cmdresp", `Could not rename nonexistent ${args[1]}.`);
         } return true;
       case "release":
         r.rnames[args[0]] = 0; return true;
