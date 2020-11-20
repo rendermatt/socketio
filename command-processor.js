@@ -49,8 +49,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let to = r.rnames[toname];
         let msg = args.join(" ");
         if (to) {
-          mes(to, "msg", `(-> you) <${r.names[from]}> ${msg}`);
-          mes(to, "msg", `(-> ${toname}) <${r.names[from]}> ${msg}`);
+          mes(to, "msg", `(-> you) <${r.names[from.id]}> ${msg}`);
+          mes(from, "msg", `(-> ${toname}) <${r.names[from.id]}> ${msg}`);
         } else {
           mes(from, "cmdresp", `Cannot message a nonexistent user.`);
         } return true;
