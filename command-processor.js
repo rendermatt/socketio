@@ -56,7 +56,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         } return true;
       case "ping":
         let toping = r.rnames[args[0]];
-        if (toping == undefined && args[0]) {mes(from, "cmdresp", "Your ping did not hit anything.");}
+        if (toping == undefined && args[0]) {mes(from, "cmdresp", "Your ping did not hit anything."); return true;}
         mes(from, "cmdresp", `You ring a bell in${toping ? (r.names[toping]+"'s ear") : "to an amplifier"}.`);
         (toping ? toping : r.io).emit("ping", !!toping, r.names[from.id]); return true;
       case "kick":
