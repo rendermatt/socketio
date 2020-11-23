@@ -16,5 +16,6 @@ $(function () {
     }
     window.scrollTo(0, document.body.scrollHeight);
   });
+  socket.on("ping", (wasTargeted, source) => alert(`${source} has pinged ${wasTargeted ? "you" : "everyone"}!`));
   $.on("blur", ()=>{alert("blur");});
 });
