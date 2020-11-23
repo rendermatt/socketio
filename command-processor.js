@@ -21,7 +21,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
   if (msg.startsWith("/")) {
     const args = msg.slice(1).split(" ");
     const cmd = args.shift();
-    if(from._debug_command_detection) {from.emit("chat message", `Command detected! ${cmd}:${args}`)};
+    if(from._debug_command_detection) {from.emit("chat message", `Command detected! ${cmd}:${args}`);}
     switch(cmd) {
       case "funpie":
         mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`); return true;
@@ -30,7 +30,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "attendance":
         r.attendance.forEach((item) => {
           mes(from, "cmdresp", `Here: ${r.io.sockets[item].id}`);            
-        });
+        }); return true;
       case "tellraw":
         mes(from, "none", args.join(" ")); return true;
       case "_debug_command_detection_enable":
@@ -69,4 +69,4 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
     return catchBadCommand;
   }
   return false;
-}
+};
