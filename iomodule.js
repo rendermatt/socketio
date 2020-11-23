@@ -5,12 +5,12 @@ module.exports = {};
 
 r.io = null;
 r.pf = require("./prefixes.js");
-r.t = require("./texts.js")["en_us"];
+r.t = require("./texts.js")[LANG];
 const names = {};
 
 
 const rnames = {};
-const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", `${(d.getHours()+8+12)%24}:${d.getMinutes()} ${r.pf[prefix]}${msg}`);};
+const mes = (who, prefix, msg) => {var d = new Date(); who.emit("chat message", r.t.message((d.getHours()+8+12)%24, d.getMinutes(), r.pf[prefix], msg));};
 
 const ipToSocket = {};
 
@@ -71,18 +71,18 @@ module.exports.main = (io) => {
     socket._id = socket.id; socket.id = /*session ? session :*/ socket.id;
     names[socket.id] = socket.id.slice(0,8);
     rnames[names[socket.id]] = socket;
-    mes(socket, "alert", `Welcome, <${names[socket.id]}>! Session = ${session}`);
-    mes(socket.broadcast, "alert", `<${names[socket.id]}> has joined.`);
+    mes(socket, "alert", r.t.join_self(names[socket.id], session));
+    mes(socket.broadcast, "alert", r.t.join(names[socket.id]));
     socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
     socket.on('chat message', msg => (
                                      magic(socket, msg) ?
                                      undefined :
-                                     format_msg(msg).map((m) => {mes(io, "msg", `<${names[socket.id]}> ${m}`);})
+                                     format_msg(msg).map((m) => {mes(io, "msg", r.t.chat(names[socket.id], m));})
                                      ));
     socket.on("disconnect", () => {
       mes(socket.broadcast, "alert", r.t.leave(names[socket.id]));
       //whoDisBot.onLeave(socket);
-      delete rnames[names[socket.id]]
+      delete rnames[names[socket.id]];
       names[socket.id] = undefined;
     });
     });
