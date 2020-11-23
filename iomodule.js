@@ -80,7 +80,7 @@ module.exports.main = (io) => {
                                      format_msg(msg).map((m) => {mes(io, "msg", `<${names[socket.id]}> ${m}`);})
                                      ));
     socket.on("disconnect", () => {
-      mes(socket.broadcast, "alert", r.t.leave(names[socket]));
+      mes(socket.broadcast, "alert", r.t.leave(names[socket.id]));
       //whoDisBot.onLeave(socket);
       delete rnames[names[socket.id]]
       names[socket.id] = undefined;
