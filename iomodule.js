@@ -1,9 +1,11 @@
 
 const r = {};
+const LANG = "en_us";
 module.exports = {};
 
 r.io = null;
 r.pf = require("./prefixes.js");
+r.t = require("./texts.js")["en_us"];
 const names = {};
 
 
@@ -78,7 +80,7 @@ module.exports.main = (io) => {
                                      format_msg(msg).map((m) => {mes(io, "msg", `<${names[socket.id]}> ${m}`);})
                                      ));
     socket.on("disconnect", () => {
-      mes(socket.broadcast, "alert", `<${names[socket.id]}> has left.`);
+      mes(socket.broadcast, "alert", r.t.leave(names[socket]));
       //whoDisBot.onLeave(socket);
       delete rnames[names[socket.id]]
       names[socket.id] = undefined;
