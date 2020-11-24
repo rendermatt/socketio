@@ -1,93 +1,77 @@
-const r = {};
-const LANG = "en_us";
-module.exports = {};
-r.io = null;
-r.pf = require("./prefixes.js");
-r.t = require("./texts.js")[LANG];
-const names = {};
-const rnames = {};
-const mes = (who, prefix, msg) => {
-  var d = new Date();
-  who.emit("chat message", r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), r.pf[prefix], msg));
-};
-const ipToSocket = {};
-r.names = names;
-r.rnames = rnames;
-module.exports.r = r;
-const magic = module.exports.magic = (sender, msg) => {
-  if (r.cmdmod(msg, sender, sender)) {
-    return true;
-  }
-  switch (msg) {
-    //case "/iam Freshdude":
-    //  apply_name(sender, "DarkWolf129"); return true;
-    case "/iam Adam":
-      //sender.disconnect(); return true;
-      apply_name(sender, "Azandfer");
-      return true;
-      //case "/iam pokepat12":
-      //  apply_name(sender, "Poképat12"); return true;
-    case "/imnot":
-      names[sender.id] = sender.id.slice(0, 8);
-      mes(sender, "cmdresp", `You are now annonymous.`);
-      return true;
-    case "":
-      return true;
-    case "/moo":
-      mes(sender, "cmdresp", `There are no easter eggs in this program.`);
-      return true;
-      //case "/_debug_dump_naming":
-      //  mes(sender, "cmdresp", `names: ${JSON.stringify(names)}\nrnames: ${JSON.stringify(rnames)}`);
-    default:
-      if (msg.startsWith("/iam")) return true;
-      return false;
+const cdict = {};
+let mes = null;
+const catchBadCommand = false;
+const {r} = require("./iomodule.js");
+const apply_name = module.exports.apply_name = (who, name) => {
+  if (r.rnames[name]) {
+    mes(who, "cmdresp", `Name ${name} already authenticated.`);
+  } else {
+    mes(who.broadcast, "alert", `${r.names[who.id]} has applied name ${name}.`);
+    console.log(`setting rnames[${r.names[who.id]}] = undefined`);
+    r.rnames[r.names[who.id]] = undefined;
+    console.log(`setting r.rnames[${name}] = ${who}`);
+    r.rnames[name] = who;
+    console.log(`setting r.names[${who.id}] = ${name}`);
+    r.names[who.id] = name;
+    mes(who, "cmdresp", `Name ${name} applied successfully.`);
   }
 };
-const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") // temp rm \\
-  .replace("\\r\\n", "\n")
-  .replace("\\r", "\\n")
-  .replace("\\n", "<br/>")
-  .replace("\\t", "\t")
-  .replace("\f", "\\\\")
-  .replace(/ass+ /i, "but")
-  .replace(/fuck/i, "truck")
-  .replace(/shit/i, "ship")
-  .replace(/bitch/i, "female dog")
-  .replace(/shut up/i, "shut down")
-  .split("<br/>");
-module.exports.main = (io) => {
-  r.io = io;
-  r.cmdmod = require("./command-processor.js")(mes);
-  /*io.use((client, next) => {
-    console.log(io.request.connection.remoteAddress);
-    client.ipAddress = io.request.connection.remoteAddress;
-    next();
-  });*/
-  io.on("connection", (socket) => {
-    socket.on('hello', (session) => {
-      if (!session) socket.emit("authenticate", session = socket.id);
-      socket._id = socket.id;
-      socket.id = /*session ? session :*/ socket.id;
-      names[socket.id] = socket.id.slice(0, 8);
-      rnames[names[socket.id]] = socket;
-      mes(socket, "alert", r.t.join_self(names[socket.id], session));
-      mes(socket.broadcast, "alert", r.t.join(names[socket.id]));
-      socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
-      socket.on('chat message', msg => (
-        magic(socket, msg) ?
-        undefined :
-        format_msg(msg)
-        .map((m) => {
-          mes(io, "msg", r.t.chat(names[socket.id], m));
-        })
-      ));
-      socket.on("disconnect", () => {
-        mes(socket.broadcast, "alert", r.t.leave(names[socket.id]));
-        //whoDisBot.onLeave(socket);
-        delete rnames[names[socket.id]];
-        names[socket.id] = undefined;
-      });
-    });
-    setTimeout(()=>socket.emit("hello"), 250);
-  });
+const main = module.exports = (_mes) => (msg, from, sudo) => {
+  mes = _mes;
+  if (msg.startsWith("/")) {
+    const args = msg.slice(1).split(" ");
+    const cmd = args.shift();
+    if(from._debug_command_detection) {from.emit("chat message", `Command detected! ${cmd}:${args}`);}
+    switch(cmd) {
+      case "funpie":
+        mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`); return true;
+      case "iam":
+        apply_name(from, args[0]); return true;
+      case "attendance":
+        r.attendance.forEach((item) => {
+          mes(from, "cmdresp", `Here: ${r.io.sockets[item].id}`);            
+        }); return true;
+      case "tellraw":
+        mes(from, "none", args.join(" ")); return true;
+      case "_debug_command_detection_enable":
+        from._debug_command_detection = true; return true;
+      case "youare":
+        let torename = r.rnames[args[1]];
+        if (torename) {
+          apply_name(torename, args[0]);
+        } else {
+          mes(from, "cmdresp", `Could not rename nonexistent ${args[1]}.`);
+        } return true;
+      case "release":
+        r.rnames[args[0]] = 0; return true;
+      case "w":
+        let toname = args.shift();
+        let to = r.rnames[toname];
+        let msg = args.join(" ");
+        if (to) {
+          mes(to, "msg", `(-> you) <${r.names[from.id]}> ${msg}`);
+          mes(from, "msg", `(-> ${toname}) <${r.names[from.id]}> ${msg}`);
+        } else {
+          mes(from, "cmdresp", `Cannot message a nonexistent user.`);
+        } return true;
+      case "ping":
+        let toping = r.rnames[args[0]];
+        if (toping == undefined && args[0]) {mes(from, "cmdresp", "Your ping did not hit anything."); return true;}
+        mes(from, "cmdresp", `You ring a bell in${toping ? (r.names[toping]+"'s ear") : "to an amplifier"}.`);
+        (toping ? toping : r.io).emit("ping", !!toping, r.names[from.id]); return true;
+      case "kick":
+        let tokick = r.rnames[args[0]];
+        if (tokick) {
+          mes(tokick, "alert", `You were kicked from NoMoreNotes by ${r.names[from.id]}.`);
+          mes(from, "cmdresp", `Kicked ${r.names[tokick.id]}`);
+          tokick.disconnect(true);
+        } else {
+          mes(from, "cmdresp", `Could not kick ${args[0]}.`);
+        } return true;
+      default:
+        mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`); return catchBadCommand;
+    }
+    return catchBadCommand;
+  }
+  return false;
 };
