@@ -2,7 +2,8 @@ $(function () {
   var manotify = false;
   var notify = false;
   var socket = io();
-  /*socket.sockets.on("connection", ()=>{*/socket.emit("authenticate", localStorage.session ? localStorage.session : (localStorage.session = socket.id));
+  socket.on("hello", ()=>{
+    socket.emit("authenticate", localStorage.session ? localStorage.session : (localStorage.session = socket.id));
   $('#send').submit(function(){
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
@@ -16,6 +17,9 @@ $(function () {
     }
     window.scrollTo(0, document.body.scrollHeight);
   });
-  socket.on("ping", (wasTargeted, source) => alert(`${source} has pinged ${wasTargeted ? "you" : "everyone"}!`));
+  socket.on("ping", (wasTargeted, source) => {
+    alert(`${source} has pinged ${wasTargeted ? "you" : "everyone"}!`));
+    
+  };
   $.on("blur", ()=>{alert("blur");});
 });
