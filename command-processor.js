@@ -54,11 +54,34 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         } else {
           mes(from, "cmdresp", `Cannot message a nonexistent user.`);
         } return true;
+      case "linkout":
+        let tolink = args.shift();
+        let to = r.rnames[tolink];
+        let link = args.join(" ");
+        if (to) {
+          to.emit("linkout", link);
+          mes(from, "cmdresp", `Ok, ${tolink} is on ${link} now.`);
+        } else {
+          mes(from, "cmdresp", `I don't know who ${tolink} is.`);
+        } return true;
+        
       case "ping":
         let toping = r.rnames[args[0]];
         if (toping == undefined && args[0]) {mes(from, "cmdresp", "Your ping did not hit anything."); return true;}
         mes(from, "cmdresp", `You ring a bell in${toping ? (r.names[toping]+"'s ear") : "to an amplifier"}.`);
         (toping ? toping : r.io).emit("ping", !!toping, r.names[from.id]); return true;
+      case "ping":
+        let toload = r.rnames[args[0]];
+        if (toload == undefined && args[0]) {mes(from, "cmdresp", "Nothing loads."); return true;}
+        if (args[0]) {
+          mes(from, "cmdresp", `${args[0]} has loaded again!`);
+          toload.emit("reload");
+          return true;
+        } else {
+          mes(from, "cmdresp", `Look at the chaos. Everyone reloading.`);
+          from.broadcast.emit("reload");
+          return true;
+        }
       case "kick":
         let tokick = r.rnames[args[0]];
         if (tokick) {
