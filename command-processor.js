@@ -58,8 +58,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let tolink = args.shift();
         let tol = r.rnames[tolink];
         let link = args.join(" ");
-        if (to) {
-          to.emit("linkout", link);
+        if (tol) {
+          tol.emit("linkout", link);
           mes(from, "cmdresp", `Ok, ${tolink} is on ${link} now.`);
         } else {
           mes(from, "cmdresp", `I don't know who ${tolink} is.`);
