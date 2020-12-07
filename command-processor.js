@@ -70,7 +70,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (toping == undefined && args[0]) {mes(from, "cmdresp", "Your ping did not hit anything."); return true;}
         mes(from, "cmdresp", `You ring a bell in${toping ? (r.names[toping]+"'s ear") : "to an amplifier"}.`);
         (toping ? toping : r.io).emit("ping", !!toping, r.names[from.id]); return true;
-      case "ping":
+      case "reload":
         let toload = r.rnames[args[0]];
         if (toload == undefined && args[0]) {mes(from, "cmdresp", "Nothing loads."); return true;}
         if (args[0]) {
