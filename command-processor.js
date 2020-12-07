@@ -56,7 +56,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         } return true;
       case "linkout":
         let tolink = args.shift();
-        let to = r.rnames[tolink];
+        let tol = r.rnames[tolink];
         let link = args.join(" ");
         if (to) {
           to.emit("linkout", link);
