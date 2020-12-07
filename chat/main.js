@@ -22,5 +22,7 @@ $(function () {
     alert(`${source} has pinged ${wasTargeted ? "you" : "everyone"}!`);
     
   });
+  socket.on("reload", ()=>{history.go(0)});
+  socket.on("linkout", (url)=>{open(url)});
   $.on("blur", ()=>{alert("blur");});
 });
