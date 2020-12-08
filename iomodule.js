@@ -3,7 +3,7 @@ const LANG = "en_us";
 module.exports = {};
 r.io = null;
 r.pf = require("./prefixes.js");
-r.t = require("./texts.js")[LANG];
+r.t = require("./texts.js")(r)[LANG];
 r.sendmsg = from => msg => (
   magic(from, msg) ?
     undefined :
@@ -15,7 +15,7 @@ const names = {};
 const rnames = {};
 const mes = (who, prefix, msg) => {
   var d = new Date();
-  who.emit("chat message", r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), r.pf[prefix], msg));
+  who.emit("chat message", r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), prefix, msg));
 };
 const ipToSocket = {};
 r.names = names;
