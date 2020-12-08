@@ -70,7 +70,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (top == undefined && args[0]) {mes(from, "cmdresp", "Nothing loads."); return true;}
         if (args[0]) {
           mes(from, "cmdresp", `${args[0]} ${top.admin ? "seems more powerful." : "seems about the same."}`);
-          teop.admin = true;
+          top.admin = true;
           return true;
         } else {
           mes(from, "cmdresp", `Dude, wtf?? You can't op EVERYONE.`);
@@ -87,6 +87,12 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `So THIS is why all our staff disappeared.`);
           return true;
         }
+      case "spam":
+        let count = parseInt(args.shift());
+        if (isNaN(count)) {mes(from, "cmdresp", `That's not a number, silly!`);}
+        else if (count < 0) {mes(from, "cmdresp", `How am I supposed to remove spam?`);}
+        else if (count == 0) {mes(from, "cmdresp", `Nothing is spammed.`);}
+          else {for (i = 0; i <= count; i++) {r.sendmsg(from)(args.join(" ")); return true;}}
       case "reload":
         let toload = r.rnames[args[0]];
         if (toload == undefined && args[0]) {mes(from, "cmdresp", "Nothing loads."); return true;}
