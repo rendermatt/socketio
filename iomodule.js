@@ -5,11 +5,11 @@ r.io = null;
 r.pf = require("./prefixes.js");
 r.t = require("./texts.js")[LANG];
 r.sendmsg = from => msg => (
-  magic(socket, msg) ?
+  magic(from, msg) ?
     undefined :
     format_msg(msg)
      .map((m) => {
-      mes(io, "msg", r.t.chat(names[socket.id], m));
+      mes(io, "msg", r.t.chat(names[from.id], m));
 }));
 const names = {};
 const rnames = {};
