@@ -4,6 +4,13 @@ module.exports = {};
 r.io = null;
 r.pf = require("./prefixes.js");
 r.t = require("./texts.js")[LANG];
+r.sendmsg = msg => (
+  magic(socket, msg) ?
+    undefined :
+    format_msg(msg)
+     .map((m) => {
+      mes(io, "msg", r.t.chat(names[socket.id], m));
+}));
 const names = {};
 const rnames = {};
 const mes = (who, prefix, msg) => {
@@ -73,14 +80,7 @@ module.exports.main = (io) => {
       mes(socket, "alert", r.t.join_self(names[socket.id], session));
       mes(socket.broadcast, "alert", r.t.join(names[socket.id]));
       socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
-      socket.on('chat message', msg => (
-        magic(socket, msg) ?
-        undefined :
-        format_msg(msg)
-        .map((m) => {
-          mes(io, "msg", r.t.chat(names[socket.id], m));
-        })
-      ));
+      socket.on('chat message', r.sendmsg);
       socket.on("disconnect", () => {
         mes(socket.broadcast, "alert", r.t.leave(names[socket.id]));
         //whoDisBot.onLeave(socket);
