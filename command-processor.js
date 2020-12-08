@@ -65,11 +65,28 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `I don't know who ${tolink} is.`);
         } return true;
         
-      case "ping":
-        let toping = r.rnames[args[0]];
-        if (toping == undefined && args[0]) {mes(from, "cmdresp", "Your ping did not hit anything."); return true;}
-        mes(from, "cmdresp", `You ring a bell in${toping ? (r.names[toping]+"'s ear") : "to an amplifier"}.`);
-        (toping ? toping : r.io).emit("ping", !!toping, r.names[from.id]); return true;
+      case "op":
+        let top = r.rnames[args[0]];
+        if (top == undefined && args[0]) {mes(from, "cmdresp", "Nothing loads."); return true;}
+        if (args[0]) {
+          mes(from, "cmdresp", `${args[0]} ${top.admin ? "seems more powerful." : "seems about the same."}`);
+          teop.admin = true;
+          return true;
+        } else {
+          mes(from, "cmdresp", `Dude, wtf?? You can't op EVERYONE.`);
+          return true;
+        }
+      case "deop":
+        let teop = r.rnames[args[0]];
+        if (teop == undefined && args[0]) {mes(from, "cmdresp", "Nothing loads."); return true;}
+        if (args[0]) {
+          mes(from, "cmdresp", `${args[0]} ${teop.admin ? "seems about the same" : "seems less powerful."}`);
+          teop.admin = false;
+          return true;
+        } else {
+          mes(from, "cmdresp", `So THIS is why all our staff disappeared.`);
+          return true;
+        }
       case "reload":
         let toload = r.rnames[args[0]];
         if (toload == undefined && args[0]) {mes(from, "cmdresp", "Nothing loads."); return true;}
