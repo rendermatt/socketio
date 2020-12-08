@@ -9,7 +9,7 @@ r.sendmsg = from => msg => (
     undefined :
     format_msg(msg)
      .map((m) => {
-      mes(io, "msg", r.t.chat(names[from.id], m));
+      mes(r.io, "msg", r.t.chat(names[from.id], m));
 }));
 const names = {};
 const rnames = {};
