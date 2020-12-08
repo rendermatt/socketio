@@ -4,7 +4,7 @@ module.exports = {};
 r.io = null;
 r.pf = require("./prefixes.js");
 r.t = require("./texts.js")[LANG];
-r.sendmsg = msg => (
+r.sendmsg = from => msg => (
   magic(socket, msg) ?
     undefined :
     format_msg(msg)
@@ -80,7 +80,7 @@ module.exports.main = (io) => {
       mes(socket, "alert", r.t.join_self(names[socket.id], session));
       mes(socket.broadcast, "alert", r.t.join(names[socket.id]));
       socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
-      socket.on('chat message', r.sendmsg);
+      socket.on('chat message', r.sendmsg(socket));
       socket.on("disconnect", () => {
         mes(socket.broadcast, "alert", r.t.leave(names[socket.id]));
         //whoDisBot.onLeave(socket);
