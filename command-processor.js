@@ -32,7 +32,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `Here: ${r.io.sockets[item].id}`);            
         }); return true;
       case "tellraw":
-        mes(from, "none", args.join(" ")); return true;
+        mes(from, args.shift(), args.join(" ")); return true;
       case "_debug_command_detection_enable":
         from._debug_command_detection = true; return true;
       case "youare":
