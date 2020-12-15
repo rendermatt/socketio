@@ -92,7 +92,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (isNaN(count)) {mes(from, "cmdresp", `That's not a number, silly!`);}
         else if (count < 0) {mes(from, "cmdresp", `How am I supposed to remove spam?`);}
         else if (count == 0) {mes(from, "cmdresp", `Nothing is spammed.`);}
-        else {for (i = 0; i <= count; i++) {r.sendmsg(from)(args.join(" "));}}
+        else {for (i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}
         return true;
       case "reload":
         let toload = r.rnames[args[0]];
