@@ -48,7 +48,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         r.io.emit("delete", `${from.id}${args[1]}`); return true;
       case "edit":
         var d = new Date();
-        r.io.emit("edit", `${from.id}${args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), args.join(" "), r.senderid[from.id]++)); return true;
+        r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), args.join(" "), edid)); return true;
       case "w":
         let toname = args.shift();
         let to = r.rnames[toname];
