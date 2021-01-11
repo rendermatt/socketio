@@ -11,7 +11,7 @@ r.sendmsg = from => msg => (
     undefined :
     format_msg(msg)
      .map((m) => {
-      mes(r.io, "msg", r.t.chat(names[from.id], m));
+      mes(r.io, "msg", r.t.chat(names[from.id], m), from);
 }));
 const names = {};
 const rnames = {};
