@@ -59,6 +59,15 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         } else {
           mes(from, "cmdresp", `Cannot message a nonexistent user.`, from);
         } return true;
+      case "getid":
+        let toid = args[1];
+        let sock = r.rnames[toid];
+        if (sock) {
+          mes(from, "cmdresp", `"${toid}" has the ID $${sock.id}`, r.SYS_ID);
+        } else {
+          mes(from, "cmdresp", `"${toid}" has no ID`, r.SYS_ID);
+        }
+        return true;
       case "linkout":
         let tolink = args.shift();
         let tol = r.rnames[tolink];
