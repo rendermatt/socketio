@@ -1,5 +1,7 @@
 const r = {};
 const LANG = "en_us";
+const SYS_ID="system";
+const senderid = {SYS_ID: 0};
 module.exports = {};
 r.io = null;
 r.pf = require("./prefixes.js");
@@ -13,13 +15,14 @@ r.sendmsg = from => msg => (
 }));
 const names = {};
 const rnames = {};
-const mes = (who, prefix, msg) => {
+const mes = (who, prefix, msg, sender) => {
   var d = new Date();
-  who.emit("chat message", r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), prefix, msg));
+  who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
 };
 const ipToSocket = {};
 r.names = names;
 r.rnames = rnames;
+r.senderid = senderid;
 module.exports.r = r;
 const magic = module.exports.magic = (sender, msg) => {
   if (r.cmdmod(msg, sender, sender)) {
@@ -36,12 +39,12 @@ const magic = module.exports.magic = (sender, msg) => {
       //  apply_name(sender, "Poképat12"); return true;
     case "/imnot":
       names[sender.id] = sender.id.slice(0, 8);
-      mes(sender, "cmdresp", `You are now annonymous.`);
+      mes(sender, "cmdresp", `You are now annonymous.`, SYS_ID);
       return true;
     case "":
       return true;
     case "/moo":
-      mes(sender, "cmdresp", `There are no easter eggs in this program.`);
+      mes(sender, "cmdresp", `There are no easter eggs in this program.`, SYS_ID);
       return true;
       //case "/_debug_dump_naming":
       //  mes(sender, "cmdresp", `names: ${JSON.stringify(names)}\nrnames: ${JSON.stringify(rnames)}`);
@@ -77,14 +80,16 @@ module.exports.main = (io) => {
       socket.id = /*session ? session :*/ socket.id;
       names[socket.id] = socket.id.slice(0, 8);
       rnames[names[socket.id]] = socket;
-      mes(socket, "alert", r.t.join_self(names[socket.id], session));
-      mes(socket.broadcast, "alert", r.t.join(names[socket.id]));
+      mes(socket, "alert", r.t.join_self(names[socket.id], session), SYS_ID);
+      mes(socket.broadcast, "alert", r.t.join(names[socket.id]), SYS_ID);
       socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
       socket.on('chat message', r.sendmsg(socket));
+      senderid[socket.id] = 0;
       socket.on("disconnect", () => {
-        mes(socket.broadcast, "alert", r.t.leave(names[socket.id]));
+        mes(socket.broadcast, "alert", r.t.leave(names[socket.id]), SYS_ID);
         //whoDisBot.onLeave(socket);
         delete rnames[names[socket.id]];
+        delete senderid[socket.id];
         names[socket.id] = undefined;
       });
     });
