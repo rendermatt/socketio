@@ -10,8 +10,8 @@ $(function () {
     $('#m').val('');
     return false;
   });
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
+  socket.on('chat message', function(id, msg){
+    $('#messages').append($('<li>', {id}).text(msg));
     if (notify) {
       notify = manotify;
       alert(msg);
@@ -21,6 +21,12 @@ $(function () {
   socket.on("ping", (wasTargeted, source) => {
     alert(`${source} has pinged ${wasTargeted ? "you" : "everyone"}!`);
     
+  });
+  socket.on("edit", (id, msg) => {
+    $(`#${id}`).text(msg);
+  });
+  socket.on("delete", (id, msg) => {
+    $(`#${id}`).remove();
   });
   socket.on("reload", ()=>{history.go(0)});
   socket.on("linkout", (url)=>{open(url)});
