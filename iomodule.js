@@ -2,6 +2,7 @@ const r = {};
 const LANG = "en_us";
 const SYS_ID={id:"system"};
 const senderid = {[SYS_ID.id]: 0};
+r.SYS_ID = SYS_ID;
 module.exports = {};
 r.io = null;
 r.pf = require("./prefixes.js");
