@@ -51,7 +51,5 @@ $(function () {
     };
     reader.readAsDataURL(blob);
   }
-}
-}
-
+};
 });
