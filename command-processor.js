@@ -43,13 +43,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         } return true;
       case "release":
         r.rnames[args[0]] = 0; return true;
-      case "delete":
-        r.io.emit("delete", `${from.id}${args[0]}`); return true;
+      
       case "_rawdelete":
         r.io.emit("delete", `${args[0]}`); return true;
-      case "edit":
-        d = new Date();
-        r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
+      
       case "_rawedit":
         d = new Date();
         r.io.emit("edit", `${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
@@ -145,6 +142,11 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         return true;
       case "_opme":
         return from.op = true; //no, i wanted to return the assignment
+      case "delete":
+        r.io.emit("delete", `${from.id}${args[0]}`); return true;
+      case "edit":
+        d = new Date();
+        r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
       default:
         mes(from, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
