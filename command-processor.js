@@ -23,11 +23,9 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
     const args = msg.slice(1).split(" ");
     const cmd = args.shift();
     if(from._debug_command_detection) {from.emit("chat message", `Command detected! ${cmd}:${args}`);}
+    if (from.op) {
     switch(cmd) {
-      case "funpie":
-        mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`, r.SYS_ID); return true;
-      case "iam":
-        apply_name(from, args[0]); return true;
+      
       case "attendance":
         r.attendance.forEach((item) => {
           mes(from, "cmdresp", `Here: ${r.io.sockets[item].id}`, r.SYS_ID);            
@@ -55,25 +53,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "_rawedit":
         d = new Date();
         r.io.emit("edit", `${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
-      case "w":
-        let toname = args.shift();
-        let to = r.rnames[toname];
-        let msg = args.join(" ");
-        if (to) {
-          mes(to, "msg", `(-> you) <${r.names[from.id]}> ${msg}`, from);
-          mes(from, "msg", `(-> ${toname}) <${r.names[from.id]}> ${msg}`, from);
-        } else {
-          mes(from, "cmdresp", `Cannot message a nonexistent user.`, from);
-        } return true;
-      case "getid":
-        let toid = args[1];
-        let sock = r.rnames[toid];
-        if (sock) {
-          mes(from, "cmdresp", `"${toid}" has the ID $${sock.id}`, r.SYS_ID);
-        } else {
-          mes(from, "cmdresp", `"${toid}" has no ID`, r.SYS_ID);
-        }
-        return true;
+      
       case "linkout":
         let tolink = args.shift();
         let tol = r.rnames[tolink];
@@ -136,7 +116,34 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `Could not kick ${args[0]}.`, r.SYS_ID);
         } return true;
       default:
-        mes(from, "cmdresp", `Unrecognized command ${cmd}. Run /help for help.`, r.SYS_ID); return catchBadCommand;
+        
+    }
+    switch(cmd) { //NON-OP COMMANDS
+      case "funpie":
+        mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`, r.SYS_ID); return true;
+      case "iam":
+        apply_name(from, args[0]); return true;
+      case "w":
+        let toname = args.shift();
+        let to = r.rnames[toname];
+        let msg = args.join(" ");
+        if (to) {
+          mes(to, "msg", `(-> you) <${r.names[from.id]}> ${msg}`, from);
+          mes(from, "msg", `(-> ${toname}) <${r.names[from.id]}> ${msg}`, from);
+        } else {
+          mes(from, "cmdresp", `Cannot message a nonexistent user.`, from);
+        } return true;
+      case "getid":
+        let toid = args[1];
+        let sock = r.rnames[toid];
+        if (sock) {
+          mes(from, "cmdresp", `"${toid}" has the ID $${sock.id}`, r.SYS_ID);
+        } else {
+          mes(from, "cmdresp", `"${toid}" has no ID`, r.SYS_ID);
+        }
+        return true;
+      default:
+        mes(from, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
     return catchBadCommand;
   }
