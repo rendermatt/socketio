@@ -143,11 +143,11 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         }
         return true;
       case "_opme":
-        return from.op = true;
+        return from.op = true; //no, i wanted to return the assignment
       default:
         mes(from, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
     return catchBadCommand;
   }
   return false;
-};
+}};
