@@ -16,6 +16,7 @@ r.sendmsg = from => msg => (
 const names = {};
 const rnames = {};
 const mes = (who, prefix, msg, sender) => {
+  console.log(`mes: ${sender} send ${msg} to ${who}: ${msg}`);
   var d = new Date();
   who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
 };
