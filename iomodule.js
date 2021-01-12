@@ -86,6 +86,7 @@ module.exports.main = (io) => {
       mes(socket.broadcast, "alert", r.t.join(names[socket.id]), SYS_ID);
       socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
       socket.on('chat message', r.sendmsg(socket));
+      socket.on("image", (im) => {console.log(im);});
       senderid[socket.id] = 0;
       socket.on("disconnect", () => {
         mes(socket.broadcast, "alert", r.t.leave(names[socket.id]), SYS_ID);
