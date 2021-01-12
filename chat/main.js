@@ -32,6 +32,7 @@ $(function () {
   socket.on("linkout", (url)=>{open(url);});
   $.on("blur", ()=>{alert("blur");});
   $("#m").on("paste",  (event) => {
+    alert("pasted");
     var items = (event.clipboardData || event.originalEvent.clipboardData).items;
     alert(JSON.stringify(items)); // will give you the mime types
     for (index in items) {
