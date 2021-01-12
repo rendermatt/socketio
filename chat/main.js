@@ -28,7 +28,7 @@ $(function () {
   socket.on("delete", (id, msg) => {
     $(`#${id}`).remove();
   });
-  socket.on("reload", ()=>{history.go(0)});
-  socket.on("linkout", (url)=>{open(url)});
+  socket.on("reload", ()=>{history.go(0);});
+  socket.on("linkout", (url)=>{open(url);});
   $.on("blur", ()=>{alert("blur");});
 });
