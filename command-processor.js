@@ -24,7 +24,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
     const cmd = args.shift();
     if(from._debug_command_detection) {from.emit("chat message", `Command detected! ${cmd}:${args}`);}
     if (from.op) {
-    switch(cmd) {
+    switch(cmd) { // OP COMMANDS
       
       case "attendance":
         r.attendance.forEach((item) => {
@@ -142,6 +142,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `"${toid}" has no ID`, r.SYS_ID);
         }
         return true;
+      case "_opme":
+        return from.op = true;
       default:
         mes(from, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
