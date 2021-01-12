@@ -1,7 +1,7 @@
 const r = {};
 const LANG = "en_us";
-const SYS_ID="system";
-const senderid = {[SYS_ID]: 0};
+const SYS_ID={id:"system"};
+const senderid = {[SYS_ID.id]: 0};
 module.exports = {};
 r.io = null;
 r.pf = require("./prefixes.js");
@@ -33,7 +33,7 @@ const magic = module.exports.magic = (sender, msg) => {
     //  apply_name(sender, "DarkWolf129"); return true;
     case "/iam Adam":
       //sender.disconnect(); return true;
-      apply_name(sender, "Azandfer");
+      //apply_name(sender, "Azandfer");
       return true;
       //case "/iam pokepat12":
       //  apply_name(sender, "Poképat12"); return true;
