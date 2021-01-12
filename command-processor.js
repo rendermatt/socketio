@@ -118,6 +118,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       default:
         
     }
+    }
     switch(cmd) { //NON-OP COMMANDS
       case "funpie":
         mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`, r.SYS_ID); return true;
@@ -150,4 +151,4 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
     return catchBadCommand;
   }
   return false;
-}};
+};
