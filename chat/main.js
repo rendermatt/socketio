@@ -26,10 +26,24 @@ $(function () {
     $(`#${id}`).text(msg);
   });
   socket.on("delete", (id) => {
-    alert(`delete ${id}`);
     document.getElementById(id).removeElement();
   });
   socket.on("reload", ()=>{history.go(0);});
   socket.on("linkout", (url)=>{open(url);});
   $.on("blur", ()=>{alert("blur");});
+  document.onpaste = function(event){
+    var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    alert(JSON.stringify(items)); // will give you the mime types
+    for (index in items) {
+      var item = items[index];
+      if (item.kind === 'file') {
+        var blob = item.getAsFile();
+        var reader = new FileReader();
+        reader.onload = function(event){
+        socket.emit("image", event.target.result)}; // data url!
+        reader.readAsDataURL(blob);
+    }
+  }
+}
+
 });
