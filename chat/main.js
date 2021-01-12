@@ -34,7 +34,7 @@ $(function () {
   document.getElementById('m').onpaste = function (event) {
   // use event.originalEvent.clipboard for newer chrome versions
   var items = (event.clipboardData  || event.originalEvent.clipboardData).items;
-  console.log(JSON.stringify(items)); // will give you the mime types
+  alert(JSON.stringify(items)); // will give you the mime types
   // find pasted image among pasted items
   var blob = null;
   for (var i = 0; i < items.length; i++) {
@@ -46,7 +46,7 @@ $(function () {
   if (blob !== null) {
     var reader = new FileReader();
     reader.onload = function(event) {
-      console.log(event.target.result); // data url!
+      alert(event.target.result); // data url!
       document.getElementById("pastedImage").src = event.target.result;
     };
     reader.readAsDataURL(blob);
