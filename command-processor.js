@@ -17,6 +17,7 @@ const apply_name = module.exports.apply_name = (who, name) => {
   }
 };
 const main = module.exports = (_mes) => (msg, from, sudo) => {
+  var edid, d; // because warnings
   mes = _mes;
   if (msg.startsWith("/")) {
     const args = msg.slice(1).split(" ");
@@ -47,10 +48,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "delete":
         r.io.emit("delete", `${from.id}${args[1]}`); return true;
       case "edit":
-        var d = new Date();
+        d = new Date();
         r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
       case "_rawedit":
-        var d = new Date();
+        d = new Date();
         r.io.emit("edit", `${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
       case "w":
         let toname = args.shift();
@@ -95,7 +96,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         }
       case "deop":
         let teop = r.rnames[args[0]];
-        if (teop == undefined && args[0]) {mes(from, "cmdresp", "Nothing happens."); return true;}
+        if (teop == undefined && args[0]) {mes(from, "cmdresp", "Nothing happens.", r.SYS_ID); return true;}
         if (args[0]) {
           mes(from, "cmdresp", `${args[0]} ${teop.admin ? "seems about the same" : "seems less powerful."}`, r.SYS_ID);
           teop.admin = false;
@@ -109,7 +110,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (isNaN(count)) {mes(from, "cmdresp", `That's not a number, silly!`, r.SYS_ID);}
         else if (count < 0) {mes(from, "cmdresp", `How am I supposed to remove spam?`, r.SYS_ID);}
         else if (count == 0) {mes(from, "cmdresp", `Nothing is spammed.`, r.SYS_ID);}
-        else {for (i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}
+        else {for (var i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}
         return true;
       case "reload":
         let toload = r.rnames[args[0]];
