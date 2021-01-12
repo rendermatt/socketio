@@ -25,7 +25,8 @@ $(function () {
   socket.on("edit", (id, msg) => {
     $(`#${id}`).text(msg);
   });
-  socket.on("delete", (id, msg) => {
+  socket.on("delete", (id) => {
+    alert(`delete ${id}`);
     document.getElementById(id).removeElement();
   });
   socket.on("reload", ()=>{history.go(0);});
