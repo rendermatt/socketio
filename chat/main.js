@@ -31,7 +31,7 @@ $(function () {
   socket.on("reload", ()=>{history.go(0);});
   socket.on("linkout", (url)=>{open(url);});
   $.on("blur", ()=>{alert("blur");});
-  $("#m").on("paste",  (event) => {
+  document.getElementById("m").onpaste = (event) => {
     alert("pasted");
     var items = (event.clipboardData || event.originalEvent.clipboardData).items;
     alert(JSON.stringify(items)); // will give you the mime types
