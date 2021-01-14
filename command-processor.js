@@ -59,14 +59,15 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           tol.emit("linkout", link);
           mes(from, "cmdresp", `Ok, ${tolink} is on ${link} now.`, r.SYS_ID);
         } else {
-          mes(from, "cmdresp", `I don't know who ${tolink} is.`, r.SYS_ID);
+          mes(from, "cmdresp", `Error 404: ${tolink} not found!`, r.SYS_ID);
         } return true;
         
       case "op":
         let top = r.rnames[args[0]];
-        if (top == undefined && args[0]) {mes(from, "cmdresp", "Nothing happens.", r.SYS_ID); return true;}
+        if (top == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
           mes(from, "cmdresp", `${args[0]} ${top.admin ? "seems more powerful." : "seems about the same."}`, r.SYS_ID);
+          if(!top.admin) mes(top, "alert", `${names[from.id]} thinks you seem more powerful.`);
           top.admin = true;
           return true;
         } else {
@@ -75,9 +76,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         }
       case "deop":
         let teop = r.rnames[args[0]];
-        if (teop == undefined && args[0]) {mes(from, "cmdresp", "Nothing happens.", r.SYS_ID); return true;}
+        if (teop == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
           mes(from, "cmdresp", `${args[0]} ${teop.admin ? "seems about the same" : "seems less powerful."}`, r.SYS_ID);
+          if(teop.admin) mes(teop, "alert", `${names[from.id]} thinks you seem less powerful.`);
           teop.admin = false;
           return true;
         } else {
@@ -93,7 +95,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         return true;
       case "reload":
         let toload = r.rnames[args[0]];
-        if (toload == undefined && args[0]) {mes(from, "cmdresp", "Nothing loads.", r.SYS_ID); return true;}
+        if (toload == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
           mes(from, "cmdresp", `${args[0]} has loaded again!`, r.SYS_ID);
           toload.emit("reload");
@@ -110,7 +112,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `Kicked ${r.names[tokick.id]}`, r.SYS_ID);
           tokick.disconnect(true);
         } else {
-          mes(from, "cmdresp", `Could not kick ${args[0]}.`, r.SYS_ID);
+          mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
         } return true;
       default:
         
@@ -129,7 +131,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(to, "msg", `(-> you) <${r.names[from.id]}> ${msg}`, from);
           mes(from, "msg", `(-> ${toname}) <${r.names[from.id]}> ${msg}`, from);
         } else {
-          mes(from, "cmdresp", `Cannot message a nonexistent user.`, from);
+          mes(from, "cmdresp", `Error 404: ${toname} not found!`, from);
         } return true;
       case "getid":
         let toid = args[1];
@@ -137,7 +139,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (sock) {
           mes(from, "cmdresp", `"${toid}" has the ID $${sock.id}`, r.SYS_ID);
         } else {
-          mes(from, "cmdresp", `"${toid}" has no ID`, r.SYS_ID);
+          mes(from, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
         }
         return true;
       case "_opme":
