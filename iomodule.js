@@ -2,6 +2,8 @@ const r = {};
 const LANG = "en_us";
 const SYS_ID={id:"system"};
 const senderid = {[SYS_ID.id]: 0};
+const USERDICT = {"username": "cGFzc3dvcmQ"}
+r.USERDICT = USERDICT;
 r.SYS_ID = SYS_ID;
 module.exports = {};
 r.io = null;
@@ -19,7 +21,7 @@ const rnames = {};
 const mes = (who, prefix, msg, sender) => {
   console.log(`mes: ${typeof sender} send ${prefix} to ${typeof who}: ${msg}`);
   var d = new Date();
-  who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
+  who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 7 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
 };
 const ipToSocket = {};
 r.names = names;
@@ -76,10 +78,12 @@ module.exports.main = (io) => {
     next();
   });*/
   io.on("connection", (socket) => {
-    socket.on('hello', (session) => {
+    socket.on('hello', (session, uname, passw) => {
+      if (!USERDICT[uname]) {socket.emit("loginbad", `Unknown user ${uname}`);};
       if (!session) socket.emit("authenticate", session = socket.id);
       socket._id = socket.id;
       socket.id = /*session ? session :*/ socket.id;
+      socket.join("main");
       names[socket.id] = socket.id.slice(0, 8);
       rnames[names[socket.id]] = socket;
       mes(socket, "alert", r.t.join_self(names[socket.id], session), SYS_ID);
