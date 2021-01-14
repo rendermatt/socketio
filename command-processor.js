@@ -67,7 +67,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (top == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
           mes(from, "cmdresp", `${args[0]} ${top.admin ? "seems more powerful." : "seems about the same."}`, r.SYS_ID);
-          if(!top.admin) mes(top, "alert", `${names[from.id]} thinks you seem more powerful.`);
+          if(!top.admin) mes(top, "alert", `${r.names[from.id]} thinks you seem more powerful.`);
           top.admin = true;
           return true;
         } else {
@@ -79,7 +79,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (teop == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
           mes(from, "cmdresp", `${args[0]} ${teop.admin ? "seems about the same" : "seems less powerful."}`, r.SYS_ID);
-          if(teop.admin) mes(teop, "alert", `${names[from.id]} thinks you seem less powerful.`);
+          if(teop.admin) mes(teop, "alert", `${r.names[from.id]} thinks you seem less powerful.`);
           teop.admin = false;
           return true;
         } else {
