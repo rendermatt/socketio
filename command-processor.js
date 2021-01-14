@@ -66,7 +66,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let top = r.rnames[args[0]];
         if (top == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
-          mes(from, "cmdresp", `${args[0]} ${top.admin ? "seems more powerful." : "seems about the same."}`, r.SYS_ID);
+          mes(from, "cmdresp", `${args[0]} ${!top.admin ? "seems more powerful." : "seems about the same."}`, r.SYS_ID);
           if(!top.admin) mes(top, "alert", `${r.names[from.id]} thinks you seem more powerful.`, r.SYS_ID);
           top.admin = true;
           return true;
