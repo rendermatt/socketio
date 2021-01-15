@@ -71,7 +71,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/</g, "&lt;")
   .replace(/>/g, "&gt;")
   .replace(/%$/g, "<")
-  .replace(/$%/g", ">")
+  .replace(/$%/g, ">")
   .split("<br/>");
 module.exports.main = (io) => {
   r.io = io;
