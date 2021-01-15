@@ -97,7 +97,7 @@ module.exports.main = (io) => {
       socket.on("image", (im) => {console.log(im);});
       senderid[socket.id] = 0;
       socket.on("disconnect", () => {
-        if(socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(names[socket.id]), SYS_ID);
+        if(!socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(names[socket.id]), SYS_ID);
         //whoDisBot.onLeave(socket);
         delete rnames[names[socket.id]];
         delete senderid[socket.id];
