@@ -2,6 +2,7 @@ module.exports = (r) => ({
   "en_us": {
     "join": a=>`&lt;${a}&gt; has joined.`,
     "leave": a=>`&lt;${a}&gt; has left. T`,
+    "kick": a=>`&lt;${a}&gt; was hit by the rubber boot!`,
     "join_self": (a,b)=>`Welcome to the ${process.env.SERVER_NAME || "local"} server, ${a} (${b})`,
     "nick": (a,b)=>`${a} has applied name ${b}.`,
     "nick_self": a=>`Name ${a} applied successfully.`,
