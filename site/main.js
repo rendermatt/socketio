@@ -1,7 +1,7 @@
 $(() => {
   const prev_feed = $("#prev-feed")
   const sock = io();
-  sock.on("chat message", (msg) => {
+  sock.on("chat message", (_, msg) => {
     if (prev_feed.children().size() >= 5) {
       prev_feed.children().first().remove();
     }
