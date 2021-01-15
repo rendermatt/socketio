@@ -109,10 +109,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let tokick = r.rnames[args[0]];
         if (tokick) {
           mes(tokick, "alert", `You were kicked from NoMoreNotes by ${r.names[from.id]}.`, r.SYS_ID);
-          mes(from, "cmdresp", `Kicked ${r.names[tokick.id]}`, r.SYS_ID);
+          var tokm = r.t.kick(r.names[tokick.id])
           tokick.silentLeave = true;
           tokick.disconnect(true);
-          mes(tokick.broadcast, "alert", r.t.kick(r.names[tokick.id]));
+          mes(tokick.broadcast, "alert", tokm);
         } else {
           mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
         } return true;
