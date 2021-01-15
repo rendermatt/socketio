@@ -58,20 +58,20 @@ const magic = module.exports.magic = (sender, msg) => {
   }
 };
 const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") // temp rm \\
-  .replace("\\r\\n", "\n")
-  .replace("\\r", "\\n")
-  .replace("\\n", "<br/>")
-  .replace("\\t", "\t")
-  .replace("\f", "\\\\")
-  .replace(/ass+ /i, "but")
-  .replace(/fuck/i, "truck")
-  .replace(/shit/i, "ship")
-  .replace(/bitch/i, "female dog")
-  .replace(/shut up/i, "shut down")
-  .replace("<", "&lt;")
-  .replace(">", "&gt;")
-  .replace("%$", "<")
-  .replace("$%", ">")
+  .replace(/\\r\\n/g, "\n")
+  .replace(/\\r/g, "\\n")
+  .replace(/\\n/g, "<br/>")
+  .replace(/\\t/g, "\t")
+  .replace(/\f/g, "\\\\")
+  .replace(/ass+ /ig, "but")
+  .replace(/fuck/ig, "truck")
+  .replace(/shit/ig, "ship")
+  .replace(/bitch/ig, "female dog")
+  .replace(/shut up/ig, "shut down")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/%$/g, "<")
+  .replace(/$%/g", ">")
   .split("<br/>");
 module.exports.main = (io) => {
   r.io = io;
