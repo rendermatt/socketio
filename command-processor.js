@@ -66,9 +66,9 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let top = r.rnames[args[0]];
         if (top == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
-          mes(from, "cmdresp", `${args[0]} ${!top.admin ? "seems more powerful." : "seems about the same."}`, r.SYS_ID);
-          if(!top.admin) mes(top, "alert", `${r.names[from.id]} thinks you seem more powerful.`, r.SYS_ID);
-          top.admin = true;
+          mes(from, "cmdresp", `${args[0]} ${!top.op ? "seems more powerful." : "seems about the same."}`, r.SYS_ID);
+          if(!top.op) mes(top, "alert", `${r.names[from.id]} thinks you seem more powerful.`, r.SYS_ID);
+          top.op = true;
           return true;
         } else {
           mes(from, "cmdresp", `Dude, wtf?? You can't op EVERYONE.`, r.SYS_ID);
@@ -78,9 +78,9 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let teop = r.rnames[args[0]];
         if (teop == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
-          mes(from, "cmdresp", `${args[0]} ${teop.admin ? "seems about the same" : "seems less powerful."}`, r.SYS_ID);
-          if(teop.admin) mes(teop, "alert", `${r.names[from.id]} thinks you seem less powerful.`, r.SYS_ID);
-          teop.admin = false;
+          mes(from, "cmdresp", `${args[0]} ${teop.op ? "seems about the same" : "seems less powerful."}`, r.SYS_ID);
+          if(teop.op) mes(teop, "alert", `${r.names[from.id]} thinks you seem less powerful.`, r.SYS_ID);
+          teop.op = false;
           return true;
         } else {
           mes(from, "cmdresp", `So THIS is why all our staff disappeared.`, r.SYS_ID);
