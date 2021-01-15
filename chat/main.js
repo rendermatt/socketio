@@ -11,7 +11,7 @@ $(function () {
     return false;
   });
   socket.on('chat message', function(id, msg){
-    $('#messages').append($('<li>', {id}).text(msg));
+    $('#messages').append($('<li>', {id}).html(msg));
     if (notify) {
       notify = manotify;
       alert(msg);
