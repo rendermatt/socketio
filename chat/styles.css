@@ -12,7 +12,7 @@ body {
 #send {
 	padding: 3px;
 	position: fixed;
-	bottom: 0;
+	bottom: 5%;
 	width: 100%;
 }
 #send input {
