@@ -1,6 +1,6 @@
 * {
-	margin: 0 !important;
-	padding: 0 !important;
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
 	background-color: white;
 }
@@ -10,25 +10,16 @@ body {
 	background-size: 100%;
 }
 #send {
-	padding: 0px;
+	padding: 3px;
 	position: fixed;
-	bottom: 0%;
+	bottom: 0;
 	width: 100%;
-    height: 5%;
-}
-p {
-	padding: 0px;
-	position: fixed;
-	bottom: 0%;
-	width: 100%;
-    height: 2%;
 }
 #send input {
 	border: 0;
 	padding: 10px;
 	width: 90%;
 	margin: 0px;
-    height: 100%;
 	color: inherit;
 	background: inherit;
 }
@@ -47,15 +38,10 @@ p {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-    height: 93%;
-    position: fixed;
-    left: 0px;
-    bottom: 7%;
 }
 #messages li {
-	padding: 0px;
+	padding: 5px 10px;
 	background: rgba(0, 0, 0, 0);
-  	margin: 0px;
 	color: black;
 }
 /*
@@ -63,7 +49,7 @@ p {
 	background: rgba(238, 238, 238, 10);
 }*/
 #messages {
-
+	margin-bottom: 40px 
 }
 
 dialog {
