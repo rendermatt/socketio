@@ -48,7 +48,7 @@ p {
 	margin: 0;
 	padding: 0;
     height: 93%;
-    position: absolute;
+    position: fixed;
     left: 0px;
     bottom: 7%;
 }
