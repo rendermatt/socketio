@@ -116,6 +116,21 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         } else {
           mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
         } return true;
+      case "preban":
+        mes(from, "Banning is irreversible. Are you sure?");
+        from.ban = true;
+      case "ban":
+        if(!from.ban) return;
+        let toban = r.rnames[args[0]];
+        if (toban) {
+          mes(toban, "alert", `You were banned from NoMoreNotes by ${r.names[from.id]}.`, r.SYS_ID);
+          var tobm = r.t.ban(r.names[tokick.id])
+          tokick.silentLeave = true;
+          tokick.disconnect(true);
+          mes(tokick.broadcast, "alert", tobm);
+        } else {
+          mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
+        } from.ban = false; return true;
         
       default:
         
