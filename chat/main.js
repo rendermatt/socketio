@@ -1,4 +1,5 @@
 $(function () {
+  if (localStorage.banned) window.location.path = "/banned"
   var manotify = false;
   var notify = false;
   var socket = io();
@@ -24,6 +25,9 @@ $(function () {
   });
   socket.on("edit", (id, msg) => {
     $(`#${id}`).text(msg);
+  });
+  socket.on("setStorage", (key, value) => {
+    localStorage[key] = value;
   });
   socket.on("delete", (id) => {
     document.getElementById(id).removeElement();
