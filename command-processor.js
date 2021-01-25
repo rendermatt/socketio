@@ -82,7 +82,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let teop = r.rnames[args[0]];
         if (teop == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
-          mes(from, "cmdresp", `${args[0]} ${teop.op ? "seems about the same" : "seems less powerful."}`, r.SYS_ID);
+          if(!top.op)
+            mes(from, "cmdresp", `${args[0]} seems about the same.`);
+          else
+            mes(top.broadcast, "alert", `${r.names[from.id]} thinks ${args[0]} seems less powerful.`);
           if(teop.op) mes(teop, "alert", `${r.names[from.id]} thinks you seem less powerful.`, r.SYS_ID);
           teop.op = false;
           return true;
