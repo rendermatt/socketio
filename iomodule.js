@@ -2,13 +2,14 @@ const r = {};
 const LANG = "en_us";
 const SYS_ID={id:"system"};
 const senderid = {[SYS_ID.id]: 0};
-const USERDICT = {"username": "cGFzc3dvcmQ"}
+const USERDICT = {"username": "cGFzc3dvcmQ"};
 r.USERDICT = USERDICT;
 r.SYS_ID = SYS_ID;
 module.exports = {};
 r.io = null;
 r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
+r.list = [];
 r.sendmsg = from => msg => (
   magic(from, msg) ?
     undefined :
@@ -95,6 +96,7 @@ module.exports.main = (io) => {
       socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
       socket.on('chat message', r.sendmsg(socket));
       socket.on("image", (im) => {console.log(im);});
+      r.list.append(socket);
       senderid[socket.id] = 0;
       socket.on("disconnect", () => {
         if(!socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(names[socket.id]), SYS_ID);
@@ -102,6 +104,7 @@ module.exports.main = (io) => {
         delete rnames[names[socket.id]];
         delete senderid[socket.id];
         names[socket.id] = undefined;
+        r.list.remove(r.list.indexOf(socket));
       });
     });
     setTimeout(()=>socket.emit("hello"), 250);
