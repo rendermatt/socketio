@@ -1,4 +1,4 @@
-function exports.unsurrogate (p2_idx, text) {
+exports.unsurrogate = function (p2_idx, text) {
   var p1_idx = p2_idx;
   for (var i = 0; i < text.length && i < p2_idx; i++) {
     var char_code = text.charCodeAt(i);
@@ -10,7 +10,7 @@ function exports.unsurrogate (p2_idx, text) {
   return p1_idx;
 }
 
-function exports.surrogate (p1_idx, text) {
+exports.surrogate = function (p1_idx, text) {
   var p2_idx = p1_idx;
   for (var i = 0; i < text.length && i < js_idx; i++) {
     var char_code = text.charCodeAt(i);
@@ -22,7 +22,7 @@ function exports.surrogate (p1_idx, text) {
   return p2_idx;
 }
 
-function exports.issurrogate (text) {
+exports.issurrogate = function (text) {
   var p1_idx = text.length();
   return exports.surrogate(p1_index, text) != p1_idx;
 }
