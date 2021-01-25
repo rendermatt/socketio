@@ -96,7 +96,7 @@ module.exports.main = (io) => {
       socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
       socket.on('chat message', r.sendmsg(socket));
       socket.on("image", (im) => {console.log(im);});
-      r.list.append(socket);
+      r.list.push(socket);
       senderid[socket.id] = 0;
       socket.on("disconnect", () => {
         if(!socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(names[socket.id]), SYS_ID);
