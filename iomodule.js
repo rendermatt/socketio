@@ -104,7 +104,7 @@ module.exports.main = (io) => {
         delete rnames[names[socket.id]];
         delete senderid[socket.id];
         names[socket.id] = undefined;
-        r.list.remove(r.list.indexOf(socket));
+        r.list.splice(r.list.indexOf(socket), 1);
       });
     });
     setTimeout(()=>socket.emit("hello"), 250);
