@@ -160,7 +160,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
         }
         return true;
-      case "_opme":
+      case "_nowop":
         return from.op = true; //no, i wanted to return the assignment
       case "delete":
         r.io.emit("delete", `${from.id}${args[0]}`); return true;
