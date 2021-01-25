@@ -163,7 +163,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "iam":
         if (!from.op) {
           if(r.surr.issurrogate(args[0])) {
-            mes(from, "cmdresp", "Emojis are not allowed in names because it messes up the monospace. Please choose something else.");
+            mes(from, "cmdresp", "Emojis are not allowed in names because it messes up the everything. Please choose something else.");
             return true;
           } else if (args[0].length > 16) {
             mes(from, "cmdresp", "The maximum name length is 16 characters.");
