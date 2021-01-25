@@ -181,6 +181,11 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         return from.op = true; //no, i wanted to return the assignment
       case "delete":
         r.io.emit("delete", `${from.id}${args[0]}`); return true;
+      case "list":
+        r.list.forEach(player => {
+          mes(from, "cmdresp", `${r.names[player.id]}: ${r.away[player.id] || "here"}`);
+        });
+        mes(from, "cmdresp", `${r.list.length} here`); return true;
       case "edit":
         d = new Date();
         r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
