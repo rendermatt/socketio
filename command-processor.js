@@ -145,8 +145,9 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           r.away[from.id] = args[0];
           mes(r.io, "alert", `${r.names[from.id]} away: ${args[0]}`);
         } else {
-          if (delete r.away[from.id]) {
-            mes(r.io, "alert", `${r.names[from.id]} back}`);
+          if (r.away[from.id]) {
+            mes(r.io, "alert", `${r.names[from.id]} back: ${r.away[from.id]}`);
+            delete r.away[from.id];
           } else {
             mes(from, "cmdresp", "you were never away");
           }
