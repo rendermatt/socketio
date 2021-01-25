@@ -142,8 +142,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`, r.SYS_ID); return true;
       case "away":
         if (args[0]) {
-          r.away[from.id] = args[0];
-          mes(r.io, "alert", `${r.names[from.id]} away: ${args[0]}`);
+          r.away[from.id] = args.join(" ");
+          mes(r.io, "alert", `${r.names[from.id]} away: ${args.join(" ")}`);
         } else {
           if (r.away[from.id]) {
             mes(r.io, "alert", `${r.names[from.id]} back: ${r.away[from.id]}`);
