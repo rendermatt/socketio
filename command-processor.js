@@ -1,7 +1,8 @@
 const cdict = {};
 let mes = null;
 const catchBadCommand = false;
-const {r} = require("./iomodule.js");
+const {r} = require("./iomodule.js");r.away = {};
+r.away = {};
 const apply_name = module.exports.apply_name = (who, name) => {
   if (r.rnames[name]) {
     mes(who, "cmdresp", `Name ${name} already authenticated.`, r.SYS_ID);
@@ -139,6 +140,18 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
     switch(cmd) { //NON-OP COMMANDS
       case "funpie":
         mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`, r.SYS_ID); return true;
+      case "away":
+        if (args[0]) {
+          r.away[from.id] = args[0];
+          mes(io, "alert", `${r.names[from.id]} away: ${args[0]}`);
+        } else {
+          if (delete r.away[from.id]) {
+            mes(io, "alert", `${r.names[from.id]} back}`);
+          } else {
+            mes(from, "cmdresp", "you were never away");
+          }
+        }
+        return true;
       case "iam":
         apply_name(from, args[0]); return true;
       case "w":
@@ -148,6 +161,9 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (to) {
           mes(to, "msg", `(-> you) <${r.names[from.id]}> ${msg}`, from);
           mes(from, "msg", `(-> ${toname}) <${r.names[from.id]}> ${msg}`, from);
+          if (r.away[to.id]) {
+            mes(from, "cmdresp", `${toname} away: ${r.away[to.id]}`);
+          }
         } else {
           mes(from, "cmdresp", `Error 404: ${toname} not found!`, from);
         } return true;
