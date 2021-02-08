@@ -50,7 +50,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       
       case "_rawedit":
         d = new Date();
-        r.io.emit("edit", `${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
+        edid = args.shift();
+        r.io.emit("edit", `${args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), args.join(" "), edid)); return true;
       
       case "linkout":
         let tolink = args.shift();
