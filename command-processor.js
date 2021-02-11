@@ -190,7 +190,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         r.io.emit("delete", `${from.id}${args[0]}`); return true;
       case "image":
         var imageid = args.shift();
-        var comment = args.join("");
+        var comment = args.join(" ");
         mes(r.io, "msg", `${comment}<details open><summary>Image</summary><img src="${imageid}"></img></details>`); return true;
       case "list":
         r.list.forEach(player => {
