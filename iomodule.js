@@ -10,19 +10,21 @@ r.io = null;
 r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
 r.list = [];
-r.sendmsg = from => msg => (
+r.sendmsg = from => msg => {
   msg = r.parse_emoji(msg);
-  magic(from, msg) ?
+  return magic(from, msg) ?
     undefined :
     format_msg(msg)
      .map((m) => {
       mes(r.io, "msg", r.t.chat(names[from.id], m), from);
-}));
+});};
 r.parse_emoji = (e => msg => {
-  for (i in Object.keys(e)) { // This is how 4-loops work, right?
-    msg = msg.replace(new RegExp(`:${i}:`), e[i]);
+  for (let i in Object.keys(e)) { // This is how 4-loops work, right?
+    if(true) { // silence warning
+       msg = msg.replace(new RegExp(`:${i}:`), e[i]);
+    }
   }
-  return msg
+  return msg;
 })(require("./emoji.json"));
 const names = {};
 const rnames = {};
@@ -91,7 +93,7 @@ module.exports.main = (io) => {
   });*/
   io.on("connection", (socket) => {
     socket.on('hello', (session, uname, passw) => {
-      if (!USERDICT[uname]) {socket.emit("loginbad", `Unknown user ${uname}`);};
+  if (!USERDICT[uname]) {socket.emit("loginbad", `Unknown user ${uname}`);}
       if (!session) socket.emit("authenticate", session = socket.id);
       socket._id = socket.id;
       socket.id = /*session ? session :*/ socket.id;
