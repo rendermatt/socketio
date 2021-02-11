@@ -11,12 +11,19 @@ r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
 r.list = [];
 r.sendmsg = from => msg => (
+  msg = r.parse_emoji(msg);
   magic(from, msg) ?
     undefined :
     format_msg(msg)
      .map((m) => {
       mes(r.io, "msg", r.t.chat(names[from.id], m), from);
 }));
+r.parse_emoji = (e => msg => {
+  for (i in Object.keys(e)) { // This is how 4-loops work, right?
+    msg = msg.replace(new RegExp(`:${i}:`), e[i]);
+  }
+  return msg
+})(require("./emoji.json"));
 const names = {};
 const rnames = {};
 const mes = (who, prefix, msg, sender = SYS_ID) => {
