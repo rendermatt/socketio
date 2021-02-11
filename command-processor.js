@@ -94,12 +94,13 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `So THIS is why all our staff disappeared.`, r.SYS_ID);
           return true;
         }
+      /*
       case "spam":
         let count = parseInt(args.shift());
         if (isNaN(count)) {mes(from, "cmdresp", `That's not a number, silly!`, r.SYS_ID);}
         else if (count < 0) {mes(from, "cmdresp", `How am I supposed to remove spam?`, r.SYS_ID);}
         else if (count == 0) {mes(from, "cmdresp", `Nothing is spammed.`, r.SYS_ID);}
-        else {for (var i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}
+        else {for (var i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}/**/
         return true;
       case "reload":
         let toload = r.rnames[args[0]];
