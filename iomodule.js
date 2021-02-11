@@ -25,7 +25,7 @@ r.parse_emoji = (e => msg => {
     }
   }
   return msg;
-})(require("./emoji.json"));
+})(require("./emoji.js"));
 const names = {};
 const rnames = {};
 const mes = (who, prefix, msg, sender = SYS_ID) => {
