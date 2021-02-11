@@ -193,6 +193,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         var imageid = args.shift();
         var comment = args.join(" ");
         mes(r.io, "msg", `${comment}<details open><summary>Image</summary><img src="${imageid}"></img></details>`); return true;
+      case "video":
+        var videoid = args.shift();
+        var vomment = args.join(" ");
+        mes(r.io, "msg", `${comment}<details open><summary>Video</summary><video src="${imageid}"></img></details>`); return true;
       case "list":
         r.list.forEach(player => {
           mes(from, "cmdresp", `${r.names[player.id]}: ${r.away[player.id] || "here"}`);
