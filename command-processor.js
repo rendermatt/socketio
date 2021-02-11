@@ -188,6 +188,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         return from.op = true; //no, i wanted to return the assignment
       case "delete":
         r.io.emit("delete", `${from.id}${args[0]}`); return true;
+      case "image":
+        var imageid = args.shift();
+        var comment = args.join("");
+        mes(io, "msg", `${comment}<details open><summary>Image</summary><img src="${imageid}"></img></details>`); return true;
       case "list":
         r.list.forEach(player => {
           mes(from, "cmdresp", `${r.names[player.id]}: ${r.away[player.id] || "here"}`);
