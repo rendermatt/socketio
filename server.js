@@ -29,6 +29,9 @@ const whoDisBot = {
 app.get("/favicon.ico", (req, res) => {
   res.sendFile(__dirname + "/favicon/drive.ico");
 });
+app.get("/story.txt", (req, res) => {
+  res.sendFile(__dirname + "/story.txt");
+});
 
 require("./site/module.js")(app); // site urls
 require("./chat/module.js")(app); // chat urls
