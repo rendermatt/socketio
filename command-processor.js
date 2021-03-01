@@ -203,7 +203,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         });
         mes(from, "cmdresp", `${r.list.length} here`); return true;
       case "me":
-        mes(r.io, "msg", r.t.action(r.names[from.id], m), from); return true;
+        mes(r.io, "msg", r.t.action(r.names[from.id], args.join(" ")), from); return true;
       case "edit":
         d = new Date();
         r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
