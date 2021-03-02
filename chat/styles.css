@@ -65,7 +65,8 @@ spoiler {
   color: gray;
   background-color: gray;
 }
-spoiler:focus {
+spoiler:hover {
+  cursor: none;
   color: gray;
   background-color: white;
 }
