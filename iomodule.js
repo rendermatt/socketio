@@ -101,7 +101,7 @@ module.exports.main = (io) => {
       socket._id = socket.id;
       socket.id = /*session ? session :*/ socket.id;
       socket.join("main");
-      socket[r.s] = socket.id.slice(0, 8);
+      socket[r.s].name = socket.id.slice(0, 8);
       rnames[socket[r.s].name] = socket;
       mes(socket, "alert", r.t.join_self(socket[r.s].name, session), SYS_ID);
       mes(socket.broadcast, "alert", r.t.join(socket[r.s].name), SYS_ID);
