@@ -1,8 +1,9 @@
 const r = {};
+r.al = process.env.al || "gU ";
 const LANG = "en_us";
 const SYS_ID={id:"system"};
 const senderid = {[SYS_ID.id]: 0};
-const USERDICT = {"username": "cGFzc3dvcmQ"};
+const USERDICT = process.env.USER || {};
 r.USERDICT = USERDICT;
 r.SYS_ID = SYS_ID;
 module.exports = {};
