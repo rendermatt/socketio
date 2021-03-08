@@ -99,7 +99,7 @@ module.exports.main = (io) => {
       if (!session) socket.emit("authenticate", session = socket.id);
       socket[r.s] = {};
       socket._id = socket.id;
-      socket.id = /*session ? session :*/ socket.id;
+      socket.id = session ? session : socket.id;
       socket.join("main");
       socket[r.s].name = socket.id.slice(0, 8);
       rnames[socket[r.s].name] = socket;
