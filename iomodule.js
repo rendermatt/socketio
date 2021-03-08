@@ -28,7 +28,7 @@ r.parse_emoji = (e => msg => {
   }
   return msg;
 })(require("./emoji.js"));
-const names = {};
+//const names = {};
 const rnames = {};
 const mes = (who, prefix, msg, sender = SYS_ID) => {
   console.log(`mes: ${typeof sender} send ${prefix} to ${typeof who}: ${msg}`);
@@ -36,7 +36,7 @@ const mes = (who, prefix, msg, sender = SYS_ID) => {
   who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 7 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
 };
 const ipToSocket = {};
-r.names = names;
+//r.names = names;
 r.rnames = rnames;
 r.senderid = senderid;
 module.exports.r = r;
