@@ -111,7 +111,7 @@ module.exports.main = (io) => {
       r.list.push(socket);
       senderid[socket.id] = 0;
       socket.on("disconnect", () => {
-        if(!socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(socket[r.s].name]), SYS_ID);
+        if(!socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(socket[r.s].name), SYS_ID);
         //whoDisBot.onLeave(socket);
         delete rnames[socket[r.s].name];
         delete senderid[socket.id];
