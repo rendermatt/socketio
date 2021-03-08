@@ -7,14 +7,15 @@ const apply_name = module.exports.apply_name = (who, name) => {
   if (r.rnames[name]) {
     mes(who, "cmdresp", `Name ${name} already authenticated.`, r.SYS_ID);
   } else {
-    mes(who.broadcast, "alert", `${r.names[who.id]} has applied name ${name}.`, r.SYS_ID);
-    console.log(`setting rnames[${r.names[who.id]}] = undefined`, r.SYS_ID);
-    r.rnames[r.names[who.id]] = undefined;
+    mes(who.broadcast, "alert", `${who[r.s].name} has applied name ${name}.`, r.SYS_ID);
+    console.log(`setting rnames[${who[r.s].name}] = undefined`, r.SYS_ID);
+    r.rnames[who[r.s].name] = undefined;
     console.log(`setting r.rnames[${name}] = ${who}`);
     r.rnames[name] = who;
-    console.log(`setting r.names[${who.id}] = ${name}`);
-    r.names[who.id] = name;
+    console.log(`setting ${who.id}[r.s].name = ${name}`);
+    who[r.s].name = name;
     mes(who, "cmdresp", `Name ${name} applied successfully.`, r.SYS_ID);
+    
   }
 };
 const main = module.exports = (_mes) => (msg, from, sudo) => {
@@ -71,8 +72,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           if(top.op)
             mes(from, "cmdresp", `${args[0]} seems about the same.`);
           else
-            mes(top.broadcast, "alert", `${r.names[from.id]} thinks ${args[0]} seems more powerful.`);
-          if(!top.op) mes(top, "alert", `${r.names[from.id]} thinks you seem more powerful.`, r.SYS_ID);
+            mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems more powerful.`);
+          if(!top.op) mes(top, "alert", `${from[r.s].name} thinks you seem more powerful.`, r.SYS_ID);
           top.op = true;
           return true;
         } else {
@@ -86,8 +87,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           if(!teop.op)
             mes(from, "cmdresp", `${args[0]} seems about the same.`);
           else
-            mes(top.broadcast, "alert", `${r.names[from.id]} thinks ${args[0]} seems less powerful.`);
-          if(teop.op) mes(teop, "alert", `${r.names[from.id]} thinks you seem less powerful.`, r.SYS_ID);
+            mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems less powerful.`);
+          if(teop.op) mes(teop, "alert", `${from[r.s].name} thinks you seem less powerful.`, r.SYS_ID);
           teop.op = false;
           return true;
         } else {
@@ -117,8 +118,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "kick":
         let tokick = r.rnames[args[0]];
         if (tokick) {
-          mes(tokick, "alert", `You were kicked from NoMoreNotes by ${r.names[from.id]}.`, r.SYS_ID);
-          var tokm = r.t.kick(r.names[tokick.id])
+          mes(tokick, "alert", `You were kicked from NoMoreNotes by ${from[r.s].name}.`, r.SYS_ID);
+          var tokm = r.t.kick(tokick[r.s].name)
           tokick.silentLeave = true;
           tokick.disconnect(true);
           mes(tokick.broadcast, "alert", tokm);
@@ -132,8 +133,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if(!from.ban) return;
         let toban = r.rnames[args[0]];
         if (toban) {
-          mes(toban, "alert", `You were banned from NoMoreNotes by ${r.names[from.id]}.`, r.SYS_ID);
-          var tobm = r.t.ban(r.names[tokick.id])
+          mes(toban, "alert", `You were banned from NoMoreNotes by ${from[r.s].name}.`, r.SYS_ID);
+          var tobm = r.t.ban(tokick[r.s].name)
           tokick.silentLeave = true;
           tokick.disconnect(true);
           mes(tokick.broadcast, "alert", tobm);
@@ -151,10 +152,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "away":
         if (args[0]) {
           r.away[from.id] = args.join(" ");
-          mes(r.io, "alert", `${r.names[from.id]} away: ${args.join(" ")}`);
+          mes(r.io, "alert", `${from[r.s].name} away: ${args.join(" ")}`);
         } else {
           if (r.away[from.id]) {
-            mes(r.io, "alert", `${r.names[from.id]} back: ${r.away[from.id]}`);
+            mes(r.io, "alert", `${from[r.s].name} back: ${r.away[from.id]}`);
             delete r.away[from.id];
           } else {
             mes(from, "cmdresp", "you were never away");
@@ -168,8 +169,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let to = r.rnames[toname];
         let msg = args.join(" ");
         if (to) {
-          mes(to, "msg", `(-> you) <${r.names[from.id]}> ${msg}`, from);
-          mes(from, "msg", `(-> ${toname}) <${r.names[from.id]}> ${msg}`, from);
+          mes(to, "msg", `(-> you) <${from[r.s].name}> ${msg}`, from);
+          mes(from, "msg", `(-> ${toname}) <${from[r.s].name}> ${msg}`, from);
           if (r.away[to.id]) {
             mes(from, "cmdresp", `${toname} away: ${r.away[to.id]}`);
           }
@@ -199,14 +200,14 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         mes(r.io, "msg", `${vomment}<details open><summary>Video</summary><video alt="${vomment}" src="${videoid}"></img></details>`); return true;
       case "list":
         r.list.forEach(player => {
-          mes(from, "cmdresp", `${r.names[player.id]}: ${r.away[player.id] || "here"}`);
+          mes(from, "cmdresp", `${from[r.s].name}: ${r.away[player.id] || "here"}`);
         });
         mes(from, "cmdresp", `${r.list.length} here`); return true;
       case "me":
-        mes(r.io, "msg", r.t.action(r.names[from.id], args.join(" ")), from); return true;
+        mes(r.io, "msg", r.t.action(from[r.s].name, args.join(" ")), from); return true;
       case "edit":
         d = new Date();
-        r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
+        r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid)); return true;
       default:
         mes(from, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
