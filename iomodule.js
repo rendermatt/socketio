@@ -1,6 +1,6 @@
 const r = {};
 r.al = process.env.al || "gU ";
-r.s = new Symbol("nomorenotes");
+r.s = Symbol("nomorenotes");
 const LANG = "en_us";
 const SYS_ID={id:"system"};
 const senderid = {[SYS_ID.id]: 0};
