@@ -56,7 +56,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           var totruth = r.rnames[args[0]];
           if(totruth) {
             mes(totruth, "alert", r.t.truly.kicky(from[r.s].name));
-            mes(totruth.broadcast, "alert", r.truly.kick(totruth[r.s].name));
+            mes(totruth.broadcast, "alert", r.t.truly.kick(totruth[r.s].name));
             totruth.silentLeave = true;
             totruth.disconnect(true);
           }
