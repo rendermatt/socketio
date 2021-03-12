@@ -50,7 +50,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         r.io.emit("delete", `${args[0]}`); return true;
         
       case "iamtruly":
-        if(args[0] == who[r.s].name) {
+        if(args[0] == from[r.s].name) {
           mes(from, "cmdresp", r.t.truly.you());
         } else {
           var totruth = r.rnames[args[0]];
