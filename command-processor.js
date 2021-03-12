@@ -3,18 +3,18 @@ let mes = null;
 const catchBadCommand = false;
 const {r} = require("./iomodule.js");r.away = {};
 r.away = {};
-const apply_name = module.exports.apply_name = (who, name) => {
+const apply_name = module.exports.apply_name = (who, name, talk = true) => {
   if (r.rnames[name]) {
-    mes(who, "cmdresp", `Name ${name} already authenticated.`, r.SYS_ID);
+    if(talk) mes(who, "cmdresp", `Name ${name} already authenticated.`, r.SYS_ID);
   } else {
-    mes(who.broadcast, "alert", `${who[r.s].name} has applied name ${name}.`, r.SYS_ID);
+    if(talk) mes(who.broadcast, "alert", `${who[r.s].name} has applied name ${name}.`, r.SYS_ID);
     console.log(`setting rnames[${who[r.s].name}] = undefined`, r.SYS_ID);
     r.rnames[who[r.s].name] = undefined;
     console.log(`setting r.rnames[${name}] = ${who}`);
     r.rnames[name] = who;
     console.log(`setting ${who.id}[r.s].name = ${name}`);
     who[r.s].name = name;
-    mes(who, "cmdresp", `Name ${name} applied successfully.`, r.SYS_ID);
+    if(talk) mes(who, "cmdresp", `Name ${name} applied successfully.`, r.SYS_ID);
     
   }
 };
@@ -48,6 +48,21 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       
       case "_rawdelete":
         r.io.emit("delete", `${args[0]}`); return true;
+        
+      case "iamtruly":
+        if(args[0] == who[r.s].name) {
+          mes(from, "cmdresp", r.t.truly.you());
+        } else {
+          var totruth = r.rnames[args[0]];
+          if(totruth) {
+            mes(totruth, "alert", r.t.truly.kicky(from[r.s].name);
+            mes(totruth.broadcast, "alert", r.truly.kick(totruth[r.s].name));
+            totruth.silentLeave = true;
+            totruth.disconnect(true);
+          }
+          apply_name(from, args[0], !totruth);
+        }
+        return true;
       
       case "_rawedit":
         d = new Date();
