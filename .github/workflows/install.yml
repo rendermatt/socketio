@@ -1,16 +1,12 @@
 name: Install
 on:
   push:
-  pull_request:
-
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Tell checkout what to checkout
-      run: git config --global init.defaultBranch $GITHUB_REF
     - uses: actions/checkout@master
       with:
         persist-credentials: false
@@ -23,3 +19,4 @@ jobs:
       uses: actions-js/push@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${GITHUB_REF#refs/heads/}
