@@ -15,12 +15,13 @@ jobs:
       run: |
         npm install
         git add package-lock.json
-    - name: Push Lockfile
+    - name: Commit Lockfile
       run: |
         git config http.sslVerify false
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add package-lock.json
         git commit -m "update package-lock"
-        git push https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git
+    - name: Push
+      run: git push https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         
