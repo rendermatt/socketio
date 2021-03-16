@@ -15,14 +15,15 @@ jobs:
     - name: Install
       run: |
         npm install
-        git add package-lock.json
-    - name: Commit Lockfile
+    - name: Add Lockfile
+      run: |
+        git add package-lock.json ||:
+    - name: Commit
       run: |
         git config http.sslVerify false
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add package-lock.json
-        git commit -m "update package-lock"
+        git commit -m "update package-lock" ||:
     - name: Push
-      run: git push
+      run: git push ||:
         
