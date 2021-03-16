@@ -1,6 +1,7 @@
 name: Install
 on:
-  push:
+  push: 
+    branches: [worksihope]
   workflow_dispatch:
 
 jobs:
