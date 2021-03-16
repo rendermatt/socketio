@@ -23,5 +23,5 @@ jobs:
         git add package-lock.json
         git commit -m "update package-lock"
     - name: Push
-      run: git push https://${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+      run: git push https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         
