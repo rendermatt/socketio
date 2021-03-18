@@ -60,7 +60,6 @@ dialog {
 li, button, input {
 	font-family: /*/32px Helvetica, Arial/**/monospace;
 }
-
 li join {
   color: green;
 }

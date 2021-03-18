@@ -3,5 +3,5 @@ module.exports = {
 	"alert": "! ",
 	"msg": "% ",
 	"debug": "# ",
-	"none": ""
+	"none": "  "
 }
