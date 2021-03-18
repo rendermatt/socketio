@@ -4,8 +4,8 @@
   "description": "No more notes! Instant messaging for classrooms.",
   "dependencies": {
     "express": "^4.15.2",
-    "socket.io": "^2.3.0",
-    "mississippi": "4.0.0"
+    "socket.io": "^2.4.0",
+    "supports-color": "8.1.1"
   },
   "scripts": {
     "start": "node server.js"

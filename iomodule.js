@@ -1,8 +1,10 @@
 const r = {};
+r.al = process.env.al || "gU ";
+r.s = Symbol("nomorenotes");
 const LANG = "en_us";
 const SYS_ID={id:"system"};
 const senderid = {[SYS_ID.id]: 0};
-const USERDICT = {"username": "cGFzc3dvcmQ"};
+const USERDICT = process.env.USER || {};
 r.USERDICT = USERDICT;
 r.SYS_ID = SYS_ID;
 module.exports = {};
@@ -10,14 +12,23 @@ r.io = null;
 r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
 r.list = [];
-r.sendmsg = from => msg => (
-  magic(from, msg) ?
+r.sendmsg = from => msg => {
+  msg = r.parse_emoji(msg);
+  return magic(from, msg) ?
     undefined :
     format_msg(msg)
      .map((m) => {
-      mes(r.io, "msg", r.t.chat(names[from.id], m), from);
-}));
-const names = {};
+      mes(r.io, "msg", r.t.chat(from[r.s].name, m), from);
+});};
+r.parse_emoji = (e => msg => {
+  for (let i in Object.keys(e)) { // This is how 4-loops work, right?
+    if(true) { // silence warning
+       msg = msg.replace(new RegExp(`:${i}:`), e[i]);
+    }
+  }
+  return msg;
+})(require("./emoji.js"));
+//const names = {};
 const rnames = {};
 const mes = (who, prefix, msg, sender = SYS_ID) => {
   console.log(`mes: ${typeof sender} send ${prefix} to ${typeof who}: ${msg}`);
@@ -25,7 +36,7 @@ const mes = (who, prefix, msg, sender = SYS_ID) => {
   who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 7 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
 };
 const ipToSocket = {};
-r.names = names;
+//r.names = names;
 r.rnames = rnames;
 r.senderid = senderid;
 module.exports.r = r;
@@ -43,7 +54,7 @@ const magic = module.exports.magic = (sender, msg) => {
       //case "/iam pokepat12":
       //  apply_name(sender, "Poképat12"); return true;
     case "/imnot":
-      names[sender.id] = sender.id.slice(0, 8);
+      sender[r.s].name = sender.id.slice(0, 8);
       mes(sender, "cmdresp", `You are now annonymous.`, SYS_ID);
       return true;
     case "":
@@ -84,26 +95,27 @@ module.exports.main = (io) => {
   });*/
   io.on("connection", (socket) => {
     socket.on('hello', (session, uname, passw) => {
-      if (!USERDICT[uname]) {socket.emit("loginbad", `Unknown user ${uname}`);};
+  if (!USERDICT[uname]) {socket.emit("loginbad", `Unknown user ${uname}`);}
       if (!session) socket.emit("authenticate", session = socket.id);
+      socket[r.s] = {};
       socket._id = socket.id;
-      socket.id = /*session ? session :*/ socket.id;
+      //socket.id = session ? session : socket.id;
       socket.join("main");
-      names[socket.id] = socket.id.slice(0, 8);
-      rnames[names[socket.id]] = socket;
-      mes(socket, "alert", r.t.join_self(names[socket.id], session), SYS_ID);
-      mes(socket.broadcast, "alert", r.t.join(names[socket.id]), SYS_ID);
-      socket.on("chat message", msg => console.log(`[CHAT ${names[socket.id]}] ${msg}`)); // who doesn't love log spam
+      socket[r.s].name = socket.id.slice(0, 8);
+      rnames[socket[r.s].name] = socket;
+      mes(socket, "alert", r.t.join_self(socket[r.s].name, session), SYS_ID);
+      mes(socket.broadcast, "alert", r.t.join(socket[r.s].name), SYS_ID);
+      socket.on("chat message", msg => console.log(`[CHAT ${socket[r.s].name}] ${msg}`)); // who doesn't love log spam
       socket.on('chat message', r.sendmsg(socket));
       socket.on("image", (im) => {console.log(im);});
       r.list.push(socket);
       senderid[socket.id] = 0;
       socket.on("disconnect", () => {
-        if(!socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(names[socket.id]), SYS_ID);
+        if(!socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(socket[r.s].name), SYS_ID);
         //whoDisBot.onLeave(socket);
-        delete rnames[names[socket.id]];
+        delete rnames[socket[r.s].name];
         delete senderid[socket.id];
-        names[socket.id] = undefined;
+        delete socket[r.s];
         r.list.splice(r.list.indexOf(socket), 1);
       });
     });

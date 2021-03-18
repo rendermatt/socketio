@@ -1,0 +1,30 @@
+name: Install
+on:
+  push: 
+    branches: [worksihope]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        persist-credentials: true
+        fetch-depth: 0
+    - name: Install
+      run: |
+        npm install
+    - name: Add Lockfile
+      run: |
+        git add package-lock.json ||:
+    - name: Commit
+      run: |
+        git config http.sslVerify false
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "update package-lock" ||:
+    - name: Push
+      run: |
+        git push ||:
+        

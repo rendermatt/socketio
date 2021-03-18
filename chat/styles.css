@@ -60,3 +60,19 @@ dialog {
 li, button, input {
 	font-family: /*/32px Helvetica, Arial/**/monospace;
 }
+li join {
+  color: green;
+}
+li leave {
+  color: red;
+}
+
+spoiler {
+  color: gray;
+  background-color: gray;
+}
+spoiler:hover {
+  cursor: none;
+  color: gray;
+  background-color: white;
+}

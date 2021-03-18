@@ -1,11 +1,14 @@
 $(function () {
-  if (localStorage.banned) window.location.path = "/banned"
+  if (localStorage.banned) window.location.path = "/banned";
   var manotify = false;
   var notify = false;
   var socket = io();
   socket.on("hello", ()=>{
+    $("#messages").append($('<li>', {class: "join"}).text(`Connected to NoMoreNotes at ${Date.now()}`));
     socket.emit("hello", localStorage.session ? localStorage.session : (localStorage.session = socket.id));
   });
+  socket.on("disconnect", ()=>{
+    $("#messages").append($('<li>', {class: 'leave'}).text(`Lost connection to NoMoreNotes at ${Date.now()}`));
   $('#send').submit(function(){
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
@@ -19,7 +22,7 @@ $(function () {
     }
     window.scrollTo(0, document.body.scrollHeight);
   });
-  socket.on("ping", (wasTargeted, source) => {
+  socket.on("pinged", (wasTargeted, source) => {
     alert(`${source} has pinged ${wasTargeted ? "you" : "everyone"}!`);
     
   });
@@ -57,3 +60,4 @@ $(function () {
   }
 };
 });
+  });

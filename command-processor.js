@@ -3,19 +3,19 @@ let mes = null;
 const catchBadCommand = false;
 const {r} = require("./iomodule.js");r.away = {};
 r.away = {};
-r.surr = require("./surr.js");
-const apply_name = module.exports.apply_name = (who, name) => {
+const apply_name = module.exports.apply_name = (who, name, talk = true) => {
   if (r.rnames[name]) {
-    mes(who, "cmdresp", `Name ${name} already authenticated.`, r.SYS_ID);
+    if(talk) mes(who, "cmdresp", `Name ${name} already authenticated.`, r.SYS_ID);
   } else {
-    mes(who.broadcast, "alert", `${r.names[who.id]} has applied name ${name}.`, r.SYS_ID);
-    console.log(`setting rnames[${r.names[who.id]}] = undefined`, r.SYS_ID);
-    r.rnames[r.names[who.id]] = undefined;
+    if(talk) mes(who.broadcast, "alert", `${who[r.s].name} has applied name ${name}.`, r.SYS_ID);
+    console.log(`setting rnames[${who[r.s].name}] = undefined`, r.SYS_ID);
+    r.rnames[who[r.s].name] = undefined;
     console.log(`setting r.rnames[${name}] = ${who}`);
     r.rnames[name] = who;
-    console.log(`setting r.names[${who.id}] = ${name}`);
-    r.names[who.id] = name;
-    mes(who, "cmdresp", `Name ${name} applied successfully.`, r.SYS_ID);
+    console.log(`setting ${who.id}[r.s].name = ${name}`);
+    who[r.s].name = name;
+    if(talk) mes(who, "cmdresp", `Name ${name} applied successfully.`, r.SYS_ID);
+    
   }
 };
 const main = module.exports = (_mes) => (msg, from, sudo) => {
@@ -48,10 +48,26 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       
       case "_rawdelete":
         r.io.emit("delete", `${args[0]}`); return true;
+        
+      case "iamtruly":
+        if(args[0] == from[r.s].name) {
+          mes(from, "cmdresp", r.t.truly.you());
+        } else {
+          var totruth = r.rnames[args[0]];
+          if(totruth) {
+            mes(totruth, "alert", r.t.truly.kicky(from[r.s].name));
+            mes(totruth.broadcast, "alert", r.t.truly.kick(totruth[r.s].name, from[r.s].name));
+            totruth.silentLeave = true;
+            totruth.disconnect(true);
+          }
+          apply_name(from, args[0], !totruth);
+        }
+        return true;
       
       case "_rawedit":
         d = new Date();
-        r.io.emit("edit", `${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
+        edid = args.shift();
+        r.io.emit("edit", `${args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), args.join(" "), edid)); return true;
       
       case "linkout":
         let tolink = args.shift();
@@ -71,8 +87,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           if(top.op)
             mes(from, "cmdresp", `${args[0]} seems about the same.`);
           else
-            mes(top.broadcast, "alert", `${r.names[from.id]} thinks ${args[0]} seems more powerful.`);
-          if(!top.op) mes(top, "alert", `${r.names[from.id]} thinks you seem more powerful.`, r.SYS_ID);
+            mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems more powerful.`);
+          if(!top.op) mes(top, "alert", `${from[r.s].name} thinks you seem more powerful.`, r.SYS_ID);
           top.op = true;
           return true;
         } else {
@@ -86,20 +102,21 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           if(!teop.op)
             mes(from, "cmdresp", `${args[0]} seems about the same.`);
           else
-            mes(top.broadcast, "alert", `${r.names[from.id]} thinks ${args[0]} seems less powerful.`);
-          if(teop.op) mes(teop, "alert", `${r.names[from.id]} thinks you seem less powerful.`, r.SYS_ID);
+            mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems less powerful.`);
+          if(teop.op) mes(teop, "alert", `${from[r.s].name} thinks you seem less powerful.`, r.SYS_ID);
           teop.op = false;
           return true;
         } else {
           mes(from, "cmdresp", `So THIS is why all our staff disappeared.`, r.SYS_ID);
           return true;
         }
+      /*
       case "spam":
         let count = parseInt(args.shift());
         if (isNaN(count)) {mes(from, "cmdresp", `That's not a number, silly!`, r.SYS_ID);}
         else if (count < 0) {mes(from, "cmdresp", `How am I supposed to remove spam?`, r.SYS_ID);}
         else if (count == 0) {mes(from, "cmdresp", `Nothing is spammed.`, r.SYS_ID);}
-        else {for (var i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}
+        else {for (var i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}/**/
         return true;
       case "reload":
         let toload = r.rnames[args[0]];
@@ -116,8 +133,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "kick":
         let tokick = r.rnames[args[0]];
         if (tokick) {
-          mes(tokick, "alert", `You were kicked from NoMoreNotes by ${r.names[from.id]}.`, r.SYS_ID);
-          var tokm = r.t.kick(r.names[tokick.id])
+          mes(tokick, "alert", `You were kicked from NoMoreNotes by ${from[r.s].name}.`, r.SYS_ID);
+          var tokm = r.t.kick(tokick[r.s].name)
           tokick.silentLeave = true;
           tokick.disconnect(true);
           mes(tokick.broadcast, "alert", tokm);
@@ -131,8 +148,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if(!from.ban) return;
         let toban = r.rnames[args[0]];
         if (toban) {
-          mes(toban, "alert", `You were banned from NoMoreNotes by ${r.names[from.id]}.`, r.SYS_ID);
-          var tobm = r.t.ban(r.names[tokick.id])
+          mes(toban, "alert", `You were banned from NoMoreNotes by ${from[r.s].name}.`, r.SYS_ID);
+          var tobm = r.t.ban(tokick[r.s].name)
           tokick.silentLeave = true;
           tokick.disconnect(true);
           mes(tokick.broadcast, "alert", tobm);
@@ -150,10 +167,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "away":
         if (args[0]) {
           r.away[from.id] = args.join(" ");
-          mes(r.io, "alert", `${r.names[from.id]} away: ${args.join(" ")}`);
+          mes(r.io, "alert", `${from[r.s].name} away: ${args.join(" ")}`);
         } else {
           if (r.away[from.id]) {
-            mes(r.io, "alert", `${r.names[from.id]} back: ${r.away[from.id]}`);
+            mes(r.io, "alert", `${from[r.s].name} back: ${r.away[from.id]}`);
             delete r.away[from.id];
           } else {
             mes(from, "cmdresp", "you were never away");
@@ -176,8 +193,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let to = r.rnames[toname];
         let msg = args.join(" ");
         if (to) {
-          mes(to, "msg", `(-> you) <${r.names[from.id]}> ${msg}`, from);
-          mes(from, "msg", `(-> ${toname}) <${r.names[from.id]}> ${msg}`, from);
+          mes(to, "msg", `(-> you) <${from[r.s].name}> ${msg}`, from);
+          mes(from, "msg", `(-> ${toname}) <${from[r.s].name}> ${msg}`, from);
           if (r.away[to.id]) {
             mes(from, "cmdresp", `${toname} away: ${r.away[to.id]}`);
           }
@@ -197,14 +214,24 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         return from.op = true; //no, i wanted to return the assignment
       case "delete":
         r.io.emit("delete", `${from.id}${args[0]}`); return true;
+      case "image":
+        var imageid = args.shift();
+        var comment = args.join(" ");
+        mes(r.io, "msg", `${comment}<details open><summary>Image</summary><img alt="${comment}" src="${imageid}"></img></details>`); return true;
+      case "video":
+        var videoid = args.shift();
+        var vomment = args.join(" ");
+        mes(r.io, "msg", `${vomment}<details open><summary>Video</summary><video alt="${vomment}" src="${videoid}"></img></details>`); return true;
       case "list":
         r.list.forEach(player => {
-          mes(from, "cmdresp", `${r.names[player.id]}: ${r.away[player.id] || "here"}`);
+          mes(from, "cmdresp", `${player[r.s].name}: ${r.away[player.id] || "here"}`);
         });
         mes(from, "cmdresp", `${r.list.length} here`); return true;
+      case "me":
+        mes(r.io, "msg", r.t.action(from[r.s].name, args.join(" ")), from); return true;
       case "edit":
         d = new Date();
-        r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${r.names[from.id]}>`, ...args, `(edited)`].join(" "), edid)); return true;
+        r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid)); return true;
       default:
         mes(from, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
