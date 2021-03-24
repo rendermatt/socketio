@@ -220,8 +220,16 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         mes(r.io, "msg", `${comment}<details open><summary>Image</summary><img alt="${comment}" src="${imageid}"></img></details>`); return true;
       case "video":
         var videoid = args.shift();
+        var autoplay = "";
+        var controls = "controls ";
         var vomment = args.join(" ");
-        mes(r.io, "msg", `${vomment}<details open><summary>Video</summary><video alt="${vomment}" src="${videoid}"></img></details>`); return true;
+        var changed = false;
+        while(args[0].startsWith("+")) {
+          if (args[0] == "+nocontrols") {controls = ""; args.shift();}
+          else if (args[0] == "+autoplay") {autoplay = "autoplay "; args.shift();}
+          else {mes(from, "cmdresp", `Unknown flag ${args[0].splice(1)`); return true;}
+        }
+        mes(r.io, "msg", `${vomment}<details open><summary>Video</summary><video ${controls}${autoplay}alt="${vomment}" src="${videoid}"></img></details>`); return true;
       case "list":
         r.list.forEach(player => {
           mes(from, "cmdresp", `${player[r.s].name}: ${r.away[player.id] || "here"}`);
