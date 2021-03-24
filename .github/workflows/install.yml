@@ -15,6 +15,14 @@ jobs:
     - name: Install
       run: |
         npm install
+    - name: Assert Lockfile
+      run: |
+        test -f package-lock.json || exit 1
+        while read input <package-lock.json; do
+          if [ -z "$input" ]; then
+            exit 1
+          fi
+        done
     - name: Add Lockfile
       run: |
         git add package-lock.json ||:
