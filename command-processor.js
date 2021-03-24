@@ -225,10 +225,14 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         var vomment = args.join(" ");
         var changed = false;
         while(args[0].startsWith("+")) {
-          if (args[0] == "+nocontrols") {controls = ""; args.shift();}
-          else if (args[0] == "+autoplay") {autoplay = "autoplay "; args.shift();}
+          console.log("parsing flag");
+          if (args[0] == "+nocontrols") {controls = ""; args.shift(); console.log("found +nocontrols");}
+          else if (args[0] == "+autoplay") {autoplay = "autoplay "; args.shift(); console.log("found +autoplay");}
           else {mes(from, "cmdresp", `Unknown flag ${args[0]}`); return true;}
         }
+        console.log(`about to render video ${videoid}\n`);
+        console.log(vomment ? `comment: ${vomment}` : vomment);
+        console.log(`controls: ${controls} | autoplay: ${autoplay}`);
         mes(r.io, "msg", `${vomment}<details open><summary>Video</summary><video ${controls}${autoplay}alt="${vomment}" src="${videoid}"></img></details>`); return true;
       case "list":
         r.list.forEach(player => {
