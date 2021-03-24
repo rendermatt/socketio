@@ -227,7 +227,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         while(args[0].startsWith("+")) {
           if (args[0] == "+nocontrols") {controls = ""; args.shift();}
           else if (args[0] == "+autoplay") {autoplay = "autoplay "; args.shift();}
-          else {mes(from, "cmdresp", `Unknown flag ${args[0].splice(1)`); return true;}
+          else {mes(from, "cmdresp", `Unknown flag ${args[0]}`); return true;}
         }
         mes(r.io, "msg", `${vomment}<details open><summary>Video</summary><video ${controls}${autoplay}alt="${vomment}" src="${videoid}"></img></details>`); return true;
       case "list":
