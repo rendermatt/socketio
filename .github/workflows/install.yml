@@ -18,11 +18,11 @@ jobs:
     - name: Assert Lockfile
       run: |
         test -f package-lock.json || exit 1
-        while read input <package-lock.json; do
+        while read input ; do
           if [ -z "$input" ]; then
             exit 1
           fi
-        done
+        done<package-lock.json || exit 1
     - name: Add Lockfile
       run: |
         git add package-lock.json ||:
