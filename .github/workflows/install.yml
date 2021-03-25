@@ -1,7 +1,6 @@
 name: Install
 on:
-  push: 
-    branches: [worksihope]
+  push:
   workflow_dispatch:
 
 jobs:
@@ -15,24 +14,14 @@ jobs:
     - name: Install
       run: |
         npm install
-    - name: Assert Lockfile
-      run: |
-        test -f package-lock.json || exit 1
-        while read input ; do
-          if [ -z "$input" ]; then
-            exit 1
-          fi
-        done<package-lock.json || exit 1
-    - name: Add Lockfile
-      run: |
-        git add package-lock.json ||:
-    - name: Commit
+        git add package-lock.json
+    - name: Commit Lockfile
       run: |
         git config http.sslVerify false
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git commit -m "update package-lock" ||:
+        git add package-lock.json
+        git commit -m "update package-lock"
     - name: Push
-      run: |
-        git push ||:
+      run: git push
         
