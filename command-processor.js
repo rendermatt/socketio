@@ -1,4 +1,6 @@
+'esversion: 6';
 const cdict = {};
+const fs = require("fs");
 let mes = null;
 const catchBadCommand = false;
 const {r} = require("./iomodule.js");r.away = {};
@@ -95,6 +97,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           mes(from, "cmdresp", `Dude, wtf?? You can't op EVERYONE.`, r.SYS_ID);
           return true;
         }
+        throw new Error("impossible");
       case "deop":
         let teop = r.rnames[args[0]];
         if (teop == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
@@ -130,11 +133,12 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           from.broadcast.emit("reload");
           return true;
         }
+        throw new Error("impossible");
       case "kick":
         let tokick = r.rnames[args[0]];
         if (tokick) {
           mes(tokick, "alert", `You were kicked from NoMoreNotes by ${from[r.s].name}.`, r.SYS_ID);
-          var tokm = r.t.kick(tokick[r.s].name)
+          var tokm = r.t.kick(tokick[r.s].name);
           tokick.silentLeave = true;
           tokick.disconnect(true);
           mes(tokick.broadcast, "alert", tokm);
@@ -144,12 +148,13 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "preban":
         mes(from, "Banning is irreversible. Are you sure?");
         from.ban = true;
+        break;
       case "ban":
         if(!from.ban) return;
         let toban = r.rnames[args[0]];
         if (toban) {
           mes(toban, "alert", `You were banned from NoMoreNotes by ${from[r.s].name}.`, r.SYS_ID);
-          var tobm = r.t.ban(tokick[r.s].name)
+          var tobm = r.t.ban(tokick[r.s].name);
           tokick.silentLeave = true;
           tokick.disconnect(true);
           mes(tokick.broadcast, "alert", tobm);
@@ -241,6 +246,40 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         mes(from, "cmdresp", `${r.list.length} here`); return true;
       case "me":
         mes(r.io, "msg", r.t.action(from[r.s].name, args.join(" ")), from); return true;
+      case "help":
+        if (args[0]) {
+          let helpdocid = args[0].replace(/\.|\/|\\/,'');
+          if (!from.op) helpdocid = helpdocid.replace("#","");
+          fs.readFile(`./help/${helpdocid}.txt`, (err, data) => {
+            if (err) {
+              if (err.code == "ENOENT") {
+                mes(from, "cmdresp", `Help file ${helpdocid} not found.`);
+              } else {
+                mes(from, "cmdresp", `Error ${err.code} while reading ${helpdocid}.txt: ${err.message}`);
+              }
+              return;
+            }
+            data.replace("\r\n","\n").replace("\r", "\n").split("\n").forEach(line=>{
+              mes(from, "cmdresp", `[Help ${helpdocid}]: ${line}`);
+            });
+          });
+        } else {
+          fs.readdir("help", function (err, files) {
+            //handling error
+            if (err) {
+              mes(from, "cmdresp", `Error ${err.code} while listing help pages: ${err.message}`);
+              return true;
+            }
+            files = files
+              .map(name => name
+                 .replace(".txt","")
+                 .replace("help/"))
+              .filter(name => !name.startsWith("%"))
+              .filter(name => (from.op || !name.startsWith("#")));
+            mes(from, "cmdresp", `List of help articles:  ${files.join(" ")}`);
+            return true;
+        });}
+        throw new Error("impossible");
       case "edit":
         d = new Date();
         r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid)); return true;
