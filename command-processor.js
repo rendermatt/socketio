@@ -259,7 +259,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
               }
               return;
             }
-            data.replace("\r\n","\n").replace("\r", "\n").split("\n").forEach(line=>{
+            data.split("\n").map(d=>d.replace("\r\n","\n").replace("\r", "\n")).forEach(line=>{
               mes(from, "cmdresp", `[Help ${helpdocid}]: ${line}`);
             });
           });
