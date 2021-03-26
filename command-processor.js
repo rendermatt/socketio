@@ -279,7 +279,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
             mes(from, "cmdresp", `List of help articles:  ${files.join(" ")}`);
             return true;
         });}
-        throw new Error("impossible");
+        break
       case "edit":
         d = new Date();
         r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid)); return true;
