@@ -9,6 +9,7 @@ r.USERDICT = USERDICT;
 r.SYS_ID = SYS_ID;
 module.exports = {};
 r.io = null;
+r.surr = require("./surr.js")
 r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
 r.list = [];
