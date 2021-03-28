@@ -100,7 +100,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           if(!teop.op)
             mes(from, "cmdresp", `${args[0]} seems about the same.`);
           else
-            mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems less powerful.`);
+            mes(teop.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems less powerful.`);
           if(teop.op) mes(teop, "alert", `${from[r.s].name} thinks you seem less powerful.`, r.SYS_ID);
           teop.op = false;
           return true;
