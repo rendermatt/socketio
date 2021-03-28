@@ -248,7 +248,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         mes(r.io, "msg", r.t.action(from[r.s].name, args.join(" ")), from); return true;
       case "help":
         if (args[0]) {
-          let helpdocid = args[0].replace(/\.|\/|\\/,'');
+          let helpdocid = args[0].replace(/\.|\/|\\/g,'');
           if (!from.op) helpdocid = helpdocid.replace("#","");
           fs.readFile(`./help/${helpdocid}.txt`, "utf-8", (err, data) => {
             if (err) {
