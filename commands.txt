@@ -9,3 +9,4 @@ a ? at the end of an argument makes it optional, e.g. <i>optional?</i>, <i>[argu
 <b>/image <i>[url]</i> <q>comment?</q></b> - send an image
 <b>/video <i>[url]</i> <i>+autoplay?</i> <i>+nocontrols?</i> <q>comment?</q></b> - send a video
 <b>/me <i><q>message</q></i></b> - do an action
+<b>/help <i>[file]</i></b> - read a help file
