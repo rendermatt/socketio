@@ -1,0 +1,11 @@
+<i>[argument]</i> is an argument without spaces
+<i><q>message</q></i> is an argument with spaces
+<i>something</i> is plain text argument
+a ? at the end of an argument makes it optional, e.g. <i>optional?</i>, <i>[argument?]</i>
+</hr>
+<b>/iam <i>[name]</i></b> - set your name
+<b>/away <i><q>message</q></i></b> - go away
+<b>/away</b> - come back
+<b>/image <i>[url]</i> <q>comment?</q></b> - send an image
+<b>/video <i>[url]</i> <i>+autoplay?</i> <i>+nocontrols?</i> <q>comment?</q></b> - send a video
+<b>/me <i><q>message</q></i></b> - do an action
