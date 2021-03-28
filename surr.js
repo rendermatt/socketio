@@ -23,6 +23,7 @@ exports.surrogate = function (p1_idx, text) {
 }
 
 exports.issurrogate = function (text) {
-  var p1_idx = text.length();
+  if(typeof text != typeof 'string') throw new TypeError(`expected ${typeof 'string'}, got ${typeof text}`); // require string
+  var p1_idx = text.length;
   return exports.surrogate(p1_index, text) != p1_idx;
 }
