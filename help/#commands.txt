@@ -1,0 +1,11 @@
+<b>/tellraw <i onclick="sendCommand('/help types')">[type]</i> <i><q>message</q></i></b> - send a raw message
+<b>/youare <i>[name]</i> <i>[who]</i></b> - rename a user
+<b>/release <i>[name]</i></b> - unlock a name
+<b>/iamtruly <i>[name]</i></b> - forcefully take a name, kicking the owner
+<b>/linkout <i>[name]</i> <i><q>url</q></i></b> - open a page for a user
+<b>/op <i>[name]</i></b> - grant operator status to a normal user
+<b>/deop <i>[name]</i></b> - revoke operator status from another operator
+<b>/reload <i>[name?]</i></b> - reset a user
+<b>/kick <i>[name]</i></b> - forcefully remove a user
+<b>/preban</b> - prepare to ban
+<b>/ban <i>[name]</i></b> - ban a user after running <b>/preban</b>
