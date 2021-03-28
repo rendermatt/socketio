@@ -250,7 +250,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (args[0]) {
           let helpdocid = args[0].replace(/\.|\/|\\/,'');
           if (!from.op) helpdocid = helpdocid.replace("#","");
-          fs.readFile(`./help/${helpdocid}.txt`, (err, data) => {
+          fs.readFile(`./help/${helpdocid}.txt`, "utf-8", (err, data) => {
             if (err) {
               if (err.code == "ENOENT") {
                 mes(from, "cmdresp", `Help file ${helpdocid} not found.`);
