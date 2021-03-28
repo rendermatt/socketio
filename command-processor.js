@@ -29,11 +29,6 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
     if(from._debug_command_detection) {from.emit("chat message", `Command detected! ${cmd}:${args}`);}
     if (from.op) {
     switch(cmd) { // OP COMMANDS
-      
-      case "attendance":
-        r.attendance.forEach((item) => {
-          mes(from, "cmdresp", `Here: ${r.io.sockets[item].id}`, r.SYS_ID);            
-        }); return true;
       case "tellraw":
         mes(r.io, args.shift(), args.join(" "), r.SYS_ID); return true;
       case "_debug_command_detection_enable":
