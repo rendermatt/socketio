@@ -259,6 +259,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
               }
               return;
             }
+            console.log(typeof data);
             data.split("\n").map(d=>d.replace("\r\n","\n").replace("\r", "\n")).forEach(line=>{
               mes(from, "cmdresp", `[Help ${helpdocid}]: ${line}`);
             });
