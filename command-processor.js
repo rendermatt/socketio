@@ -150,8 +150,8 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         if (toban) {
           mes(toban, "alert", `You were banned from NoMoreNotes by ${from[r.s].name}.`, r.SYS_ID);
           var tobm = r.t.ban(tokick[r.s].name);
-          tokick.silentLeave = true;
-          tokick.disconnect(true);
+          toban.silentLeave = true;
+          toban.disconnect(true);
           mes(tokick.broadcast, "alert", tobm);
         } else {
           mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
