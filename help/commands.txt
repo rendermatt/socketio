@@ -1,0 +1,14 @@
+<b><i>[name]</i></b> is a value without spaces
+<b><i><q>message</q></i></b> is a value that can have spaces
+<b><i>string</i></b> is an optional string
+a <b>?</b> at the end means the value is optional
+<hr/>
+<b>/away <i><q>message</q></i></b>: mark yourself as away
+<b>/away</b>: unmark yourself as away
+<b>/iam <i>[name]</i></b>: change your name
+<b>/w <i>[name]</i> <i><q>message</q></i></b>: send a private message to a user
+<b>/image <i>[url]</i> <i><q>caption?</q></i></b>: send an image
+<b>/video <i>[url]</i> <i>+autoplay</i> <i>+nocontrols</i> <i><q>caption?</q></i></b>: send a video
+<b>/list</b>: display a list of who is online
+<b>/me <i><q>action</q></i></b>: do an action
+<b>/help <i>[file?]</i></b>: get help
