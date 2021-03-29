@@ -51,5 +51,12 @@ $(function () {
     };
     reader.readAsDataURL(blob);
   }
+  window.sendCommand = (cmd) => {
+    socket.emit("chat message", cmd);
+    $("#m").val("");
+  }
+  window.showCommand = (cmd) => {
+    $("#m").val(cmd);
+  }
 };
 });
