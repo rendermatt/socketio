@@ -252,12 +252,13 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
               } else {
                 mes(from, "cmdresp", `Error ${err.code} while reading ${helpdocid}.txt: ${err.message}`);
               }
-              return;
+              return true;
             }
             console.log(typeof data);
             data.split("\n").map(d=>d.replace("\r\n","\n").replace("\r", "\n")).forEach(line=>{
               mes(from, "cmdresp", `[Help ${helpdocid}]: ${line}`);
             });
+            return true
           });
         } else {
           fs.readdir("help", function (err, files) {
