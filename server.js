@@ -1,4 +1,5 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
@@ -31,6 +32,9 @@ app.get("/favicon.ico", (req, res) => {
 });
 app.get("/story.txt", (req, res) => {
   res.sendFile(__dirname + "/story.txt");
+});
+app.get("/themes.json", (req, res) => {
+  res.sendFile(__dirname + "/themes.json");
 });
 
 require("./site/module.js")(app); // site urls
