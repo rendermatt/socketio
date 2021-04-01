@@ -14,17 +14,17 @@ jobs:
     - name: Startup
       run: |
         mkdir -p .actions
-        date > .actions/lastrun.txt
+        date > .actions/lastrun.txt 2>&1
         git add .actions/lastrun.txt
     - name: Install
       continue-on-error: true
       run: |
-        npm install > .actions/install.log
+        npm install > .actions/install.log 2>&1
         git add package-lock.json .actions/install.log
     - name: Audit
       continue-on-error: true
       run: |
-        npm audit > .actions/audit.txt
+        npm audit > .actions/audit.txt 2>&1
         git add .actions/audit.txt
     - name: Commit
       run: |
