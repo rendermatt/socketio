@@ -15,6 +15,7 @@ function loadTheme() {
     alert("loading theme");
     fetch("/themes.json")
       .then(data => {
+        alert(`processing theme data:\n${data.body}`);
         data = JSON.parse(data.body);
         alert("theme data fetched");
         const ust  = readCookie("theme") || data._default_;
