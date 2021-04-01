@@ -1,4 +1,6 @@
+/*global readCookie, createCookie, eraseCookie */
 // <style> * {display: inline-block;} </style>
+
 /*(() => {
   const prevFeed = $("#prev-feed")
   const sock = io();
@@ -10,7 +12,7 @@
   });
 });*/
 
-async function loadTheme() {
+function loadTheme() {
   alert("loading theme");
   fetch("/themes.json")
     .then(resp => {
@@ -18,25 +20,28 @@ async function loadTheme() {
       body = body.getReader();
       let nextPart = {done: false};
       let data = "";
-      alert("recieving data");
-      while (!nextPart.done) {
-        data += nextPart.value;
-        nextPart = await body.read();
+      function handler(part) {
+        data += part.value || "";
+        if (part.done) {
+          finish(data);
+        } else {
+          body.read().then(handler);
+        }
+  		}
+      function finish() {
+        alert(`processing theme data:\n${data}`);
+        data = JSON.parse(data);
+        alert("theme data fetched");
+        const ust  = readCookie("theme") || data._default_;
+        alert(`got user prefrences: ${ust}`);
+        const color= data[ust];
+        alert(`which means color ${color}`);
+        createCookie("theme", ust, 7);
       }
-      alert(`processing theme data:\n${data}`);
-      data = JSON.parse(data);
-      alert("theme data fetched");
-      const ust  = readCookie("theme") || data._default_;
-      alert(`got user prefrences: ${ust}`);
-      const color= data[ust];
-      alert(`which means color ${color}`);
-      createCookie("theme", ust, 7);
-      res(color);
   	})
     .catch(err => {
       alert(`could not load because ${err.type}: ${err.message}`);
       alert(err.stack);
-      rej(err);
   	});
 }
 
