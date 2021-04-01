@@ -19,8 +19,9 @@ async function loadTheme() {
       let nextPart = {done: false};
       let data = "";
       alert("recieving data");
-      while (!(nextPart = await body.read()).done) {
+      while (!nextPart.done) {
         data += nextPart.value;
+        nextPart = await body.read();
       }
       alert(`processing theme data:\n${data}`);
       data = JSON.parse(data);
