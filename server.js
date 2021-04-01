@@ -26,7 +26,7 @@ const whoDisBot = {
   }
 };
 */
-app.use('/lib', express.static(path.join(__dirname, 'lib')))
+app.use('/lib', express.static(__dirname + '/lib'))
 app.get("/favicon.ico", (req, res) => {
   res.sendFile(__dirname + "/favicon/drive.ico");
 });
