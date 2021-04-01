@@ -17,10 +17,12 @@ jobs:
         date > .actions/lastrun.txt
         git add .actions/lastrun.txt
     - name: Install
+      continue-on-error: true
       run: |
         npm install > .actions/install.log
         git add package-lock.json .actions/install.log
     - name: Audit
+      continue-on-error: true
       run: |
         npm audit > .actions/audit.txt
         git add .actions/audit.txt
