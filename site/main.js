@@ -10,35 +10,33 @@
   });
 });*/
 
-function loadTheme() {
-  return new Promise((res, rej) => {
-    alert("loading theme");
-    fetch("/themes.json")
-      .then(resp => {
-        let body = resp.body;
-        body = body.getReader();
-        let nextPart = {done: false};
-        let data = "";
-        alert("recieving data");
-        while (!(nextPart = await body.read()).done) {
-          data += nextPart.value;
-        }
-        alert(`processing theme data:\n${data}`);
-        data = JSON.parse(data);
-        alert("theme data fetched");
-        const ust  = readCookie("theme") || data._default_;
-        alert(`got user prefrences: ${ust}`);
-        const color= data[ust];
-        alert(`which means color ${color}`);
-        createCookie("theme", ust, 7);
-        res(color);
-      })
-      .catch(err => {
-        alert(`could not load because ${err.type}: ${err.message}`);
-        alert(err.stack);
-        rej(err);
-      });
-  });
+async function loadTheme() {
+  alert("loading theme");
+  fetch("/themes.json")
+    .then(resp => {
+      let body = resp.body;
+      body = body.getReader();
+      let nextPart = {done: false};
+      let data = "";
+      alert("recieving data");
+      while (!(nextPart = await body.read()).done) {
+        data += nextPart.value;
+      }
+      alert(`processing theme data:\n${data}`);
+      data = JSON.parse(data);
+      alert("theme data fetched");
+      const ust  = readCookie("theme") || data._default_;
+      alert(`got user prefrences: ${ust}`);
+      const color= data[ust];
+      alert(`which means color ${color}`);
+      createCookie("theme", ust, 7);
+      res(color);
+  	})
+    .catch(err => {
+      alert(`could not load because ${err.type}: ${err.message}`);
+      alert(err.stack);
+      rej(err);
+  	});
 }
 
 $(()=> {
