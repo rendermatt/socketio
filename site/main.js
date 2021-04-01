@@ -1,4 +1,4 @@
-/*global readCookie, createCookie, eraseCookie */
+/*global readCookie, createCookie, eraseCookie, $, _ */
 // <style> * {display: inline-block;} </style>
 
 /*(() => {
