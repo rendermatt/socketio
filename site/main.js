@@ -12,13 +12,19 @@
 
 async function loadTheme() {
   alert("loading theme");
-  const data = JSON.parse(await fetch("/themes.json"));
-  alert("theme data fetched");
-  const ust  = readCookie("theme") || data._default_;
-  alert(`got user prefrences: ${ust}`);
-  const color= data[ust];
-  alert(`which means color ${color}`);
-  createCookie("theme", ust, 7);
+  fetch("/themes.json")
+    .then(data => {
+      alert("theme data fetched");
+      const ust  = readCookie("theme") || data._default_;
+      alert(`got user prefrences: ${ust}`);
+      const color= data[ust];
+      alert(`which means color ${color}`);
+      createCookie("theme", ust, 7);
+    });
+    .catch(err => {
+      alert(`could not load because ${err.type}: ${err.message}`);
+      alert(err.stack);
+    });
 }
 
 $(()=> {
