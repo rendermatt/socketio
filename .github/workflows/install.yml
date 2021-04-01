@@ -13,6 +13,7 @@ jobs:
         fetch-depth: 0
     - name: Startup
       run: |
+        mkdir -p .actions
         date > .actions/lastrun.txt
         git add .actions/lastrun.txt
     - name: Install
