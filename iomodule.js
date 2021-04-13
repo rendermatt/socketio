@@ -14,10 +14,10 @@ r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
 r.list = [];
 r.sendmsg = from => msg => {
-  msg = r.parse_emoji(msg);
+  msg = format_msg(r.parse_emoji(msg));
   return magic(from, msg) ?
     undefined :
-    format_msg(msg)
+      msg.split("<br/>");
      .map((m) => {
       mes(r.io, "msg", r.t.chat(from[r.s].name, m), from);
 });};
@@ -85,7 +85,6 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/>/g, "&gt;")
   .replace(/%$/g, "<")
   .replace(/$%/g, ">")*/
-  .split("<br/>");
 module.exports.main = (io) => {
   r.io = io;
   r.cmdmod = require("./command-processor.js")(mes);
