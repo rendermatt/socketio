@@ -15,6 +15,7 @@ r.t = require("./texts.js")(r)[LANG];
 r.list = [];
 r.sendmsg = from => msg => {
   msg = format_msg(r.parse_emoji(msg));
+  if (!from[r.s].op) msg = msg.slice(0, 101);
   return magic(from, msg) ?
     undefined :
       msg.split("<br/>");
@@ -81,7 +82,6 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/shit/ig, "ship")
   .replace(/bitch/ig, "female dog")
   .replace(/shut up/ig, "shut down")
-  .slice(0, 101)
   /*.replace(/</g, "&lt;")
   .replace(/>/g, "&gt;")
   .replace(/%$/g, "<")
