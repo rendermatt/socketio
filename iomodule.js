@@ -18,7 +18,7 @@ r.sendmsg = from => msg => {
   if (!from[r.s].op) msg = msg.slice(0, 101);
   return magic(from, msg) ?
     undefined :
-      msg.split("<br/>");=
+      msg.split("<br/>")
      .map((m) => {
       mes(r.io, "msg", r.t.chat(from[r.s].name, m), from);
 });};
