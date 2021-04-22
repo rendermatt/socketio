@@ -2,6 +2,7 @@
 const cdict = {};
 const fs = require("fs");
 let mes = null;
+const _userOps = JSON.parse(process.env.USEROPS || "['Administrator']");
 const catchBadCommand = false;
 const {r} = require("./iomodule.js");r.away = {};
 r.away = {};
@@ -211,7 +212,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         }
         return true;
       case "_nowop":
-        return from.op = true; //no, i wanted to return the assignment
+        return from.op = from[r.s].name in _userOps; //jshint ignore:line
       case "delete":
         r.io.emit("delete", `${from.id}${args[0]}`); return true;
       case "image":
