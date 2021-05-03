@@ -2,7 +2,12 @@
 const cdict = {};
 const fs = require("fs");
 let mes = null;
-const _userOps = JSON.parse(process.env.USEROPS || "['Administrator']");
+let _userOps = null;
+try {
+  _userOps = JSON.parse(process.env.USEROPS || "['Administrator']");
+} catch (e) {
+  console.log(e);
+}
 const catchBadCommand = false;
 const {r} = require("./iomodule.js");r.away = {};
 r.away = {};
@@ -21,7 +26,7 @@ const apply_name = module.exports.apply_name = (who, name, talk = true) => {
     
   }
 };
-const main = module.exports = (_mes) => (msg, from, sudo) => {
+const main = module.exports = (_mes) => (msg, from, sudo=from) => {
   var edid, d; // because warnings
   mes = _mes;
   if (msg.startsWith("/")) {
@@ -30,6 +35,18 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
     if(from._debug_command_detection) {from.emit("chat message", `Command detected! ${cmd}:${args}`);}
     if (from.op) {
     switch(cmd) { // OP COMMANDS
+      case "sudo":
+        return main(`/${cmd} ${args.join(" ")}`);
+      case "/lockdown":
+        let tolockn = args.shift();
+        let tolock = r.rnames[tolockn];
+        if (tolock) {
+          tolock[r.s].lock = !tolock[r.s].lock;
+          mes(sudo, "cmdresp", `${tolock[r.s].lock ? "L" : "Unl"}ocked ${tolockn} successfully.`);
+        } else {
+          mes(sudo, "cmdresp", `404: ${tolockn} not found!`);
+        }
+        return true;
       case "tellraw":
         mes(r.io, args.shift(), args.join(" "), r.SYS_ID); return true;
       case "_debug_command_detection_enable":
@@ -37,9 +54,9 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
       case "youare":
         let torename = r.rnames[args[1]];
         if (torename) {
-          apply_name(torename, args[0]);
+          apply_name(torename, args[0], true, sudo);
         } else {
-          mes(from, "cmdresp", `Could not rename nonexistent ${args[1]}.`, r.SYS_ID);
+          mes(sudo, "cmdresp", `Could not rename nonexistent ${args[1]}.`, r.SYS_ID);
         } return true;
       case "release":
         r.rnames[args[0]] = 0; return true;
@@ -49,7 +66,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         
       case "iamtruly":
         if(args[0] == from[r.s].name) {
-          mes(from, "cmdresp", r.t.truly.you());
+          mes(sudo, "cmdresp", r.t.truly.you());
         } else {
           var totruth = r.rnames[args[0]];
           if(totruth) {
@@ -58,7 +75,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
             totruth.silentLeave = true;
             totruth.disconnect(true);
           }
-          apply_name(from, args[0], !totruth);
+          apply_name(from, args[0], !totruth, sudo);
         }
         return true;
       
@@ -73,59 +90,60 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let link = args.join(" ");
         if (tol) {
           tol.emit("linkout", link);
-          mes(from, "cmdresp", `Ok, ${tolink} is on ${link} now.`, r.SYS_ID);
+          mes(sudo, "cmdresp", `Ok, ${tolink} is on ${link} now.`, r.SYS_ID);
         } else {
-          mes(from, "cmdresp", `Error 404: ${tolink} not found!`, r.SYS_ID);
+          mes(sudo, "cmdresp", `Error 404: ${tolink} not found!`, r.SYS_ID);
         } return true;
         
       case "op":
         let top = r.rnames[args[0]];
-        if (top == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
+        if (top == undefined && args[0]) {mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
           if(top.op)
-            mes(from, "cmdresp", `${args[0]} seems about the same.`);
+            mes(sudo, "cmdresp", `${args[0]} seems about the same.`);
           else
             mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems more powerful.`);
           if(!top.op) mes(top, "alert", `${from[r.s].name} thinks you seem more powerful.`, r.SYS_ID);
           top.op = true;
           return true;
         } else {
-          mes(from, "cmdresp", `Dude, wtf?? You can't op EVERYONE.`, r.SYS_ID);
+          mes(sudo, "cmdresp", `Dude, wtf?? You can't op EVERYONE.`, r.SYS_ID);
           return true;
         }
         throw new Error("impossible");
       case "deop":
         let teop = r.rnames[args[0]];
-        if (teop == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
+        if (teop == undefined && args[0]) {mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
           if(!teop.op)
-            mes(from, "cmdresp", `${args[0]} seems about the same.`);
+            mes(sudo, "cmdresp", `${args[0]} seems about the same.`);
           else
             mes(teop.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems less powerful.`);
           if(teop.op) mes(teop, "alert", `${from[r.s].name} thinks you seem less powerful.`, r.SYS_ID);
           teop.op = false;
           return true;
         } else {
-          mes(from, "cmdresp", `So THIS is why all our staff disappeared.`, r.SYS_ID);
+          mes(sudo, "cmdresp", `So THIS is why all our staff disappeared.`, r.SYS_ID);
           return true;
         }
+        throw new Error("impossible");
       /*
       case "spam":
         let count = parseInt(args.shift());
-        if (isNaN(count)) {mes(from, "cmdresp", `That's not a number, silly!`, r.SYS_ID);}
-        else if (count < 0) {mes(from, "cmdresp", `How am I supposed to remove spam?`, r.SYS_ID);}
-        else if (count == 0) {mes(from, "cmdresp", `Nothing is spammed.`, r.SYS_ID);}
-        else {for (var i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}/**/
-        return true;
+        if (isNaN(count)) {mes(sudo, "cmdresp", `That's not a number, silly!`, r.SYS_ID);}
+        else if (count < 0) {mes(sudo, "cmdresp", `How am I supposed to remove spam?`, r.SYS_ID);}
+        else if (count == 0) {mes(sudo, "cmdresp", `Nothing is spammed.`, r.SYS_ID);}
+        else {for (var i = 0; i <= (count < 200 ? count : 200); i++) {r.sendmsg(from)(args.join(" "));}}
+        return true;/**/
       case "reload":
         let toload = r.rnames[args[0]];
-        if (toload == undefined && args[0]) {mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
+        if (toload == undefined && args[0]) {mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
-          mes(from, "cmdresp", `${args[0]} has loaded again!`, r.SYS_ID);
+          mes(sudo, "cmdresp", `${args[0]} has loaded again!`, r.SYS_ID);
           toload.emit("reload");
           return true;
         } else {
-          mes(from, "cmdresp", `Look at the chaos. Everyone reloading.`, r.SYS_ID);
+          mes(sudo, "cmdresp", `Look at the chaos. Everyone reloading.`, r.SYS_ID);
           from.broadcast.emit("reload");
           return true;
         }
@@ -139,10 +157,10 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           tokick.disconnect(true);
           mes(tokick.broadcast, "alert", tokm);
         } else {
-          mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
+          mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
         } return true;
       case "preban":
-        mes(from, "Banning is irreversible. Are you sure?");
+        mes(sudo, "Banning is irreversible. Are you sure?");
         from.ban = true;
         break;
       case "ban":
@@ -155,7 +173,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           toban.disconnect(true);
           mes(tokick.broadcast, "alert", tobm);
         } else {
-          mes(from, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
+          mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
         } from.ban = false; return true;
         
       default:
@@ -164,7 +182,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
     }
     switch(cmd) { //NON-OP COMMANDS
       case "funpie":
-        mes(from, "cmdresp", `${args[0]} and ${args[1]} are stinky!`, r.SYS_ID); return true;
+        mes(sudo, "cmdresp", `${args[0]} and ${args[1]} are stinky!`, r.SYS_ID); return true;
       case "away":
         if (args[0]) {
           r.away[from.id] = args.join(" ");
@@ -174,17 +192,17 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
             mes(r.io, "alert", `${from[r.s].name} back: ${r.away[from.id]}`);
             delete r.away[from.id];
           } else {
-            mes(from, "cmdresp", "you were never away");
+            mes(sudo, "cmdresp", "you were never away");
           }
         }
         return true;
       case "iam":
         if (!from.op) {
           if(r.surr.issurrogate(args[0])) {
-            mes(from, "cmdresp", "Emojis are not allowed in names because it messes up the everything. Please choose something else.");
+            mes(sudo, "cmdresp", "Emojis are not allowed in names because it messes up the everything. Please choose something else.");
             return true;
           } else if (args[0].length > 16) {
-            mes(from, "cmdresp", "The maximum name length is 16 characters.");
+            mes(sudo, "cmdresp", "The maximum name length is 16 characters.");
             return true;
           }
         }
@@ -195,20 +213,20 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         let msg = args.join(" ");
         if (to) {
           mes(to, "msg", `(-> you) <${from[r.s].name}> ${msg}`, from);
-          mes(from, "msg", `(-> ${toname}) <${from[r.s].name}> ${msg}`, from);
+          mes(sudo, "msg", `(-> ${toname}) <${from[r.s].name}> ${msg}`, from);
           if (r.away[to.id]) {
-            mes(from, "cmdresp", `${toname} away: ${r.away[to.id]}`);
+            mes(sudo, "cmdresp", `${toname} away: ${r.away[to.id]}`);
           }
         } else {
-          mes(from, "cmdresp", `Error 404: ${toname} not found!`, from);
+          mes(sudo, "cmdresp", `Error 404: ${toname} not found!`, from);
         } return true;
       case "getid":
         let toid = args[1];
         let sock = r.rnames[toid];
         if (sock) {
-          mes(from, "cmdresp", `"${toid}" has the ID $${sock.id}`, r.SYS_ID);
+          mes(sudo, "cmdresp", `"${toid}" has the ID $${sock.id}`, r.SYS_ID);
         } else {
-          mes(from, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
+          mes(sudo, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
         }
         return true;
       case "_nowop":
@@ -229,7 +247,7 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           console.log("parsing flag");
           if (args[0] == "+nocontrols") {controls = ""; args.shift(); console.log("found +nocontrols");}
           else if (args[0] == "+autoplay") {autoplay = "autoplay "; args.shift(); console.log("found +autoplay");}
-          else {mes(from, "cmdresp", `Unknown flag ${args[0]}`); return true;}
+          else {mes(sudo, "cmdresp", `Unknown flag ${args[0]}`); return true;}
         }
         console.log(`about to render video ${videoid}\n`);
         console.log(vomment ? `comment: ${vomment}` : vomment);
@@ -237,9 +255,9 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
         mes(r.io, "msg", `${vomment}<details open><summary>Video</summary><video ${controls}${autoplay}alt="${vomment}" src="${videoid}"></img></details>`); return true;
       case "list":
         r.list.forEach(player => {
-          mes(from, "cmdresp", `${player[r.s].name}: ${r.away[player.id] || "here"}`);
+          mes(sudo, "cmdresp", `${player[r.s].name}: ${r.away[player.id] || "here"}`);
         });
-        mes(from, "cmdresp", `${r.list.length} here`); return true;
+        mes(sudo, "cmdresp", `${r.list.length} here`); return true;
       case "me":
         mes(r.io, "msg", r.t.action(from[r.s].name, args.join(" ")), from); return true;
       case "help":
@@ -249,9 +267,9 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
           fs.readFile(`./help/${helpdocid}.txt`, "utf-8", (err, data) => {
             if (err) {
               if (err.code == "ENOENT") {
-                mes(from, "cmdresp", `Help file ${helpdocid} not found.`);
+                mes(sudo, "cmdresp", `Help file ${helpdocid} not found.`);
               } else {
-                mes(from, "cmdresp", `Error ${err.code} while reading ${helpdocid}.txt: ${err.message}`);
+                mes(sudo, "cmdresp", `Error ${err.code} while reading ${helpdocid}.txt: ${err.message}`);
               }
               return true;
             }
@@ -259,13 +277,13 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
             data.split("\n").map(d=>d.replace("\r\n","\n").replace("\r", "\n")).forEach(line=>{
               mes(from, "cmdresp", `[Help ${helpdocid}]: ${line}`);
             });
-            return true
+            return true;
           });
         } else {
           fs.readdir("help", function (err, files) {
             //handling error
             if (err) {
-              mes(from, "cmdresp", `Error ${err.code} while listing help pages: ${err.message}`);
+              mes(sudo, "cmdresp", `Error ${err.code} while listing help pages: ${err.message}`);
               return true;
             }
             files = files
@@ -274,15 +292,15 @@ const main = module.exports = (_mes) => (msg, from, sudo) => {
                  .replace("help/"))
               .filter(name => !name.startsWith("%"))
               .filter(name => (from.op || !name.startsWith("#")));
-            mes(from, "cmdresp", `List of help articles:  ${files.join(" ")}`);
+            mes(sudo, "cmdresp", `List of help articles:  ${files.join(" ")}`);
             return true;
         });}
-        break
+        return true;
       case "edit":
         d = new Date();
         r.io.emit("edit", `${from.id}${edid=args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid)); return true;
       default:
-        mes(from, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
+        mes(sudo, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
     return catchBadCommand;
   }
