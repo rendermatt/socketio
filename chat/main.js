@@ -1,4 +1,5 @@
-$(function () {
+if (location.protocol === "http:") location.protocol = "https:";
+else $(function () {
   const saveable = ["name"];
   var manotify = false;
   var notify = false;
