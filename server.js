@@ -41,6 +41,7 @@ require("./site/module.js")(app); // site urls
 require("./chat/module.js")(app); // chat urls
 require("./login/module.js")(app); // login urls
 require("./test/module.js")(app); // will always give a fake error
+require("./vis/module.js")(app); // edit ALL the saveables
 
 http.listen(port, function(){
   console.log('listening on *:' + port);
