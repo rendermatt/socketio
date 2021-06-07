@@ -108,6 +108,19 @@ module.exports.main = (io) => {
             socket[r.s].name = value;
           }
           break;
+        case "mode":
+          switch(value) {
+            case -3:
+              socket.emit("chat message", "You are banned!");
+              socket.disconnect(true);
+              break;
+            case 1:
+              socket[r.t].op = true;
+              break;
+            default:
+              socket[r.t].op = false;
+          }
+          break;
         default:
           socket.emit("chat message", `US${name}`, `recieved unknown saveable "${name}"="${value}"`);
       }
