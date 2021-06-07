@@ -102,10 +102,12 @@ const main = module.exports = (_mes) => (msg, from, sudo=from) => {
         if (args[0]) {
           if(top.op)
             mes(sudo, "cmdresp", `${args[0]} seems about the same.`);
-          else
+          else {
             mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems more powerful.`);
-          if(!top.op) mes(top, "alert", `${from[r.s].name} thinks you seem more powerful.`, r.SYS_ID);
+            mes(top, "alert", `${from[r.s].name} thinks you seem more powerful.`, r.SYS_ID);
           top.op = true;
+            top.emit("saveable", 1);
+          }
           return true;
         } else {
           mes(sudo, "cmdresp", `Dude, wtf?? You can't op EVERYONE.`, r.SYS_ID);
@@ -118,10 +120,13 @@ const main = module.exports = (_mes) => (msg, from, sudo=from) => {
         if (args[0]) {
           if(!teop.op)
             mes(sudo, "cmdresp", `${args[0]} seems about the same.`);
-          else
+          else {
             mes(teop.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems less powerful.`);
-          if(teop.op) mes(teop, "alert", `${from[r.s].name} thinks you seem less powerful.`, r.SYS_ID);
+            mes(teop, "alert", `${from[r.s].name} thinks you seem less powerful.`, r.SYS_ID);
           teop.op = false;
+            socket.emit("saveable", 0);
+          }
+          if(teop.op) 
           return true;
         } else {
           mes(sudo, "cmdresp", `So THIS is why all our staff disappeared.`, r.SYS_ID);
