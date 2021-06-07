@@ -34,4 +34,4 @@ jobs:
         git add package-lock.json
         git commit --amend -C HEAD
     - name: Push
-      run: git push
+      run: git push --force-with-lease
