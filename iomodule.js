@@ -109,7 +109,7 @@ module.exports.main = (io) => {
           }
           break;
         case "mode":
-          switch(value) {
+          switch(+value) {
             case -3:
               socket.emit("chat message", "You are banned!");
               socket.disconnect(true);
