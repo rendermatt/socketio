@@ -15,12 +15,11 @@ r.t = require("./texts.js")(r)[LANG];
 r.list = [];
 r.sendmsg = from => msg => {
   msg = format_msg(r.parse_emoji(msg));
-  if (!from[r.s].op) msg = msg.slice(0, 101);
   return magic(from, msg) ?
     undefined :
       msg.split("<br/>")
      .map((m) => {
-      mes(r.io, "msg", r.t.chat(from[r.s].name, m), from);
+      mes(r.io, "msg", r.t.chat(from[r.s].name, m.slice(0, 101)), from);
 });};
 r.parse_emoji = (e => msg => {
   for (let i in Object.keys(e)) { // This is how 4-loops work, right?
