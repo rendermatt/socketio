@@ -8,6 +8,14 @@ iom.main(io);
 
 const users = process.env.USERS ? JSON.parse(process.env.USERS) : {"admin": "adminpassword", "user": "userpassword"};
 
+process.on("uncaughtException", e => {
+  io.send("message", "Unfortunately, NoMoreNotes has crashed.");
+  io.send("message", "The complete stack trace is logged below:");
+  e.stack.split("\n").forEach((s, i) => io.send("message", `{i.padStart(4, 0)}  {s}`));
+  io.send("message", "If this happened an even number of times before, the restart should happen soon.");
+  io.send("message", "If this happened an odd number of times before, please wait for Nathan to manually restart the server.");
+});
+
 /*
 const whoDisBot = {
   botName: "WhoDisBot",
