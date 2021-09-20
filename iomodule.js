@@ -19,7 +19,7 @@ r.sendmsg = from => msg => {
     undefined :
       msg.split("<br/>")
      .map((m) => {
-      mes(r.io, "msg", r.t.chat(from[r.s].name, m.slice(0, 101)), from);
+      mes(r.io, "msg", r.t.chat(from[r.s].name, m), from);
 });};
 r.parse_emoji = (e => msg => {
   for (let i in Object.keys(e)) { // This is how 4-loops work, right?
