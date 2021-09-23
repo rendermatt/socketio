@@ -11,9 +11,6 @@
   "scripts": {
     "start": "node server.js"
   },
-  "devDependencies": {
-    "heroku": "^7.59.0"
-  },
   "engines": {
     "node": "15.x"
   }
