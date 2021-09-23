@@ -5,8 +5,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "socket.io": "^4.2.0",
-    "supports-color": "9.0.2",
-    "heroku-client": "3.1.0"
+    "supports-color": "9.0.2"
   },
   "scripts": {
     "start": "node server.js"

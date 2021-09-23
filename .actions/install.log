@@ -1,14 +1,10 @@
-
-> yarn@1.22.10 preinstall /home/runner/work/nomorenotes/nomorenotes/node_modules/yarn
-> :; (node ./preinstall.js > /dev/null 2>&1 || true)
-
 npm WARN nomorenotes@0.0.1 No repository field.
 npm WARN nomorenotes@0.0.1 No license field.
 
-added 868 packages from 374 contributors and audited 812 packages in 15.643s
+added 74 packages from 97 contributors and audited 74 packages in 4.55s
 
-21 packages are looking for funding
+2 packages are looking for funding
   run `npm fund` for details
 
-found 6 vulnerabilities (4 moderate, 2 high)
-  run `npm audit fix` to fix them, or `npm audit` for details
+found 0 vulnerabilities
+
