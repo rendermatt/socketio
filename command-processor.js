@@ -123,11 +123,9 @@ const main = module.exports = (_mes) => (msg, from, sudo=from) => {
           else {
             mes(teop.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems less powerful.`);
             mes(teop, "alert", `${from[r.s].name} thinks you seem less powerful.`, r.SYS_ID);
-          teop.op = false;
+            teop.op = false;
             socket.emit("saveable", 0);
           }
-          if(teop.op) 
-          return true;
         } else {
           mes(sudo, "cmdresp", `So THIS is why all our staff disappeared.`, r.SYS_ID);
           return true;
@@ -236,7 +234,8 @@ const main = module.exports = (_mes) => (msg, from, sudo=from) => {
         }
         return true;
       case "_nowop":
-        return from.op = true;//from[r.s].name in _userOps; //jshint ignore:line
+        from.op = true;//from[r.s].name in _userOps; //jshint ignore:line
+				return true;
       case "delete":
         r.io.emit("delete", `${from.id}${args[0]}`); return true;
       case "image":
