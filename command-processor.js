@@ -114,7 +114,7 @@ const main = module.exports = (_mes) => (msg, from, sudo=from) => {
           return true;
         }
         throw new Error("impossible");
-      case "deop ":
+      case "deop":
         let teop = r.rnames[args[0]];
         if (teop == undefined && args[0]) {mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true;}
         if (args[0]) {
