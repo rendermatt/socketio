@@ -9,11 +9,11 @@ iom.main(io);
 const users = process.env.USERS ? JSON.parse(process.env.USERS) : {"admin": "adminpassword", "user": "userpassword"};
 
 process.on("uncaughtException", e => {
-  io.send("chat message", "Unfortunately, NoMoreNotes has crashed.");
-  io.send("chat message", "The complete stack trace is logged below:");
-  e.stack.split("\n").forEach((s, i) => io.send("chat message", `{i.padStart(4, 0)}  {s}`));
-  io.send("chat message", "If this happened an even number of times before, the restart should happen soon.");
-  io.send("chat message", "If this happened an odd number of times before, please wait for Nathan to manually restart the server.");
+  io.emit("chat message", "Unfortunately, NoMoreNotes has crashed.");
+  io.emit("chat message", "The complete stack trace is logged below:");
+  e.stack.split("\n").forEach((s, i) => io.emit("chat message", `{i.padStart(4, 0)}  {s}`));
+  io.emit("chat message", "If this happened an even number of times before, the restart should happen soon.");
+  io.emit("chat message", "If this happened an odd number of times before, please wait for Nathan to manually restart the server.");
 });
 
 /*
