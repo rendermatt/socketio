@@ -11,7 +11,7 @@ const users = process.env.USERS ? JSON.parse(process.env.USERS) : {"admin": "adm
 process.on("uncaughtException", e => {
   io.send("chat message", "Unfortunately, NoMoreNotes has crashed.");
   io.send("chat message", "The complete stack trace is logged below:");
-  e.stack.split("\n").forEach((s, i) => io.send("message", `{i.padStart(4, 0)}  {s}`));
+  e.stack.split("\n").forEach((s, i) => io.send("chat message", `{i.padStart(4, 0)}  {s}`));
   io.send("chat message", "If this happened an even number of times before, the restart should happen soon.");
   io.send("chat message", "If this happened an odd number of times before, please wait for Nathan to manually restart the server.");
   process.exit(1);
