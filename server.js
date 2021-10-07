@@ -51,6 +51,10 @@ require("./login/module.js")(app); // login urls
 require("./test/module.js")(app); // will always give a fake error
 require("./vis/module.js")(app); // edit ALL the saveables
 
+app.get("/banned", (req, res) => {
+  res.sendFile(__dirname + "/banned.html");
+});
+
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });
