@@ -1,0 +1,45 @@
+<div class=venter>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js">
+  <center><img src="https://cdn1.iconfinder.com/data/icons/medieval-7/128/medieval_hammer_barbarian_power_weapon-512.png" height=96 width=96></center>
+  <center>
+    <p class=head>Banned</p>
+    <p>
+      Your ability to use NoMoreNotes has been removed by <b id=banner></b>. This will expire on <b id=unbant></b>.
+    </p>
+    <p>
+      (Reason: <span id=reason></span>)
+    </p>
+  </center>
+  <script>
+    $("#banner").text(localStorage.banner);
+    $("#unbant").text(new Date(+localStorage.banExpiry));
+    $("#reason").text(localStorage.banReason);
+
+  </script>
+  <style>
+    body {
+      background-color: darkgray;
+      font-family: "Calibri";
+    }
+
+    .venter {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: block;
+      transform: translate(-50%, -50%);
+    }
+
+    .head {
+      display: block;
+      font-size: 3em;
+      line-height: 1em;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+  </style>
+</div>
