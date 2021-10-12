@@ -49,6 +49,10 @@ app.get("/banned", (req, res) => {
   res.sendFile(__dirname + "/banned.html");
 });
 
+app.get("/timer", (req, res) => {
+  res.sendFile(__dirname + "/timer.html");
+});
+
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });
