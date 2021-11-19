@@ -1,5 +1,6 @@
 if (location.protocol === "http:") location.protocol = "https:";
 else $(function () {
+  
   const saveable = ["name"];
   var manotify = false;
   var notify = false;
@@ -68,4 +69,11 @@ else $(function () {
     $("#m").val(cmd);
   }
 };
+})
+document.addEventListener("keydown", e => {
+	if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "d") {
+  	e.preventDefault();
+    console.log("hyperactive rabbits")
+    $(document.body).toggleClass("dark")
+}
 });
