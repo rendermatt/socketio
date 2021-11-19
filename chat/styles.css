@@ -76,3 +76,7 @@ spoiler:hover {
   color: gray;
   background-color: white;
 }
+.dark {
+  background: rgba(30, 30, 30, 1);
+  color: white;
+}
