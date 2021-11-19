@@ -2,7 +2,8 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	background-color: white;
+	color: inherit;
+	background-color: inherit;
 }
 body {
 	/*/ background-image: url(https://www.ouruniverseforkids.com/wp-content/uploads/2018/09/shooting-768x323.png); /**/
@@ -42,7 +43,7 @@ body {
 #messages li {
 	padding: 5px 10px;
 	background: rgba(0, 0, 0, 0);
-	color: black;
+	color: inherit;
 }
 /*
 #messages li:nth-child(odd) {
@@ -60,10 +61,10 @@ dialog {
 li, button, input {
 	font-family: /*/32px Helvetica, Arial/**/monospace;
 }
-li join {
+li.join {
   color: green;
 }
-li leave {
+li.leave {
   color: red;
 }
 
@@ -74,7 +75,7 @@ spoiler {
 spoiler:hover {
   cursor: none;
   color: gray;
-  background-color: white;
+  background-color: inherit;
 }
 .dark {
   background: rgba(30, 30, 30, 1);
