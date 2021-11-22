@@ -220,8 +220,8 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         let to = r.rnames[toname];
         let msg = args.join(" ");
         if (to) {
-          mes(to, "msg", `(-> you) <${from[r.s].name}> ${msg}`, from);
-          mes(sudo, "msg", `(-> ${toname}) <${from[r.s].name}> ${msg}`, from);
+          mes(to, "msg", `(private) &lt;${from[r.s].name}> ${msg}`, from);
+          mes(sudo, "msg", `(to ${toname}) <${from[r.s].name}> ${msg}`, from);
           if (r.away[to.id]) {
             mes(sudo, "cmdresp", `${toname} away: ${r.away[to.id]}`);
           }
