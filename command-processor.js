@@ -283,7 +283,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
               return true;
             }
             console.log(typeof data);
-            data.split("\n").map(d => d.replace("\r\n", "\n").replace("\r", "\n")).forEach(line => {
+            data.split("\n").map(d => d.replace("\r\n", "\n").replace("\r", "\n")).filter(line => line).forEach(line => {
               mes(from, "cmdresp", `[Help ${helpdocid}]: ${line}`);
             });
             return true;
@@ -301,7 +301,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
                 .replace("help/"))
               .filter(name => !name.startsWith("%"))
               .filter(name => (from.op || !name.startsWith("#")));
-            mes(sudo, "cmdresp", `List of help articles (use <button>/help filename</button to read):  ${files.join(" ")}`);
+            mes(sudo, "cmdresp", `List of help articles (use <button>/help filename</button> to read):  ${files.join(" ")}`);
             return true;
           });
         }
