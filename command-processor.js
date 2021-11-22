@@ -99,6 +99,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         case "code":
           from.emit("linkout", "https://github.dev/nomorenotes/nomorenotes")
           mes(from, "cmdresp", "You are now coding!")
+          break;
         case "op":
           let top = r.rnames[args[0]];
           if (top == undefined && args[0]) { mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID); return true; }
