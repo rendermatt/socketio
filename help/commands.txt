@@ -11,4 +11,5 @@ a <b>?</b> at the end means the value is optional
 <b>/video <i>[url]</i> <i>+autoplay</i> <i>+nocontrols</i> <i><q>caption?</q></i></b>: send a video
 <b>/list</b>: display a list of who is online
 <b>/me <i><q>action</q></i></b>: do an action
+<b>/nexus</b>: view other servers
 <b>/help <i>[file?]</i></b>: get help

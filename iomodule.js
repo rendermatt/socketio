@@ -7,6 +7,12 @@ const senderid = {[SYS_ID.id]: 0};
 const USERDICT = process.env.USER || {};
 r.USERDICT = USERDICT;
 r.SYS_ID = SYS_ID;
+r.nexusData = require("./servers.json");
+r.nexusSyms = {
+  "other": "&nbsp;",
+  "here": ">",
+  "noid": "!"
+}
 module.exports = {};
 r.io = null;
 r.surr = require("./surr.js")

@@ -319,6 +319,10 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           });
         }
         return true;
+      case "nexus":
+        for (let { id, name, description, url } of r.nexusData) {
+          mes(sudo, "cmdresp", `${r.nexusSyms[id === process.env.SERVER_NAME ? "here" : id ? "other" : "noid"]} <a href="${url}" title="${id ?? "no id set"}">${name}</a> - ${description}`)
+        }
       case "edit":
         d = new Date();
         r.io.emit("edit", `${from.id}${edid = args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid)); return true;
