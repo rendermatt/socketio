@@ -30,7 +30,7 @@ const whoDisBot = {
 */
 app.use('/lib', express.static(__dirname + '/lib'))
 app.get("/favicon.ico", (req, res) => {
-  res.sendFile(__dirname + "/favicon/drive.ico");
+  res.sendFile(__dirname + "/favicon/drive_new.ico");
 });
 app.get("/story.txt", (req, res) => {
   res.sendFile(__dirname + "/story.txt");
