@@ -1,11 +1,11 @@
 module.exports = (r) => ({
   "en_us": {
-    "join": a=>`&lt;${a}&gt; has joined.`,
-    "leave": a=>`&lt;${a}&gt; has left. T`,
-    "kick": a=>`&lt;${a}&gt; was hit by the rubber boot!`,
-    "ban": a=>`&lt;${a}&gt; was hit by the banhammer. :(`,
+    "join": a=>`&lt;${a}> has joined.`,
+    "leave": a=>`&lt;${a}> has left. T`,
+    "kick": (a,b)=>`&lt;${a}> was hit by &lt;${b}>'s rubber boot!`,
+    "ban": (a,b,c,d)=>`&lt;${a}>; was hit by &lt;${b}>'s ${c}-pound banhammer: ${d}`,
     "join_self": (a,b)=>`Welcome to the ${process.env.SERVER_NAME || "local"} server, ${a} (${b})`,
-    "chat": (a,b)=>`&lt;${a}&gt; ${b}`,
+    "chat": (a,b)=>`&lt;${a}> ${b}`,
     "action": (a,b)=>`* ${a} ${b}`,
     "nick": (a,b)=>`${a} has applied name ${b}.`,
     "truly": {

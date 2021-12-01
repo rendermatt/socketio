@@ -161,7 +161,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           let tokick = r.rnames[args[0]];
           if (tokick) {
             mes(tokick, "alert", `You were kicked from NoMoreNotes by ${from[r.s].name}.`, r.SYS_ID);
-            var tokm = r.t.kick(tokick[r.s].name);
+            var tokm = r.t.kick(tokick[r.s].name, from[r.s].name);
             tokick.silentLeave = true;
             tokick.disconnect(true);
             mes(tokick.broadcast, "alert", tokm);
@@ -171,7 +171,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         case "preban":
           let topban = r.rnames[args[0]];
           if (!topban) return mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
-          mes(sudo, `Are you completely sure you want to ban ${args[0]}`);
+          mes(sudo, "cmdresp", `Are you completely sure you want to ban ${args[0]}?`);
           from.ban = topban;
           return true;
         case "ban":
@@ -190,7 +190,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
             toban.silentLeave = true;
             toban.emit("ban", from[r.s].name, time, m);
             toban.disconnect(true);
-            var tobm = r.t.ban(tokick[r.s].name, time, m);
+            var tobm = r.t.ban(tokick[r.s].name, from[r.s].name, time, m);
             mes(toban.broadcast, "alert", tobm);
           } else {
             mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
