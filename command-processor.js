@@ -259,7 +259,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         var imageid = args.shift();
         var comment = args.join(" ");
         mes(r.io, "msg", `${comment}<details open><summary>Image</summary><img alt="${comment}" src="${imageid}"></img></details>`); return true;
-      case "video":
+      case " video":
         var videoid = args.shift();
         var autoplay = "";
         var controls = "controls ";
