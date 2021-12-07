@@ -169,11 +169,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
             mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
           } return true;
         case "preban":
-          let topban = r.rnames[args[0]];
-          if (!topban) return mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
-          mes(sudo, "cmdresp", `Are you completely sure you want to ban ${args[0]}?`);
-          from.ban = topban;
-          return true;
+          mes(sudo, "cmdresp", "/preban was removed. You can just use /ban.")
         case "ban":
           if (args.length < 3) {
             mes(sudo, "cmdresp", "Name, time, and message are required.");
@@ -186,9 +182,8 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           let time = parseFloat(timestr); // minutes - 1h = 60, 24h = 1440, 7d = 10080
           let m = args.join(" ")
           if (toban) {
-            if (toban !== from.ban) mes(sudo, "Use /preban first.");
             toban.silentLeave = true;
-            var tobm = r.t.ban(tokick[r.s].name, from[r.s].name, time, m);
+            var tobm = r.t.ban(toban[r.s].name, from[r.s].name, time, m);
             toban.emit("ban", from[r.s].name, time, m);
             toban.disconnect(true);
             mes(io, "alert", tobm);
