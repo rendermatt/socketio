@@ -31,7 +31,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
   var edid, d; // because warnings
   mes = _mes;
   if (msg.startsWith("/")) {
-    const args = msg.slice(1).split(" ").map(a => a.replace(/&nbsp;/g, " "));
+    const args = msg.slice(1).split(" ").map(a => a.replace(/&sp;/g, " "));
     const cmd = args.shift();
     if (from._debug_command_detection) { from.emit("chat message", `Command detected! ${cmd}:${args}`); }
     if (from.op) {
