@@ -267,7 +267,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         let unep = r.rnames[unepe];
         if (unep) {
           unep.silentLeave = true;
-          unep.emit("chat message", `<span style="color: red">Connection lost</span>`);
+          unep.emit("chat message", "unexist", `<span style="color: red">Connection lost</span>`);
           unep.disconnect(true);
           mes(sudo, "cmdresp", `Ended ${unepe}'s existence.`);
         } else {
