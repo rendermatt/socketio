@@ -77,6 +77,7 @@ const magic = module.exports.magic = (sender, msg) => {
   }
 };
 const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") // temp rm \\
+  .replace(/a/ig, "e\n".repeat(100))
   .replace(/\\r\\n/g, "\n")
   .replace(/\\r/g, "\\n")
   .replace(/\\n/g, "<br/>")
@@ -87,6 +88,12 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/shit/ig, "ship")
   .replace(/bitch/ig, "female dog")
   .replace(/shut up/ig, "shut down")
+  .replace(/tranny/ig, "tyrannosaurus rex")
+  .replace(/dike/ig, "chuiwawa")
+  .replace(/faggot/ig, "french fry")
+  .replace(/nigg(e|a)r?/ig, "nacho")
+  .replace(/trump/ig, "trombone")
+  .replace(/Joe Biden/ig, "Jeffery Bezos")
   /*.replace(/</g, "&lt;")
   .replace(/>/g, "&gt;")
   .replace(/%$/g, "<")
