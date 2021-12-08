@@ -254,12 +254,24 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           mes(sudo, "cmdresp", `Error 404: ${toname} not found!`, from);
         } return true;
       case "getid":
-        let toid = args[1];
+        let toid = args[0];
         let sock = r.rnames[toid];
         if (sock) {
           mes(sudo, "cmdresp", `"${toid}" has the ID $${sock.id}`, r.SYS_ID);
         } else {
           mes(sudo, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
+        }
+        return true;
+      case "unexist":
+        let unepe = args.shift();
+        let unep = r.rnames[unepe];
+        if (unep) {
+          unep.silentLeave = true;
+          unep.emit("chat message", `<span style="color: red">Connection lost</span>`);
+          unep.disconnect(true);
+          mes(sudo, "cmdresp", `Ended ${unepe}'s existence.`);
+        } else {
+          mes(sudo, "cmdresp", `Error 404: ${unepe} not found!`, r.SYS_ID);
         }
         return true;
       case "_nowop":

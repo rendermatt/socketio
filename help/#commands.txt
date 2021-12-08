@@ -12,3 +12,4 @@
 <b>/code</b> - start working on nomorenotes
 <b>/wspy</b> - spy on private messages
 <b>/unwspy</b> - give people back their privacy
+<b>/unexist <i>[name]</i></b> - silently kick someone
