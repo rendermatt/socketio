@@ -3,5 +3,6 @@ module.exports = {
 	"alert": "! ",
 	"msg": "% ",
 	"debug": "# ",
+	"spy": "* ",
 	"none": "&nbsp; "
 }

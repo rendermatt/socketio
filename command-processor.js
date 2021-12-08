@@ -246,7 +246,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         if (to) {
           mes(to, "msg", `(private) &lt;${from[r.s].name}> ${msg}`, from);
           mes(sudo, "msg", `(to ${toname}) &lt;${from[r.s].name}> ${msg}`, from);
-          mes(io.to("wspy"), `(to ${toname}) &lt;${from[r.s].name}> ${msg}`);
+          mes(io.to("wspy"), "spy", `(to ${toname}) &lt;${from[r.s].name}> ${msg}`);
           if (r.away[to.id]) {
             mes(sudo, "cmdresp", `(${toname} is away: ${r.away[to.id]})`);
           }
