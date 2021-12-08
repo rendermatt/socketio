@@ -197,6 +197,13 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           }
           from.ban = undefined;
           return true;
+        case "wspy":
+          if (from.rooms.has("wspy")) {
+            mes(from, "cmdresp", "You were already spying on /w.")
+          } else {
+            from.join("wspy")
+            mes(from, "cmdresp", "You are now spying on /w.")
+          }
         default:
 
       }
@@ -217,6 +224,13 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           }
         }
         return true;
+      case "unwspy":
+        if (from.rooms.has("wspy")) {
+          from.leave("wspy");
+          mes(from, "cmdresp", "You are no longer spying on /w.")
+        } else {
+          mes(from, "cmdresp", "You were not spying on /w.")
+        }
       case "iam":
         if (!from.op) {
           if (r.surr.issurrogate(args[0])) {
@@ -235,8 +249,9 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         if (to) {
           mes(to, "msg", `(private) &lt;${from[r.s].name}> ${msg}`, from);
           mes(sudo, "msg", `(to ${toname}) <${from[r.s].name}> ${msg}`, from);
+          mes(io.to("wspy"), `(to ${toname}) <${from[r.s].name}> ${msg}`);
           if (r.away[to.id]) {
-            mes(sudo, "cmdresp", `${toname} away: ${r.away[to.id]}`);
+            mes(sudo, "cmdresp", `(${toname} is away: ${r.away[to.id]})`);
           }
         } else {
           mes(sudo, "cmdresp", `Error 404: ${toname} not found!`, from);
