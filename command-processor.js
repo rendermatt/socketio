@@ -204,6 +204,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
             from.join("wspy")
             mes(from, "cmdresp", "You are now spying on /w.")
           }
+          return true;
         default:
 
       }
@@ -231,6 +232,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         } else {
           mes(from, "cmdresp", "You were not spying on /w.")
         }
+        return true;
       case "iam":
         if (!from.op) {
           if (r.surr.issurrogate(args[0])) {
