@@ -77,7 +77,6 @@ const magic = module.exports.magic = (sender, msg) => {
   }
 };
 const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") // temp rm \\
-  .replace(/a/ig, "e\n".repeat(100))
   .replace(/\\r\\n/g, "\n")
   .replace(/\\r/g, "\\n")
   .replace(/\\n/g, "<br/>")
