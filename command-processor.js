@@ -109,10 +109,14 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
             if (top.op)
               mes(sudo, "cmdresp", `${args[0]} seems about the same.`);
             else {
-              mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems more powerful.`);
-              mes(top, "alert", `${from[r.s].name} thinks you seem more powerful.`, r.SYS_ID);
-              top.op = true;
-              top.emit("saveable", 1);
+              if (top.permDeop) {
+                mes(from, "cmdresp", `${args[0]} is permanently deopped and cannot be opped.`)
+              } else {
+                mes(top.broadcast, "alert", `${from[r.s].name} thinks ${args[0]} seems more powerful.`);
+                mes(top, "alert", `${from[r.s].name} thinks you seem more powerful.`, r.SYS_ID);
+                top.op = true;
+                top.emit("saveable", 1);
+              }
             }
             return true;
           } else {
