@@ -13,6 +13,7 @@ const catchBadCommand = false;
 const { r } = require("./iomodule.js"); r.away = {};
 r.away = {};
 const apply_name = module.exports.apply_name = (who, name, talk = true) => {
+  name = name.replace("&nbsp;", "").replace("&sp;", "").replace("&nbsp", "")
   if (r.rnames[name]) {
     if (talk) mes(who, "cmdresp", `Name ${name} already authenticated.`, r.SYS_ID);
   } else {

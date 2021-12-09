@@ -114,6 +114,7 @@ module.exports.main = (io) => {
     socket.on('saveable', (name, value) => {
       switch(name) {
         case "name":
+          value = value.replace("&nbsp;", "").replace("&sp;", "").replace("&nbsp", "")
           if (rnames[value]) {
             mes(socket, "alert", "Sorry, your saved name was taken.");
             mes(rnames[value], "alert", `You prevented ${socket[r.s].name} from getting their name.`);
