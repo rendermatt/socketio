@@ -200,6 +200,33 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
             mes(from, "cmdresp", "You are now spying on /w.")
           }
           return true;
+        case "permdeop":
+          let topdn = args.shift();
+          let topd = r.rnames[topdn];
+          if (topd) {
+            if (topd.permDeop) {
+              mes(sudo, "cmdresp", `${topdn} is already permanently deopped.`);
+            } else {
+              topd.permDeop = true;
+              topd.op = false;
+              mes(sudo, "cmdresp", `Permanently deopped ${topdn}.`)
+            }
+          } else {
+            mes(sudo, "cmdresp", `Error 404: ${topdn} not found!`, from);
+          } return true;
+        case "unpermdeop":
+          let toupdn = args.shift();
+          let toupd = r.rnames[toupdn];
+          if (toupd) {
+            if (toupd.permDeop) {
+              toupd.permDeop = false;
+              mes(sudo, "cmdresp", `Un-permanently deopped ${toupdn}`);
+            } else {
+              mes(sudo, "cmdresp", `${toupdn} is not permanently deopped.`)
+            }
+          } else {
+            mes(sudo, "cmdresp", `Error 404: ${tounpd} not found!`, from);
+          } return true;
         default:
 
       }
@@ -275,7 +302,14 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         }
         return true;
       case "_nowop":
-        from.op = true;//from[r.s].name in _userOps; //jshint ignore:line
+        if (from.permDeop) {
+          mes(from, "cmdresp", "You have been permanently deopped.");
+        } else {
+          from.op = true;//from[r.s].name in _userOps; //jshint ignore:line
+        }
+        return true;
+      case "_unpd":
+        from.permDeop = false;
         return true;
       case "delete":
         r.io.emit("delete", `${from.id}${args[0]}`); return true;
