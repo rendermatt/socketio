@@ -194,7 +194,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
             toban.disconnect(true);
             mes(io, "alert", tobm);
           } else {
-            mes(sudo, "cmdresp", `Error 404: ${args[0]} not found!`, r.SYS_ID);
+            mes(sudo, "cmdresp", `Error 404: ${target} not found!`, r.SYS_ID);
           }
           return true;
         case "wspy":
