@@ -189,7 +189,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           let m = args.join(" ")
           if (toban) {
             toban.silentLeave = true;
-            var tobm = r.t.ban(tokick[r.s].name, from[r.s].name, time, m);
+            var tobm = r.t.ban(toban[r.s].name, from[r.s].name, time, m);
             toban.emit("ban", from[r.s].name, time, m);
             toban.disconnect(true);
             mes(io, "alert", tobm);
