@@ -205,6 +205,18 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
             mes(from, "cmdresp", "You are now spying on /w.")
           }
           return true;
+        case "unexist":
+          let unepe = args.shift();
+          let unep = r.rnames[unepe];
+          if (unep) {
+            unep.silentLeave = true;
+            unep.emit("chat message", "unexist", `<span style="color: red">Connection lost</span>`);
+            unep.disconnect(true);
+            mes(sudo, "cmdresp", `Ended ${unepe}'s existence.`);
+          } else {
+            mes(sudo, "cmdresp", `Error 404: ${unepe} not found!`, r.SYS_ID);
+          }
+          return true;
         case "permdeop":
           let topdn = args.shift();
           let topd = r.rnames[topdn];
@@ -294,24 +306,15 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           mes(sudo, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
         }
         return true;
-      case "unexist":
-        let unepe = args.shift();
-        let unep = r.rnames[unepe];
-        if (unep) {
-          unep.silentLeave = true;
-          unep.emit("chat message", "unexist", `<span style="color: red">Connection lost</span>`);
-          unep.disconnect(true);
-          mes(sudo, "cmdresp", `Ended ${unepe}'s existence.`);
-        } else {
-          mes(sudo, "cmdresp", `Error 404: ${unepe} not found!`, r.SYS_ID);
-        }
-        return true;
       case "_nowop":
         if (from.permDeop) {
           mes(from, "cmdresp", "You have been permanently deopped.");
         } else {
           from.op = true;//from[r.s].name in _userOps; //jshint ignore:line
         }
+        return true;
+      case "human":
+        io.emit("chat message", "human", `<details open><summary>Human provided by ${socket[r.s].name}</summary><img src="https://thispersondoesnotexist.com/image?n=${Date.now}" alt="human" title="human"></img>`)
         return true;
       case "_unpd":
         from.permDeop = false;
