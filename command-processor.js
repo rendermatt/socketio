@@ -36,7 +36,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
     const cmd = args.shift();
     if (from._debug_command_detection) { from.emit("chat message", `Command detected! ${cmd}:${args}`); }
     if (from.op) {
-      switch (cmd) { // OP COMMANDS
+      switch (cmd.toLowerCase()) { // OP COMMANDS
         case "sudo":
           return main(`/${cmd} ${args.join(" ")}`);
         case "/lockdown":
@@ -234,6 +234,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         case "guestlock":
           io.guestlock = !io.guestlock;
           mes(io, "alert", `Guests are now ${io.guestlock ? "un" : ""}locked.`)
+          return true;
         case "unpermdeop":
           let toupdn = args.shift();
           let toupd = r.rnames[toupdn];
