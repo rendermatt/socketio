@@ -231,6 +231,9 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           } else {
             mes(sudo, "cmdresp", `Error 404: ${topdn} not found!`, from);
           } return true;
+        case "guestlock":
+          io.guestlock = !io.guestlock;
+          mes(io, "alert", `Guests are now ${io.guestlock ? "un" : ""}locked.`)
         case "unpermdeop":
           let toupdn = args.shift();
           let toupd = r.rnames[toupdn];

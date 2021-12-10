@@ -143,6 +143,11 @@ module.exports.main = (io) => {
     socket.on('hello', (session, uname, passw) => {
       if (!USERDICT[uname]) { socket.emit("loginbad", `Unknown user ${uname}`); }
       if (!session) socket.emit("authenticate", session = socket.id);
+      if (io.guestlock && socket[r.s].name === "Guest-" + socket.id.slice(0, 3)) {
+        socket.emit("chat message", "guestlock", "Guests are currently locked out of this server.")
+        socket.disconnect(true);
+        return;
+      }
       rnames[socket[r.s].name] = socket;
       //socket.id = session ? session : socket.id;
       socket.join("main");
