@@ -53,6 +53,10 @@ app.get("/timer", (req, res) => {
   res.sendFile(__dirname + "/timer.html");
 });
 
+app.get("/nopine", (req, res) => {
+  res.sendFile(__dirname + "/nopine.html");
+});
+
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });
