@@ -71,6 +71,7 @@ li.leave {
 spoiler {
   color: gray;
   background-color: gray;
+  transition: background-color 0.2s;
 }
 spoiler:hover {
   cursor: none;
