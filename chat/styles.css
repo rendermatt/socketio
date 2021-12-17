@@ -68,12 +68,12 @@ li.leave {
   color: red;
 }
 
-spoiler {
+spoiler, sp {
   color: gray;
   background-color: gray;
   transition: background-color 0.2s;
 }
-spoiler:hover {
+spoiler:hover, sp:hover {
   cursor: none;
   color: gray;
   background-color: inherit;

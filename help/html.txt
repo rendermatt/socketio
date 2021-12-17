@@ -3,7 +3,7 @@
 <i>Italic:</i> &lt;i>your text&lt;/i>
 <u>Underline:</u> &lt;u>your text&lt;/u>
 <strike>Strikethrough:</strike> &lt;strike>your text&lt/strike>
-<spoiler>Spoiler</spoiler>: &lt;spoiler>your movie-ruining spoiler here&lt;/spoiler>
+<spoiler>Spoiler</spoiler>: &lt;spoiler>your movie-ruining spoiler here&lt;/spoiler> OR &lt;sp>this also works</sp>
 <a href="https://google.com" target=_blank>Link:</a> &lt;a href="your url" target=_blank>your text&lt;a><hr/>
 <span style="color: red;">Red text</span>: &lt;span style="color: red;">your text&lt;/span>
 <span style="color: red;">Fancy text</span>: &lt;span style="font-family: sans-serif">your text&lt;/span>
