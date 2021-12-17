@@ -46,7 +46,7 @@ const mes = (who, prefix, msg, sender = SYS_ID) => {
   console.log(`mes: ${typeof sender} send ${prefix} to ${typeof who}: ${msg}`);
   var d = new Date();
   who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 7 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
-  
+
 };
 const ipToSocket = {};
 //r.names = names;
@@ -119,6 +119,7 @@ module.exports.main = (io) => {
     next();
   });*/
   io.on("connection", (socket) => {
+    console.log("Existence")
     socket[r.s] = {};
     socket._id = socket.id;
     socket[r.s].name = "Guest-" + socket.id.slice(0, 3);
@@ -151,6 +152,7 @@ module.exports.main = (io) => {
       }
     });
     socket.on('hello', (session, uname, passw) => {
+      console.log("Hello")
       socket.removeAllListeners();
       if (!USERDICT[uname]) { socket.emit("loginbad", `Unknown user ${uname}`); }
       if (!session) socket.emit("authenticate", session = socket.id);
@@ -179,6 +181,7 @@ module.exports.main = (io) => {
       });
     });
     socket.on("preview", () => {
+      console.log("Preview")
       socket.removeAllListeners()
       socket.join("preview")
     })
