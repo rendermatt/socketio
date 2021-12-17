@@ -161,6 +161,7 @@ module.exports.main = (io) => {
         socket.disconnect(true);
         return;
       }
+      console.log("Survived removal")
       rnames[socket[r.s].name] = socket;
       //socket.id = session ? session : socket.id;
       socket.join("main");

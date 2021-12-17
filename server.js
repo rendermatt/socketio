@@ -8,7 +8,7 @@ iom.main(io);
 
 const users = process.env.USERS ? JSON.parse(process.env.USERS) : {"admin": "adminpassword", "user": "userpassword"};
 
-process.on("uncaughtException", e=>e);
+process.on("uncaughtException", e=>(console.error(e),e));
 
 /*
 const whoDisBot = {
