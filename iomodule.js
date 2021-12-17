@@ -150,8 +150,8 @@ module.exports.main = (io) => {
           socket.emit("chat message", `US${name}`, `recieved unknown saveable "${name}"="${value}"`);
       }
     });
-    socket.once('hello', (session, uname, passw) => {
-      socket.off("preview");
+    socket.on('hello', (session, uname, passw) => {
+      socket.removeAllListeners();
       if (!USERDICT[uname]) { socket.emit("loginbad", `Unknown user ${uname}`); }
       if (!session) socket.emit("authenticate", session = socket.id);
       if (io.guestlock && socket[r.s].name === "Guest-" + socket.id.slice(0, 3)) {
@@ -178,9 +178,9 @@ module.exports.main = (io) => {
         r.list.splice(r.list.indexOf(socket), 1);
       });
     });
-    socket.once("preview", () => {
+    socket.on("preview", () => {
+      socket.removeAllListeners()
       socket.join("preview")
-      socket.off("hello")
     })
     setTimeout(() => socket.emit("hello"), 250);
   });
