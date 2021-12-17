@@ -39,9 +39,14 @@ r.parse_emoji = (e => msg => {
 //const names = {};
 const rnames = {};
 const mes = (who, prefix, msg, sender = SYS_ID) => {
+  if (who === io && prefix === "mes" && sender !== SYS_ID) {
+    io.to("preview").emit(msg)
+  }
+  if (who === io) who = io.to("main");
   console.log(`mes: ${typeof sender} send ${prefix} to ${typeof who}: ${msg}`);
   var d = new Date();
   who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 7 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
+  
 };
 const ipToSocket = {};
 //r.names = names;
@@ -145,7 +150,8 @@ module.exports.main = (io) => {
           socket.emit("chat message", `US${name}`, `recieved unknown saveable "${name}"="${value}"`);
       }
     });
-    socket.on('hello', (session, uname, passw) => {
+    socket.once('hello', (session, uname, passw) => {
+      socket.off("preview");
       if (!USERDICT[uname]) { socket.emit("loginbad", `Unknown user ${uname}`); }
       if (!session) socket.emit("authenticate", session = socket.id);
       if (io.guestlock && socket[r.s].name === "Guest-" + socket.id.slice(0, 3)) {
@@ -172,6 +178,10 @@ module.exports.main = (io) => {
         r.list.splice(r.list.indexOf(socket), 1);
       });
     });
+    socket.once("preview", () => {
+      socket.join("preview")
+      socket.off("hello")
+    })
     setTimeout(() => socket.emit("hello"), 250);
   });
 };
