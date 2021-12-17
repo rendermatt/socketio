@@ -4,7 +4,7 @@ const fs = require("fs");
 let mes = null;
 let _userOps = null;
 try {
-  _userOps = JSON.parse(process.env.USEROPS || "['Administrator']");
+  _userOps = JSON.parse(process.env.USEROPS || '["Administrator"]');
 } catch (e) {
   console.log(e);
   _userOps = ["Administrator"];
