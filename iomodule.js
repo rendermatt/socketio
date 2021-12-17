@@ -1,4 +1,5 @@
 const r = {};
+let io = null;
 r.al = process.env.al || "gU ";
 r.s = Symbol("nomorenotes");
 const LANG = "en_us";
@@ -110,8 +111,8 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
 .replace(/>/g, "&gt;")
 .replace(/%$/g, "<")
 .replace(/$%/g, ">")*/
-module.exports.main = (io) => {
-  r.io = io;
+module.exports.main = (_io) => {
+  io = r.io = _io;
   r.cmdmod = require("./command-processor.js")(mes);
   /*io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
