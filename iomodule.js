@@ -21,22 +21,16 @@ r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
 r.list = [];
 r.sendmsg = from => msg => {
-  if (from[r.s].hotbox) {
-    msg.split("<br/>")
-    .map((m) => {
-      mes(from, "msg", r.t.chat(from[r.s].name, m), from);
-    });
-  }
   msg = format_msg(r.parse_emoji(msg));
   return magic(from, msg) ?
     undefined :
     msg.split("<br/>")
       .map((m) => {
-        mes(r.io, "msg", r.t.chat(from[r.s].name, m), from);
+        mes(from.hotboxed ? from : r.io, "msg", r.t.chat(from[r.s].name, m), from);
       });
 };
 r.parse_emoji = (e => msg => {
-  for (let i in Object.keys(e)) { // This is how 4-loops work, right?
+  for (let i of Object.keys(e)) { // This is how 4-loops work, right?
     if (e.hasOwnProperty(i)) {
       msg = msg.replace(new RegExp(`:${i}:`, "g"), e[i]);
     }
