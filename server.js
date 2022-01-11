@@ -6,6 +6,8 @@ var port = process.env.PORT || 3000;
 var iom = require("./iomodule.js");
 iom.main(io);
 
+io.toString = () => "[IO]"
+
 const users = process.env.USERS ? JSON.parse(process.env.USERS) : {"admin": "adminpassword", "user": "userpassword"};
 
 process.on("uncaughtException", e=>(console.error(e),e));

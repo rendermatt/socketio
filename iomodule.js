@@ -127,6 +127,9 @@ module.exports.main = (_io) => {
     socket[r.s] = {};
     socket._id = socket.id;
     socket[r.s].name = "Guest-" + socket.id.slice(0, 3);
+    socket.toString = () => {
+      return `[Socket ${socket[r.s].name}]`
+    }
     socket.on('saveable', (name, value) => {
       switch (name) {
         case "name":
