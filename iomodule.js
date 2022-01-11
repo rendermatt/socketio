@@ -21,6 +21,12 @@ r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
 r.list = [];
 r.sendmsg = from => msg => {
+  if (from[r.s].hotbox) {
+    msg.split("<br/>")
+    .map((m) => {
+      mes(from, "msg", r.t.chat(from[r.s].name, m), from);
+    });
+  }
   msg = format_msg(r.parse_emoji(msg));
   return magic(from, msg) ?
     undefined :
@@ -100,11 +106,11 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/nigg(e|a)r?/ig, "nacho")
   .replace(/trump/ig, "trombone") // joke
   .replace(/Joe Biden/ig, "Jeffery Bezos") // joke
-  .replace(/cable/ig, "cock") // joke
   .replace(/heffer/ig, "helper")
   .replace(/slut/ig, "serial killer")
   .replace(/dick/ig, "dinosaur")
   .replace(/cock/ig, "cabbage")
+  .replace(/cable/ig, "cock") // joke
   .replace(/cunt/ig, "putter")
   .replace(/pussy/ig, "kitty")
   .replace(/penis/ig, "pencil")
@@ -117,11 +123,11 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
 module.exports.main = (_io) => {
   io = r.io = _io;
   r.cmdmod = require("./command-processor.js")(mes);
-  /*io.use((client, next) => {
+  /* io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
     client.ipAddress = io.request.connection.remoteAddress;
     next();
-  });*/
+  }); */
   io.on("connection", (socket) => {
     console.log("Existence")
     socket[r.s] = {};

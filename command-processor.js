@@ -12,8 +12,8 @@ try {
 const catchBadCommand = false;
 const { r } = require("./iomodule.js"); r.away = {};
 r.away = {};
-const apply_name = module.exports.apply_name = (who, name, talk = true) => {
-  name = name.replace(/&nbsp;/ig, "").replace(/&sp;/ig, "").replace(/&nbsp/ig, "").replace(/ /ig, "")
+const apply_name = module.exports.apply_name = (who, name, talk = true, noSpaces = true) => {
+  if (noSpaces) name = name.replace(/&nbsp;/ig, "").replace(/&sp;/ig, "").replace(/&nbsp/ig, "").replace(/ /ig, "")
   if (r.rnames[name]) {
     if (talk) mes(who, "cmdresp", `Name ${name} already authenticated.`, r.SYS_ID);
   } else {
@@ -39,6 +39,42 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
       switch (cmd.toLowerCase()) { // OP COMMANDS
         case "sudo":
           return main(`/${cmd} ${args.join(" ")}`);
+        case "hotbox":
+          let tohotboxn = args.shift();
+          let tohotbox = r.rnames[tohotboxn];
+          if (tohotbox) {
+            if (tohotbox[r.s].hotboxed) {
+              mes(sudo, "cmdresp", `${tohotboxn} is already hotboxed.`)
+            } else {
+              tohotbox[r.s].hotboxed = true;
+              mes(sudo, "cmdresp", `Hotboxed ${tohotboxn} successfully.`)
+            }
+          } else {
+            mes(sudo, "cmdresp", `404: ${tohotboxn} not found!`);
+          }
+          return true;
+        case "unhotbox":
+          let tounhotboxn = args.shift();
+          let tounhotbox = r.rnames[tounhotboxn];
+          if (tounhotbox) {
+            if (tounhotbox[r.s].hotboxed) {
+              tounhotbox[r.s].hotboxed = false;
+              mes(sudo, "cmdresp", `Unhotboxed ${tounhotboxn} successfully.`)
+            } else {
+              mes(sudo, "cmdresp", `${tounhotboxn} is not hotboxed.`)
+            }
+          } else {
+            mes(sudo, "cmdresp", `404: ${tounhotboxn} not found!`);
+          }
+          return true;
+        case "hotboxspy": 
+          if (from.rooms.has("hotboxspy")) {
+            from.leave("hotboxspy")
+            mes(from, "You are no longer spying on hotbox messages.")
+          } else {
+            from.join("hotboxspy")
+            mes(from, "You are now spying on hotbox messages.")
+          }
         case "/lockdown":
           let tolockn = args.shift();
           let tolock = r.rnames[tolockn];
