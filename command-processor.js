@@ -346,17 +346,17 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           mes(sudo, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
         }
         return true;
-      case "_nowop":
+      case process.env.SELF_OP_COMMAND:
         if (from.permDeop) {
           mes(from, "cmdresp", "You have been permanently deopped.");
         } else {
           from.op = true;//from[r.s].name in _userOps; //jshint ignore:line
         }
         return true;
-      case "human":
-        io.emit("chat message", "human", `<details open><summary>Human provided by ${socket[r.s].name}</summary><img src="https://thispersondoesnotexist.com/image?n=${Date.now}" alt="human" title="human"></img>`)
+    case "human":
+        mes(io, "human", `<details open><summary>Human provided by ${socket[r.s].name}</summary><img src="https://thispersondoesnotexist.com/image?n=${Date.now}" alt="human" title="human"></img>`)
         return true;
-      case "_unpd":
+      case process.env.SELF_AO_COMMAND:
         from.permDeop = false;
         return true;
       case "delete":

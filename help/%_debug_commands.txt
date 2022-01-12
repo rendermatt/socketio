@@ -1,3 +1,2 @@
-<b>/_nowop</b> - makes the current user an operator
 <b>/_debug_command_detection_enable</b> - print messages whenever a command is sent
 <b>/funpie</b> - the ORIGINAL test command

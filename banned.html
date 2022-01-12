@@ -11,9 +11,9 @@
     </p>
   </center>
   <script>
-    if (+localStorage.banExpiry < Date.now()) location.pathname = "/chat";
+    if (+localStorage.banExpiry1 < Date.now()) location.pathname = "/chat";
     $("#banner").html(localStorage.banner);
-    $("#unbant").text(new Date(+localStorage.banExpiry));
+    $("#unbant").text(new Date(+localStorage.banExpiry1));
     $("#reason").html(localStorage.banReason);
     setTimeout(history.go.bind(null, 0), 1000);
   </script>
