@@ -112,7 +112,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/v\s*a\s*g\s*[1li]\s*n\s*a/ig, "vinegar")
   .replace(/s\s*e\s*x/ig, "saltwater")
   .replace(/c\s*u\s*m/ig, "ice cream")
-  .replace(/p\s*o?\s*r\s*n/ig, "people debating about pronouns")
+  .replace(/p\s*[ro]?\s*[ro]?\s*n/ig, "people debating about pronouns")
   
 /*.replace(/</g, "&lt;")
 .replace(/>/g, "&gt;")
