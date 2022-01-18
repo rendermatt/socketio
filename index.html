@@ -77,6 +77,7 @@
       var avatar = document.getElementById("avatar_url");
       var input = document.getElementById("input");
 
+      messages.append("Porcupine commenced");
       usernameForm.addEventListener("submit", function (e) {
         e.preventDefault();
         socket.emit("set username", {
