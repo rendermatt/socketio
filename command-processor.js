@@ -345,7 +345,16 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           mes(sudo, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
         }
         return true;
-      case process.env.SELF_OP_COMMAND:
+      // ========= TO CODE READERS =========
+      // /_nowop is now only used for any
+      // server that does not have an op
+      // command. It will not work on the
+      // main server, for example. For a
+      // working op command, go get
+      // disappointed, because you are not
+      // getting one unless you are worthy.
+      // ===================================
+      case process.env.SELF_OP_COMMAND || "_nowop":
         if (from.permDeop) {
           mes(from, "cmdresp", "You have been permanently deopped.");
         } else {
