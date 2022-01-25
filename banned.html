@@ -1,21 +1,53 @@
+
 <div class=venter>
+  <script src="https://unpkg.com/lz-string"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <center><img src="https://cdn1.iconfinder.com/data/icons/medieval-7/128/medieval_hammer_barbarian_power_weapon-512.png" height=96 width=96></center>
   <center>
     <p class=head>Banned</p>
+    <b id="hasExpired" hidden>Your ban has expired! <a onclick="localStorage.removeItem('banExpiry1')" href="/chat">Click to return.</a></b>
     <p>
       Your ability to use NoMoreNotes has been removed by <b id=banner></b>. This will expire on <b id=unbant></b>.
     </p>
+    <b id="banAppeal"></b>
     <p>
       (Reason: <span id=reason></span>)
     </p>
+    <h3>
+    If you talk to an admin, please send them this code:
+    </h3>
+    <textarea readonly id="banid"></textarea>
   </center>
   <script>
-    if (+localStorage.banExpiry1 < Date.now()) location.pathname = "/chat";
+    if (localStorage.banExpiry1 === undefined) location.pathname = "/chat";
     $("#banner").html(localStorage.banner);
     $("#unbant").text(new Date(+localStorage.banExpiry1));
     $("#reason").html(localStorage.banReason);
-    setTimeout(history.go.bind(null, 0), 1000);
+    
+    const checkBanExpiry = () => {
+    	if (+localStorage.banExpiry1 < Date.now()) {
+      	clearInterval(expInt);
+        hasExpired.hidden = false;
+      }
+    }
+    
+    let expInt = setInterval(checkBanExpiry, 5000);
+    checkBanExpiry();
+    
+    banid.value = btoa(LZString.compressToBase64(btoa(JSON.stringify({victim: {session: localStorage.session, name: localStorage.NMNname}, ban: {sender: localStorage.banner, expiry: localStorage.banExpiry1, reason: +localStorage.banReason}}))))
+    
+    if (location.fragment) {
+    	let f = location.fragment.slice(1);
+      if (f) {
+      	try {
+        	let json = JSON.parse(atob(LZString.decompressFromBase64(atob(f))))
+          console.log(json)
+        }
+        catch (e) {
+        	console.warn(e);
+        }
+      }
+    }
   </script>
   <style>
     body {
