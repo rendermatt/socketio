@@ -8,5 +8,6 @@
 <span style="color: red;">Red text</span>: &lt;span style="color: red;">your text&lt;/span>
 <span style="font-family: serif">Fancy text</span>: &lt;span style="font-family: serif">your text&lt;/span>
 <span style="font-size: 2em;">Big text</span>: &lt;span style="font-size: 2em;">your text&lt;/span><hr/>
+<span style="font-size: 0.5em;">Small text</span>: &lt;span style="font-size: 0.5em;">your text&lt;/span><hr/>
 To send a &lt; without any bullship: &amp;lt;
 To send a &amp; without any bullship: &amp;amp;
