@@ -67,10 +67,6 @@ const magic = module.exports.magic = (sender, msg) => {
       return true;
     //case "/iam pokepat12":
     //  apply_name(sender, "Poképat12"); return true;
-    case "/imnot":
-      sender[r.s].name = sender.id.slice(0, 8);
-      mes(sender, "cmdresp", `You are now annonymous.`, SYS_ID);
-      return true;
     case "":
       return true;
     case "/moo":
