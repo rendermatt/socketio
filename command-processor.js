@@ -336,6 +336,15 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         } else {
           mes(sudo, "cmdresp", `Error 404: ${toname} not found!`, from);
         } return true;
+      case "imnot":
+        let guestName = "Guest-" + from.id.slice(0, 3);
+        if (r.rnames[guestName]) {
+          mes(from, "cmdresp", `Cannot anonymize to ${guestName} because it is taken.`)
+        } else {
+          apply_name(from, guestName, false);
+          mes(from, "cmdresp", `You are now anonymous. Your name is ${guestName}.`);
+        }
+        return true;
       case "getid":
         let toid = args[0];
         let sock = r.rnames[toid];
@@ -349,10 +358,9 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
       // /_nowop is now only used for any
       // server that does not have an op
       // command. It will not work on the
-      // main server, for example. For a
-      // working op command, go get
-      // disappointed, because you are not
-      // getting one unless you are worthy.
+      // main server, for example. Show 
+      // your mod skills as a trial mod
+      // and you might get the real one.
       // ===================================
       case process.env.SELF_OP_COMMAND || "_nowop":
         if (from.permDeop) {
