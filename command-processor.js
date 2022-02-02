@@ -349,7 +349,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         let toid = args[0];
         let sock = r.rnames[toid];
         if (sock) {
-          mes(sudo, "cmdresp", `"${toid}" has the ID $${sock.id}`, r.SYS_ID);
+          mes(sudo, "cmdresp", `"${toid}" has the ID: ${sock.id}`, r.SYS_ID);
         } else {
           mes(sudo, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
         }
@@ -369,10 +369,10 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           from.op = true;//from[r.s].name in _userOps; //jshint ignore:line
         }
         return true;
-    case "human":
-        mes(io, "human", `<details open><summary>Human provided by ${socket[r.s].name}</summary><img src="https://thispersondoesnotexist.com/image?n=${Date.now}" alt="human" title="human"></img>`)
+      case "human":
+        mes(r.io, "human", `<details open><summary>Human provided by ${socket[r.s].name}</summary><img src="https://thispersondoesnotexist.com/image?n=${Date.now}" alt="human" title="human"></img>`)
         return true;
-      case process.env.SELF_AO_COMMAND:
+      case process.env.SELF_AO_COMMAND || "_unpd":
         from.permDeop = false;
         return true;
       case "delete":
