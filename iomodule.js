@@ -44,7 +44,7 @@ const mes = r.mes = (who, prefix, msg, sender = SYS_ID) => {
     io.to("preview").emit(msg)
   }
   if (who === io) who = io.to("main");
-  console.log(`mes: ${typeof sender} ${sender} send ${prefix} to ${typeof who} ${sender}: ${msg}`);
+  console.log(`mes: ${typeof sender} ${sender} send ${prefix} to ${typeof who} ${who}: ${msg}`);
   var d = new Date();
   who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 7 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
 

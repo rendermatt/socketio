@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "No more notes! Instant messaging for classrooms.",
   "dependencies": {
+    "body-parser": "^1.19.1",
     "express": "^4.15.2",
     "socket.io": "^4.2.0",
     "supports-color": "9.0.2"
