@@ -85,7 +85,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/\\n/g, "<br/>")
   .replace(/\\t/g, "\t")
   .replace(/\f/g, "\\\\")
-  .replace(/(?<=^|\W)ass+/igm, "but")
+  .replace(/(?<=^|\W)ass+/igm, "big badonk")
   .replace(/f\W*u\W*c\W*k/ig, "truck")
   .replace(/s\W*h\W*[1li]\W*t/ig, "ship")
   .replace(/b\W*[1li]\W*t\W*c\W*h/ig, "female dog")
@@ -175,7 +175,7 @@ module.exports.main = (_io) => {
       //socket.id = session ? session : socket.id;
       socket.join("main");
       mes(socket, "alert", r.t.join_self(socket[r.s].name, session), SYS_ID);
-      mes(socket.broadcast, "alert", r.t.join(socket[r.s].name), SYS_ID);
+      mes(socket.broadcast, "alert", r.t.join(socket[r.s].name, require("./motd.js")), SYS_ID);
       socket.on("chat message", msg => console.log(`[CHAT ${socket[r.s].name}] ${msg}`)); // who doesn't love log spam
       socket.on('chat message', r.sendmsg(socket));
       socket.on("image", (im) => { console.log(im); });

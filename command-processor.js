@@ -1,8 +1,6 @@
 'esversion: 6';
-const cdict = {};
 const fs = require("fs");
 let mes = null;
-let _userOps = null;
 try {
   _userOps = JSON.parse(process.env.USEROPS || '["Administrator"]');
 } catch (e) {
@@ -442,8 +440,8 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         }
         return true;
       case "nexus":
-        for (let { id, name, description, url } of r.nexusData) {
-          mes(sudo, "cmdresp", `${r.nexusSyms[id === process.env.SERVER_NAME ? "here" : id ? "other" : "noid"]} <a href="${url}" title="${id || "no id set"}">${name}</a> - ${description}`)
+        for (let { id, name, description, url, blocked, secure } of r.nexusData) {
+          mes(sudo, "cmdresp", `${r.nexusSyms[id === process.env.SERVER_NAME? "here" : !id? "noid" : blocked? "blocked" : !secure? "insecure" : "other"]} <a href="${url}" title="${id || "no id set"}">${name}</a> - ${description}`)
         }
       case "edit":
         d = new Date();
@@ -451,7 +449,9 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
       default:
         mes(sudo, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
-    return catchBadCommand;
+    //@ts-ignore
+    console.warn(`WARNING: Detected command ${cmd} with args ${args} not returning`);
+    return true;
   }
   return false;
 };

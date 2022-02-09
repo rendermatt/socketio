@@ -1,6 +1,6 @@
 module.exports = (r) => ({
   "en_us": {
-    "join": a=>`${a} has joined.`,
+    "join": (a,b)=>`${a} has joined.${b && `<div style="border: "`}`,
     "leave": a=>`${a} has ${Math.random() < .05 ? "right" : "left"}. T`,
     "kick": (a,b)=>`${a} was hit by ${b}'s rubber boot!`,
     "ban": (a,b,c,d)=>`${a} was hit by ${b}'s ${c}-pound banhammer: ${d}`,
