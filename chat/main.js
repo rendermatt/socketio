@@ -24,7 +24,7 @@ else $(function () {
     $('#messages').append($('<li>', { id }).html(msg));
     if (notify) {
       notify = manotify;
-      alert(msg);
+      console.log(msg);
     }
     window.scrollTo(0, document.body.scrollHeight);
   });
