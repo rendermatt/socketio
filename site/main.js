@@ -13,7 +13,7 @@
 });*/
 
 function loadTheme() {
-  alert("loading theme");
+  console.log("loading theme");
   fetch("/themes.json")
     .then(resp => {
       let body = resp.body;
@@ -29,19 +29,18 @@ function loadTheme() {
         }
   		}
       function finish() {
-        alert(`processing theme data:\n${data}`);
+        console.log("processing theme data", ${data});
         data = JSON.parse(data);
-        alert("theme data fetched");
+        console.log("theme data fetched");
         const ust  = readCookie("theme") || data._default_;
-        alert(`got user prefrences: ${ust}`);
+        console.log(`got user prefrences: ${ust}`);
         const color= data[ust];
-        alert(`which means color ${color}`);
+        console.log(`which means color ${color}`);
         createCookie("theme", ust, 7);
       }
   	})
     .catch(err => {
-      alert(`could not load because ${err.type}: ${err.message}`);
-      alert(err.stack);
+      console.error(err.stack);
   	});
 }
 
