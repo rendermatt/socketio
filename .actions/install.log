@@ -10,7 +10,7 @@ npm WARN EBADENGINE   required: { node: '15.x' },
 npm WARN EBADENGINE   current: { node: 'v16.13.2', npm: '8.1.2' }
 npm WARN EBADENGINE }
 
-added 86 packages, and audited 87 packages in 4s
+added 86 packages, and audited 87 packages in 3s
 
 3 packages are looking for funding
   run `npm fund` for details
