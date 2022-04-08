@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://games.injectxgames.io/mysterious3d/lib/fontawesome-free-6.0.0-web/css/all.min.css" rel="stylesheet" />
+    <link href="https://games.injectxgames.io/mysterious3d/lib/uikit.min.css" rel="stylesheet" />
+    <link href="https://games.injectxgames.io/mysterious3d/assets/css/estilos.css" rel="stylesheet" />
+    <style>
+      html {background: rgba(255, 255, 255, 0.60);}
+      body { background: transparent; margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      * { cursor: url('https://games.injectxgames.io/mysterious3d/assets/cursor/pointer.cur'), default; }
+
+      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
+      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
+      #input:focus { outline: none; }
+      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+      #form > button, #form > button i { cursor: url('https://games.injectxgames.io/mysterious3d/assets/cursor/hand.cur'), pointer; }
+      #form > button[disabled] { background: #6c0000; }
+      #form > button[disabled] i { color: #cb0000; }
+
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages > li { padding: 0.5rem 1rem; }
+      #messages > li:nth-child(odd) { background: #efefef; background: rgba(239, 239, 239, 0.60); }
+
+      .uk-comment-title {
+        font-size: 0.9rem;
+        line-height: 1;
+      }
+      .uk-comment-meta {
+        font-size: 0.75rem;
+      }
+      .uk-comment-body {
+        font-size: 0.9rem;
+      }
+      .uk-subnav > * {
+        padding-left: 10px;
+      }
+      .uk-comment-header > i {
+        float: left;
+        padding-right: 10px;
+      }
+      .mine .uk-comment-header > i {
+        float: right;
+        padding-left: 10px;
+        padding-right: 0px;
+      }
+      .mine .uk-comment-header > div, .mine .uk-comment-header .uk-comment-meta > li, .mine .uk-comment-body {
+        text-align: right;
+      }
+      .mine .uk-comment-header .uk-comment-meta {
+        float: right;
+      }
+      .mine .uk-comment-header .uk-comment-meta > li {
+        padding-left: 0px;
+        padding-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button id="button">
+        <i class="fa-solid fa-comment"></i>
+      </button>
+    </form>
+    <script src="../socket.io/socket.io.js"></script>
+
+    <script>
+      var socket = io();
+
+      var messages = document.getElementById('messages');
+      var form = document.getElementById('form');
+      var input = document.getElementById('input');
+      var button = document.getElementById('button');
+      
+      const user = getParam('user');
+      if (user == null) {
+        button.disabled = true;
+        let i = button.querySelector('i');
+        i.classList.remove('fa-comment');
+        i.classList.add('fa-comment-slash');
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit('chat message', {msg: input.value, user: getParam('user')});
+          input.value = '';
+        }
+      });
+
+      socket.on('chat message', (data) => {
+        let item = document.createElement('li');
+        let today = new Date();
+        let month = (today.getMonth() + 1);
+        if (month < 10) month = '0' + month;
+        let day = today.getDate();
+        if (day < 10) day = '0' + day;
+        let date = today.getFullYear() + '-' + month + '-' + day;
+        date += ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        item.innerHTML = `
+        <article class="uk-comment">
+            <header class="uk-comment-header uk-margin-remove">
+                <i class="fa-solid fa-comment fa-2x"></i>
+                <div>
+                  <h4 class="uk-comment-title uk-margin-remove">${data.user}</h4>
+                  <ul class="uk-comment-meta uk-subnav uk-margin-remove"><li>${date}</li></ul>
+                </div>
+            </header>
+            <div class="uk-comment-body">${data.msg}</div>
+        </article>
+        `;
+        if (data.user == user) {
+          item.classList.add('mine');
+        }
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+
+      function getParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+    </script>
+  </body>
+</html>

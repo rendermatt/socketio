@@ -13,3 +13,5 @@ You can also spin up a free Heroku dyno to test it out:
 Or run it on [Repl.it](https://repl.it/):
 
 [![Run on Repl.it](https://repl.it/badge/github/socketio/chat-example)](https://repl.it/github/socketio/chat-example)
+
+https://socket.io/get-started/chat#getting-this-example
