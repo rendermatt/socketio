@@ -1,3 +1,4 @@
+const { static } = require("express")
 module.exports = (app) => {
   app.get("/site.js", (req, res) => {
     res.sendFile(__dirname + "/main.js");
@@ -8,4 +9,5 @@ module.exports = (app) => {
   app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
   });
+	app.use(static("../.uploaded"))
 };

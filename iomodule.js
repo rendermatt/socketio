@@ -85,7 +85,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/\\n/g, "<br/>")
   .replace(/\\t/g, "\t")
   .replace(/\f/g, "\\\\")
-  .replace(/(?<=^|\W)ass+/igm, "big badonk")
+  .replace(/(?<=^|\W)ass+/igm, "but")
   .replace(/f\W*u\W*c\W*k/ig, "truck")
   .replace(/s\W*h\W*[1li]\W*t/ig, "ship")
   .replace(/b\W*[1li]\W*t\W*c\W*h/ig, "female dog")
@@ -107,7 +107,7 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/p\W*e\W*n\W*i\W*s/ig, "pencil")
   .replace(/v\W*a\W*g\W*[1li]\W*n\W*a/ig, "vinegar")
   .replace(/s\W*e\W*x/ig, "saltwater")
-  .replace(/c\W*u\W*m/ig, "ice cream")
+  .replace(/(?!document)c\W*u\W*m/ig, "ice cream")
   .replace(/p\W*[ro0]?\W*[r0o]\W*n/ig, "corn")
   .replace(/h\W*w?\W*[3e]\W*n\W*t\W*a?\W*[1li]/ig, "hitmen")
   .replace(/r\/([a-zA-Z0-9]{3,21})/, (_match, sub) => `<a href="//r.nf/r/${sub}" target=_blank>r/${sub}</a>`) // autolink subs
@@ -117,9 +117,9 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
 .replace(/%$/g, "<")
 .replace(/$%/g, ">")*/
 module.exports.main = (_io) => {
-
   io = r.io = _io;
   r.cmdmod = require("./command-processor.js")(mes);
+  require("./upload.js")(io)
   /* io.use((client, next) => {
     console.log(io.request.connection.remoteAddress);
     client.ipAddress = io.request.connection.remoteAddress;
@@ -146,7 +146,7 @@ module.exports.main = (_io) => {
         case "mode":
           switch (+value) {
             case -3:
-              socket.emit("chat message", "You are banned!");
+              socket.emit("chat message", "alert", "You are banned!");
               socket.disconnect(true);
               break;
             case 1:
@@ -156,6 +156,8 @@ module.exports.main = (_io) => {
               socket[r.t].op = false;
           }
           break;
+				case "userdata":
+					
         default:
           socket.emit("chat message", `US${name}`, `recieved unknown saveable "${name}"="${value}"`);
       }

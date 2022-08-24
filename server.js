@@ -3,7 +3,9 @@ const bodyParser = require("body-parser");
 var app = express();
 app.use(bodyParser.json())
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, {
+  maxHttpBufferSize: Infinity
+});
 var port = process.env.PORT || 3000;
 var iom = require("./iomodule.js");
 iom.main(io);
@@ -49,6 +51,7 @@ require("./chat/module.js")(app); // chat urls
 require("./login/module.js")(app); // login urls
 require("./test/module.js")(app); // will always give a fake error
 require("./vis/module.js")(app); // edit ALL the saveables
+require("./upload/module.js")(app); // file uploader
 
 app.get("/banned", (req, res) => {
   res.sendFile(__dirname + "/banned.html");

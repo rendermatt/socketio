@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/upload.css" />
+    <meta name="google-site-verification" content="SDlAsr2ot7CRhHkPglWGXUFyVrAV7QtTNuxpqz_C_EA" />
+    <title>File uploader test</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/lib/cookies.js"></script>
+    <!--
+		<p>status: <span id=statu>waiting for script</span></p>
+		<p>last file: <span id="filel"></span></p>
+		<p>size: <span id="filez"></span></p>
+		<p>last url: <a id=lastu target=_blank>NONE</a></p>
+		<p>auto-open: </p>
+		-->
+
+		<table class="wikitable">
+			<tr>
+				<td>status</td>
+				<td id=statu>waiting for script</td>
+			</tr>
+			<tr>
+				<td>file</td>
+				<td id="filel"></td>
+			</tr>
+			<tr>
+				<td>size</td>
+				<td id="filez"></td>
+			</tr>
+			<tr>
+				<td>url</td>
+				<td><a id="lastu" target=_blank></a></td>
+			</tr>
+			<tr>
+				<td>open</td>
+				<td><input type=checkbox checked id=openu></td>
+			</tr>
+		</table>
+		
+		Upload: <input type="file" id="filei"><button type="button" id=ubut>↑</button>
+  </head>
+    <script src="/upload.js"></script>
+</html>
