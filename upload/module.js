@@ -1,4 +1,6 @@
 const { static } = require("express")
+const cors = require("cors")
+
 module.exports = (app) => {
 	app.get("/upload.js", (req, res) => {
 		res.sendFile(__dirname + "/main.js");
@@ -9,7 +11,7 @@ module.exports = (app) => {
 	app.get("/upload", (req, res) => {
 		res.sendFile(__dirname + "/index.html");
 	});
-	app.use(static(__dirname + "/../.uploaded"))
+	app.use("/upload/", cors(), static(__dirname + "/../.uploaded"))
 
 
 	app.get("/upload/admin", (req, res) => {

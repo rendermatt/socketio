@@ -1,2 +1,5 @@
 language = "nodejs"
 run = "npm start"
+
+[packager.features]
+  guessImports = false

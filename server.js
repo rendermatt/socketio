@@ -4,7 +4,11 @@ var app = express();
 app.use(bodyParser.json())
 var http = require('http').Server(app);
 var io = require('socket.io')(http, {
-  maxHttpBufferSize: Infinity
+	maxHttpBufferSize: Infinity,
+	cors: {
+		origin: ["admin.socket.io"],
+		credentials: true
+	}
 });
 var port = process.env.PORT || 3000;
 var iom = require("./iomodule.js");
@@ -13,9 +17,9 @@ iom.main(io);
 io.toString = () => "[IO]"
 
 app.use(bodyParser.raw())
-const users = process.env.USERS ? JSON.parse(process.env.USERS) : {"admin": "adminpassword", "user": "userpassword"};
+const users = process.env.USERS ? JSON.parse(process.env.USERS) : { "admin": "adminpassword", "user": "userpassword" };
 
-process.on("uncaughtException", e=>(console.error(e),e));
+process.on("uncaughtException", e => (console.error(e), e));
 
 /*
 const whoDisBot = {
@@ -37,13 +41,13 @@ const whoDisBot = {
 */
 app.use('/lib', express.static(__dirname + '/lib'))
 app.get("/favicon.ico", (req, res) => {
-  res.sendFile(__dirname + "/favicon/drive_new.ico");
+	res.sendFile(__dirname + "/favicon/drive_new.ico");
 });
 app.get("/story.txt", (req, res) => {
-  res.sendFile(__dirname + "/story.txt");
+	res.sendFile(__dirname + "/story.txt");
 });
 app.get("/themes.json", (req, res) => {
-  res.sendFile(__dirname + "/themes.json");
+	res.sendFile(__dirname + "/themes.json");
 });
 
 require("./site/module.js")(app); // site urls
@@ -54,28 +58,52 @@ require("./vis/module.js")(app); // edit ALL the saveables
 require("./upload/module.js")(app); // file uploader
 
 app.get("/banned", (req, res) => {
-  res.sendFile(__dirname + "/banned.html");
+	res.sendFile(__dirname + "/banned.html");
 });
 
 app.get("/timer", (req, res) => {
-  res.sendFile(__dirname + "/timer.html");
+	res.sendFile(__dirname + "/timer.html");
 });
 
 app.get("/nopine", (req, res) => {
-  res.sendFile(__dirname + "/nopine.html");
+	res.sendFile(__dirname + "/nopine.html");
 });
 
 app.post("/hook/:name", (req, res) => {
-  if (!req.body || !req.body.message) {
-    res.status(400)
-    res.send(`{"error": "Body must extend {\"message\": string}"}`)
-  }
-  console.log(`[HOOK ${req.params.name}] ${req.body.message}`)
-  iom.r.mes(io, "hook", iom.r.t.chat(req.params.name, req.body.message))
-  res.send(`{"sender": ${JSON.stringify(req.params.name)}, "data": ${JSON.stringify(req.body.message)}`);
-  res.end()
+	if (!req.body || !req.body.message) {
+		res.status(400)
+		res.send(`{"error": "Body must extend {\"message\": string}"}`)
+	}
+	console.log(`[HOOK ${req.params.name}] ${req.body.message}`)
+	iom.r.mes(io, "hook", iom.r.t.chat(req.params.name, req.body.message))
+	res.send(`{"sender": ${JSON.stringify(req.params.name)}, "data": ${JSON.stringify(req.body.message)}`);
+	res.end()
 })
 
-http.listen(port, function(){
-  console.log('listening on *:' + port);
+app.get("/$:id([0-9a-f]{8})", () => {})
+
+http.listen(port, function() {
+	console.log('listening on *:' + port);
 });
+
+app.use(express.static("public"))
+
+
+
+loadadmin: if (true) {
+	try {
+		require.resolve("@socket.io/admin-ui")
+	} catch (e) {
+		console.warn("WARNING: @socket.io/admin-ui is not installed. Admin UI will be unavailable.")
+		break loadadmin;
+	}
+	const { instrument } = require("@socket.io/admin-ui")
+	instrument(io, {
+		// auth: {
+		// 	type: "basic",
+		// 	username: "admin",
+		// 	password: "$2b$10$lhEk.hJIAJcbmzXO33JWnOZqZ8uW6Xj3v9FBzOQxnJO9VX1xvedYC"
+		// }
+		auth: false
+	})
+}

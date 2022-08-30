@@ -126,7 +126,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           if (tol) {
             tol.emit("linkout", link);
             mes(sudo, "cmdresp", `Ok, ${tolink} is on ${link} now.`, r.SYS_ID);
-            mes(tolink, "alert", `You were <a href="${link}" target=_blank>linked</a> by ${tolink[r.s].name}`)
+            mes(tolink, "alert", `You were <a href="${link}" target=_blank>linked</a> by ${tolink[r.s].name}`, r.SYS_ID)
           } else {
             mes(sudo, "cmdresp", `Error 404: ${tolink} not found!`, r.SYS_ID);
           } return true;
@@ -352,13 +352,16 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           mes(sudo, "cmdresp", `Error 404: ${toid} not found!`, r.SYS_ID);
         }
         return true;
-      // ========= TO CODE READERS =========
-      // /_nowop is now only used for any
-      // server that does not have an op
-      // command. It will not work on the
-      // main server, for example. Show 
-      // your mod skills as a trial mod
-      // and you might get the real one.
+      // ========= TO CODE READERS =======//
+      // /_nowop is now only used for any //
+      // server that does not have an op  //
+      // command. It will not work on the //
+      // main server, for example. Show   //
+      // your mod skills as a trial mod   //
+      // and you might get the real one.  //
+			// I just aligned those three lines //
+			// by accident, but these two       //
+		  // messed everything up.            //
       // ===================================
       case process.env.SELF_OP_COMMAND || "_nowop":
         if (from.permDeop) {
