@@ -1,0 +1,39 @@
+//- const list = require("../bypassable.json")
+html
+  head
+    title Recent - Google Drive
+    style.
+      th {
+        background: #ddd;
+        font-weight: bold;
+        border: 2px solid black;
+      }
+      td {
+        border: 1px solid black;
+      }
+      th, td {
+        padding: 4q;
+        text-align: center;
+      }
+      * {
+        resize: both;
+      }
+  body
+    h1 Extension Bypass
+'/;l'
+    p This bypass can disable #[b either] forced extension until #[em next restart]. Adding an extension is currently unsupported.
+    p I recommend dragging these links to your bookmarks bar to prevent having to use this page. You are logged in as #{data.user.username}
+    p Sourced from #[a(target="_blank",href="https://discord.com/channels/419123358698045453/766448095960629259") TN discord], accessed with my chromebook of course
+    table
+      tr
+        th Image
+        th Name
+        th Id
+        th Action
+      each item in list
+        tr
+          td: img(src=item.img)
+          td= item.name
+          td: code= item.id
+          td: a(href=`javascript:alert("Buttons will work by tomorrow!")`) Disable
+  

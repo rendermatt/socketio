@@ -1,0 +1,33 @@
+- console.log([[color1, color2, color3]])
+html(class={dark: data.user.theme === "dark"})
+  head
+    title= oidc.user.user_metadata.username
+    style.
+      .dark {
+        background: #1b1b24
+      }
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: Verdana;
+      }
+      .top {
+        padding: 2cm 2cm 1cm;
+        height: 4cm;
+        margin-bottom: 1.25cm;
+        font-size: 2cm;
+        background: linear-gradient(to right, rgb(#{color1}), rgb(#{color2}));
+        color: rgb(#{color3})
+      }
+      .pfp {
+        position: absolute;
+        left: 2.5cm;
+        top: 5.5cm;
+        height: 3cm;
+        width: 3cm;
+        border-radius: 16q;
+      }
+  body
+    .top= oidc.user.user_metadata.username
+    img.pfp(src=oidc.user.picture)
+    pre: code= JSON.stringify(oidc.user, null, 2)

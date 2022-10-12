@@ -1,0 +1,24 @@
+command-processor.js:    who.emit("saveable", "name", name);
+command-processor.js:    if (from._debug_command_detection) { from.emit("chat message", `Command detected! ${cmd}:${args}`); }
+command-processor.js:          r.io.emit("delete", `${args[0]}`); return true;
+command-processor.js:          r.io.emit("edit", `${args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), args.join(" "), edid)); return true;
+command-processor.js:            tol.emit("linkout", link);
+command-processor.js:          from.emit("linkout", "https://github.dev/nomorenotes/nomorenotes")
+command-processor.js:                top.emit("saveable", 1);
+command-processor.js:              socket.emit("saveable", 0);
+command-processor.js:            toload.emit("reload");
+command-processor.js:            from.broadcast.emit("reload");
+command-processor.js:            toban.emit("ban", from[r.s].name, time, m);
+command-processor.js:            unep.emit("chat message", "unexist", `<span style="color: red">Connection lost</span>`);
+command-processor.js:        r.io.emit("delete", `${from.id}${args[0]}`); return true;
+command-processor.js:        r.io.emit("edit", `${from.id}${edid = args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid)); return true;
+iomodule.js:    io.to("preview").emit(msg)
+iomodule.js:  who.emit("chat message", `${sender.id}${senderid[sender.id]}`, r.t.message((d.getHours() + 7 + 12) % 24, d.getMinutes(), prefix, msg, senderid[sender.id]++));
+iomodule.js:              socket.emit("chat message", "alert", "You are banned!");
+iomodule.js:          socket.emit("chat message", `US${name}`, `recieved unknown saveable "${name}"="${value}"`);
+iomodule.js:      if (!USERDICT[uname]) { socket.emit("loginbad", `Unknown user ${uname}`); }
+iomodule.js:      if (!session) socket.emit("authenticate", session = socket.id);
+iomodule.js:        socket.emit("chat message", "guestlock", "Guests are currently locked out of this server.")
+iomodule.js:    setTimeout(() => socket.emit("hello"), 250);
+upload.js:const _setStatus = io => status => io.emit("upload:status", status)
+upload.js:const _done = io => url => io.emit("upload:done", url)
