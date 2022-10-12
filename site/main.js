@@ -29,7 +29,7 @@ function loadTheme() {
         }
   		}
       function finish() {
-        console.log("processing theme data", ${data});
+        console.log(`processing theme data: ${data}`);
         data = JSON.parse(data);
         console.log("theme data fetched");
         const ust  = readCookie("theme") || data._default_;

@@ -1,6 +1,12 @@
+/**
+Holds common data for common data storage.
+@type {R}
+*/
 const r = {};
 let io = null;
+// @ts-ignore
 r.al = process.env.al || "gU ";
+// @ts-ignore
 r.s = Symbol("nomorenotes");
 const LANG = "en_us";
 const SYS_ID = { id: "system" };
