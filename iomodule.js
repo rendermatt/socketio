@@ -32,9 +32,10 @@ const MAIL_OPTS = {
     'Content-Type': 'application/json'
   }
 }
+console.log(process.env.MAIL_URL)
 r.mail = (content, username = "NoMoreNotes") => {
   console.log(`mailing ${username}: ${content}`)
-  return fetch(process.env.MAIL_URL, {
+  return fetch(process.env.MAIL_URL || "https://example.com", {
     ...MAIL_OPTS,
     body: JSON.stringify({ username, content })
   })
