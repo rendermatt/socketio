@@ -21,6 +21,7 @@ body {
 }
 .dark #send {
   --shade: 60;
+  border-top-color: white;
 }
 #send input {
 	border: none;
