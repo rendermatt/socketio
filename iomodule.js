@@ -26,14 +26,31 @@ r.surr = require("./surr.js")
 r.pf = require("./prefixes.js");
 r.t = require("./texts.js")(r)[LANG];
 r.list = [];
+const MAIL_OPTS = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+}
+r.mail = (content, username = "NoMoreNotes") => {
+  console.log(`mailing ${username}: ${content}`)
+  return fetch(process.env.MAIL_URL, {
+    ...MAIL_OPTS,
+    body: JSON.stringify({ username, content })
+  })
+}
+const fetch = require("node-fetch")
+r.mail("Server restarted")
 r.sendmsg = from => msg => {
   msg = format_msg(r.parse_emoji(msg));
-  return magic(from, msg) ?
-    undefined :
-    msg.split("<br/>")
+  const isMagic = magic(from, msg)
+  if (!isMagic) {
+    r.mail(msg, from[r.s].name)
+    return msg.split("<br/>")
       .map((m) => {
         mes(from.hotboxed ? from : r.io, "msg", r.t.chat(from[r.s].name, m), from);
       });
+  }
 };
 r.parse_emoji = (e => msg => {
   for (let i of Object.keys(e)) { // This is how 4-loops work, right?
@@ -116,12 +133,13 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
   .replace(/(?!document)c\W*u\W*m/ig, "ice cream")
   .replace(/p\W*[ro0]?\W*[r0o]\W*n/ig, "corn")
   .replace(/h\W*w?\W*[3e]\W*n\W*t\W*a?\W*[1li]/ig, "hitmen")
-  .replace(/r\/([a-zA-Z0-9]{3,21})/, (_match, sub) => `<a href="//r.nf/r/${sub}" target=_blank>r/${sub}</a>`) // autolink subs
+  .replace(/r\/([a-zA-Z0-9]{3,21})/, (_match, sub) => `<a href="//bob.fr.to/r/${sub}" target=_blank>r/${sub}</a>`) // autolink subs
   
 /*.replace(/</g, "&lt;")
 .replace(/>/g, "&gt;")
 .replace(/%$/g, "<")
 .replace(/$%/g, ">")*/
+const rids = {}
 module.exports.main = (_io) => {
   io = r.io = _io;
   r.cmdmod = require("./command-processor.js")(mes);
@@ -171,6 +189,9 @@ module.exports.main = (_io) => {
     socket.on('hello', (session, uname, passw) => {
       console.log("Hello")
       socket.removeAllListeners();
+      if (uname === "nmn-link") {
+        return nmnlink(session);
+      }
       if (!USERDICT[uname]) { socket.emit("loginbad", `Unknown user ${uname}`); }
       if (!session) socket.emit("authenticate", session = socket.id);
       if (io.guestlock && socket[r.s].name === "Guest-" + socket.id.slice(0, 3)) {
@@ -188,21 +209,50 @@ module.exports.main = (_io) => {
       socket.on('chat message', r.sendmsg(socket));
       socket.on("image", (im) => { console.log(im); });
       r.list.push(socket);
+      rids[socket.id] = socket
       senderid[socket.id] = 0;
+      r.mail(`${socket[r.s].name} has joined.`)
       socket.on("disconnect", () => {
-        if (!socket.silentLeave) mes(socket.broadcast, "alert", r.t.leave(socket[r.s].name), SYS_ID);
+        if (!socket.silentLeave) {
+          mes(socket.broadcast, "alert", r.t.leave(socket[r.s].name), SYS_ID);
+          r.mail(`${socket[r.s].name} has left. T`)
+        }
         //whoDisBot.onLeave(socket);
         delete rnames[socket[r.s].name];
+        delete rids[socket.id]
         delete senderid[socket.id];
         delete socket[r.s];
         r.list.splice(r.list.indexOf(socket), 1);
       });
     });
-    socket.on("preview", () => {
-      console.log("Preview")
-      socket.removeAllListeners()
-      socket.join("preview")
-    })
+    // socket.on("preview", () => {
+    //   console.log("Preview")
+    //   socket.removeAllListeners()
+    //   socket.join("preview")
+    // })
     setTimeout(() => socket.emit("hello"), 250);
   });
 };
+
+function nmnlink(socket) {
+  io.on("ban", (id, time, reason, callback) => {
+    try {
+      if (id in rids) {
+        const toban = rids[id]
+        const tobm = r.t.ban(toban[r.s].name, socket[r.s].name, time, m);
+        toban.emit("ban", socket[r.s].name, time, m);
+        toban.disconnect(true);
+        mes(r.io, "alert", tobm);
+        callback(true)
+      } else {
+        callback(false)
+      }
+    } catch (e) {
+      callback(e)
+    }
+  })
+}
+
+function updatenmnlink() {
+  io.to("nmnlink").emit("users", r.list.map(socket => ({ name: socket[r.s].name, id: socket.id })))
+}
