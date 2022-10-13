@@ -23,7 +23,7 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": "15.x"
+    "node": "^16.7.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
