@@ -4,7 +4,7 @@
   "description": "No more notes! Instant messaging for classrooms.",
   "dependencies": {
     "@hapi/hoek": "^10.0.1",
-    "@socket.io/admin-ui": "^0.4.0",
+    "@socket.io/admin-ui": "^0.5.1",
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
     "express-openid-connect": "^2.8.0",
