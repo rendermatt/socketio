@@ -15,9 +15,16 @@ body {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
+  border-top: thin solid black;
+  --shade: 230;
+  background: rgb(var(--shade), var(--shade), var(--shade));
+}
+.dark #send {
+  --shade: 60;
 }
 #send input {
-	border: 0;
+	border: none;
+  outline: none;
 	padding: 10px;
 	width: 90%;
 	margin: 0px;
