@@ -36,16 +36,17 @@ console.log(process.env.MAIL_URL)
 r.mail = (content, username = "Server") => {
   console.log(`mailing ${username}: ${content}`)
   proms = []
-  for (let url of process.env.MAIL_URL || "")
+  for (let url of (process.env.MAIL_URL || "").split(";"))
     proms.push(fetch(url, {
       ...MAIL_OPTS,
       body: JSON.stringify({ username, content })
     }))
-  for (let nmnurl of process.env.NMN_MAIL_URL || "")
-    proms.push(fetch(nmnurl + getMailName(username), {
+  for (let nmnurl of (process.env.NMN_MAIL_URL || "").split(";"))
+    proms.push(fetch(nmnurl + username + (process.env.NMN_MAIL_SUFFIX), {
       ...MAIL_OPTS,
-      body: JSON.stringify({ })
+      body: JSON.stringify({ message: content })
     }))
+  
 }
 const fetch = require("node-fetch")
 r.mail("Server restarted")
