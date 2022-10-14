@@ -92,15 +92,8 @@ r.rnames = rnames;
 r.senderid = senderid;
 module.exports.r = r;
 const magic = module.exports.magic = (sender, msg) => {
-  if (r.cmdmod(msg, sender, sender)) {
+  if (!msg || r.cmdmod(msg, sender, sender)) {
     return true;
-  }
-  switch (msg) {
-    case "":
-      return true;
-    default:
-      if (msg.startsWith("/iam")) return true;
-      return false;
   }
 };
 const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") // temp rm \\
