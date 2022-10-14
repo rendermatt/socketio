@@ -225,13 +225,14 @@ app.get("/evade", requiresAuth(), (req, res) => {
       console.log("imgur -> filmot")
       url.host = "i.filmot.com"
       break;
-    case "nomo,renotes.herokuapp.com":
+    case "nomorenotes.herokuapp.com":
     case "nomorestaging.herokuapp.com":
     case "nomorenotes-devel.herokuapp.com":
     case "nmn4frens.herokuapp.com":
     case "nmn4ogs.herokuapp.com":
+    case "nmn.bad.mn":
       console.log("nmn -> nmn")
-      url.host = "nmn.bad.mn"
+      url.host = "lloyd-lynn.herokuapp.com"
       break
     default:
       console.log("jk lol")
