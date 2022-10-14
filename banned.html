@@ -5,7 +5,7 @@
   <center><img src="https://cdn1.iconfinder.com/data/icons/medieval-7/128/medieval_hammer_barbarian_power_weapon-512.png" height=96 width=96></center>
   <center>
     <p class=head>Banned</p>
-    <b id="hasExpired" hidden>Your ban has expired! <a onclick="localStorage.removeItem('banExpiry1')" href="/chat">Click to return.</a></b>
+    <b id="hasExpired" hidden>Your ban has expired! <a onclick="localStorage.removeItem('banExpiry2')" href="/chat">Click to return.</a></b>
     <p>
       Your ability to use NoMoreNotes has been removed by <b id=banner></b>. This will expire on <b id=unbant></b>.
     </p>
@@ -19,7 +19,7 @@
     <textarea readonly id="banid"></textarea>
   </center>
   <script>
-    if (localStorage.banExpiry1 === undefined) location.pathname = "/chat";
+    if (localStorage.banExpiry2 === undefined) location.pathname = "/chat";
     $("#banner").html(localStorage.banner);
     $("#unbant").text(new Date(+localStorage.banExpiry2));
     $("#reason").html(localStorage.banReason);

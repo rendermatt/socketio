@@ -1,6 +1,6 @@
 const opts = location.hash ? location.hash.slice(1).split("&") : []
 if (location.protocol === "http:" && !opts.includes("noHttps")) location.protocol = "https:";
-else if (localStorage.banExpiry1 && +localStorage.banExpiry1 > Date.now()) location.pathname = "/banned";
+else if (localStorage.banExpiry2 && +localStorage.banExpiry2 > Date.now()) location.pathname = "/banned";
 else $(function () {
 
   const saveable = ["name"];
