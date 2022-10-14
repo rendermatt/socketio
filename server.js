@@ -145,14 +145,19 @@ app.get("/logintest", attemptSilentLogin(), ({ oidc }, res) => {
 	
 })
 
-app.post("/hook/:name", (req, res) => {
+app.post(["/hook", "/hook/:name"], (req, res) => {
 	if (!req.body || !req.body.message) {
 		res.status(400)
 		res.send(`{"error": "Body must extend {\"message\": string}"}`)
 	}
-	console.log(`[HOOK ${req.params.name}] ${req.body.message}`)
-	iom.r.mes(io, "hook", iom.r.t.chat(req.params.name, req.body.message))
-  res.json({ sender: req.params.name, data: req.body.message })
+  const name = req.body.sender || req.params.name
+  if (!name) {
+    res.status(400)
+    res.json({ error: "There must either be a name given after /hook or a sender parameter in the body" })
+  }
+	console.log(`[HOOK ${name}] ${req.body.message}`)
+	iom.r.mes(io, "hook", iom.r.t.chat(name, req.body.message))
+  res.json({ sender: name, data: req.body.message })
 	res.end()
 })
 

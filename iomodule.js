@@ -36,16 +36,21 @@ console.log(process.env.MAIL_URL)
 r.mail = (content, username = "Server") => {
   console.log(`mailing ${username}: ${content}`)
   proms = []
-  for (let url of (process.env.MAIL_URL || "").split(";"))
+  for (let url of (process.env.MAIL_URL || "").split(";")) {
+    console.log(`Discord mail: ${url}`)
     proms.push(fetch(url, {
       ...MAIL_OPTS,
       body: JSON.stringify({ username, content })
     }))
-  for (let nmnurl of (process.env.NMN_MAIL_URL || "").split(";"))
-    proms.push(fetch(nmnurl + username + (process.env.NMN_MAIL_SUFFIX), {
+  }
+  for (let nmnurl of (process.env.NMN_MAIL_URL || "").split(";")) {
+    sender = username + (process.env.NMN_MAIL_SUFFIX ?? "")
+    console.log(`NMN mail: ${nmnurl}`)
+    proms.push(fetch(nmnurl, {
       ...MAIL_OPTS,
-      body: JSON.stringify({ message: content })
+      body: JSON.stringify({ message: content, sender })
     }))
+  }
   
 }
 const fetch = require("node-fetch")

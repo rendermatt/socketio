@@ -1,5 +1,6 @@
 'esversion: 6';
 const fs = require("fs");
+const { execSync } = require("child_process")
 let mes = null;
 try {
   _userOps = JSON.parse(process.env.USEROPS || '["Administrator"]');
@@ -442,13 +443,19 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           });
         }
         return true;
+      case "version":
+        const commit = process.env.HEROKU_SLUG_COMMIT ?? execSync("git rev-parse HEAD")
+        mes(sudo, "cmdresp", `Current commit: ${commit}`)
+        return true
       case "nexus":
         for (let { id, name, description, url, blocked, secure } of r.nexusData) {
           mes(sudo, "cmdresp", `${r.nexusSyms[id === process.env.SERVER_NAME? "here" : !id? "noid" : blocked? "blocked" : !secure? "insecure" : "other"]} <a href="${url}" title="${id || "no id set"}">${name}</a> - ${description}`)
         }
+        return true
       case "edit":
         d = new Date();
-        r.io.emit("edit", `${from.id}${edid = args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid)); return true;
+        r.io.emit("edit", `${from.id}${edid = args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid));
+        return true;
       default:
         mes(sudo, "cmdresp", `Unrecognized command ${cmd}. The command does not exist, or you aren't allowed to run it. Run /help for help.`, r.SYS_ID); return catchBadCommand;
     }
