@@ -21,11 +21,11 @@
   <script>
     if (localStorage.banExpiry1 === undefined) location.pathname = "/chat";
     $("#banner").html(localStorage.banner);
-    $("#unbant").text(new Date(+localStorage.banExpiry1));
+    $("#unbant").text(new Date(+localStorage.banExpiry2));
     $("#reason").html(localStorage.banReason);
     
     const checkBanExpiry = () => {
-    	if (+localStorage.banExpiry1 < Date.now()) {
+    	if (+localStorage.banExpiry2 < Date.now()) {
       	clearInterval(expInt);
         hasExpired.hidden = false;
       }
@@ -34,7 +34,7 @@
     let expInt = setInterval(checkBanExpiry, 5000);
     checkBanExpiry();
     
-    banid.value = btoa(LZString.compressToBase64(btoa(JSON.stringify({victim: {session: localStorage.session, name: localStorage.NMNname}, ban: {sender: localStorage.banner, expiry: localStorage.banExpiry1, reason: +localStorage.banReason}}))))
+    banid.value = btoa(LZString.compressToBase64(btoa(JSON.stringify({victim: {session: localStorage.session, name: localStorage.NMNname}, ban: {sender: localStorage.banner, expiry: localStorage.banExpiry2, reason: +localStorage.banReason}, site: location.origin}))))
     
     if (location.fragment) {
     	let f = location.fragment.slice(1);

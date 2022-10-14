@@ -39,7 +39,7 @@ else $(function () {
   });
   socket.on("ban", (banner, time, reason) => {
     localStorage.banner = banner;
-    localStorage.banExpiry1 = Date.now() + time * 60000;
+    localStorage.banExpiry2 = Date.now() + time * 60000;
     localStorage.banReason = reason;
     location.pathname = "/banned"
   })
