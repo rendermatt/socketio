@@ -96,21 +96,11 @@ const magic = module.exports.magic = (sender, msg) => {
     return true;
   }
   switch (msg) {
-    //case "/iam Freshdude":
-    //  apply_name(sender, "DarkWolf129"); return true;
-    case "/iam Adam":
-      //sender.disconnect(); return true;
-      //apply_name(sender, "Azandfer");
-      return true;
-    //case "/iam pokepat12":
-    //  apply_name(sender, "Poképat12"); return true;
     case "":
       return true;
     case "/moo":
       mes(sender, "cmdresp", `There are no easter eggs in this program.`, SYS_ID);
       return true;
-    //case "/_debug_dump_naming":
-    //  mes(sender, "cmdresp", `names: ${JSON.stringify(names)}\nrnames: ${JSON.stringify(rnames)}`);
     default:
       if (msg.startsWith("/iam")) return true;
       return false;
