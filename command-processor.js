@@ -455,6 +455,9 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
       case "/moo":
         mes(sudo, "cmdresp", `There are no easter eggs in this program.`, SYS_ID);
         return true;
+      case "/dumpnames":
+        mes(sudo, "cmdresp", `names: ${JSON.stringify(names)}\nrnames: ${JSON.stringify(rnames)}`);
+        return true
       case "edit":
         d = new Date();
         r.io.emit("edit", `${from.id}${edid = args.shift()}`, r.t.message((d.getHours() + 8 + 12) % 24, d.getMinutes(), args.shift(), [`<${from[r.s].name}>`, ...args, `(edited)`].join(" "), edid));
