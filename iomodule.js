@@ -98,9 +98,6 @@ const magic = module.exports.magic = (sender, msg) => {
   switch (msg) {
     case "":
       return true;
-    case "/moo":
-      mes(sender, "cmdresp", `There are no easter eggs in this program.`, SYS_ID);
-      return true;
     default:
       if (msg.startsWith("/iam")) return true;
       return false;
