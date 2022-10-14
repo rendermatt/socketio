@@ -452,10 +452,10 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
           mes(sudo, "cmdresp", `${r.nexusSyms[id === process.env.SERVER_NAME? "here" : !id? "noid" : blocked? "blocked" : !secure? "insecure" : "other"]} <a href="${url}" title="${id || "no id set"}">${name}</a> - ${description}`)
         }
         return true
-      case "/moo":
+      case "moo":
         mes(sudo, "cmdresp", `There are no easter eggs in this program.`, SYS_ID);
         return true;
-      case "/dumpnames":
+      case "dumpnames":
         mes(sudo, "cmdresp", `names: ${JSON.stringify(names)}\nrnames: ${JSON.stringify(rnames)}`);
         return true
       case "edit":
