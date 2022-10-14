@@ -152,7 +152,7 @@ app.post("/hook/:name", (req, res) => {
 	}
 	console.log(`[HOOK ${req.params.name}] ${req.body.message}`)
 	iom.r.mes(io, "hook", iom.r.t.chat(req.params.name, req.body.message))
-	res.send(`{ "sender": ${JSON.stringify(req.params.name)}, "data": ${JSON.stringify(req.body.message)} }`);
+  res.json({ sender: req.params.name, data: req.body.message })
 	res.end()
 })
 
