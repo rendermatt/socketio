@@ -7,6 +7,13 @@ else $(function () {
   var manotify = false;
   var notify = false;
   var socket = io();
+	window.sendCommand = (cmd) => {
+		socket.emit("chat message", cmd);
+		//$("#m").val("");
+	}
+	window.showCommand = (cmd) => {
+		$("#m").val(cmd);
+	}
   socket.on("hello", () => {
     saveable.forEach(s => {
       if (localStorage["NMN" + s]) {
@@ -70,20 +77,13 @@ else $(function () {
   //     reader.readAsDataURL(blob);
   //   }
   // };
-	window.sendCommand = (cmd) => {
-		socket.emit("chat message", cmd);
-		//$("#m").val("");
-	}
-	window.showCommand = (cmd) => {
-		$("#m").val(cmd);
-	}
 })
 document.addEventListener("keydown", e => {
   if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "d") {
     e.preventDefault();
     console.log("hyperactive rabbits")
     $(document.body).toggleClass("dark")
-  } else if (e.which === 85 && e.ctrlKey) {
+  } else if (e.which === 78 && e.altKey) {
 		open(`view-source:${location}`)
 	}
 });
