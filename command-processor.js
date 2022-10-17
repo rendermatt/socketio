@@ -438,7 +438,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
                 .replace("help/"))
               .filter(name => !name.startsWith("%"))
               .filter(name => (from.op || !name.startsWith("#")));
-            mes(sudo, "cmdresp", `List of help articles (use <button>/help filename</button> to read):  ${files.join(" ")}`);
+            mes(sudo, "cmdresp", `List of help articles:  ${files.map(name => `<button onclick="showCommand('/help ${name}')">${name}</button>`).join(" ")}`);
             return true;
           });
         }

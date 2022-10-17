@@ -5,6 +5,7 @@ module.exports = (r) => ({
     "kick": (a,b)=>`${a} was hit by ${b}'s rubber boot!`,
     "ban": (a,b,c,d)=>`${a} was hit by ${b}'s ${c}-pound banhammer: ${d}`,
     "join_self": (a,b)=>`Welcome to the ${process.env.SERVER_NAME || "local"} server, ${a} (${b})`,
+    "help": () => `For help, type or click <button onclick="sendCommand('/help welcome')">/help welcome</button>.`,
     "chat": (a,b)=>`&lt;${a}> ${b}`,
     "action": (a,b)=>`* ${a} ${b}`,
     "nick": (a,b)=>`${a} has applied name ${b}.`,
