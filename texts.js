@@ -14,6 +14,6 @@ module.exports = (r) => ({
       "kick": (a,b)=>`${a} was told the truth about ${b}.`,
     },
     "nick_self": a=>`Name ${a} applied successfully.`,
-    "message": (a, b, c, d, e, f = '') => `${f.toString().padStart(12, " ").slice(-12).replace(/ /g, "&nbsp;")} ${e.toString().padStart(6, " ").slice(-6).replace(/ /g, "&nbsp;")}: ${(r.pf[c])?(r.pf[c]):("("+c+") ")}${a.toString().padStart(2, "0")}:${b.toString().padStart(2, "0")} | ${d}`,
+    "message": (a, b, c, d, e, f = '') => `${f.toString().padStart(12, " ").slice(-12).replace(/ /g, "&nbsp;")} ${e.toString().padStart(6, " ").slice(-6).replace(/ /g, "&nbsp;")}: ${(r.pf[c])?(r.pf[c]):("("+c+") ")}${a.toString().padStart(2, "0")}:${b.toString().padStart(2, "0")}:${new Date().getSeconds()} | ${d}`,
   }
 });
