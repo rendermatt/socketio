@@ -21,8 +21,8 @@ var io = new (require('socket.io').Server)(http, {
 });
 var port = process.env.PORT || 3000;
 var iom = require("./iomodule.js");
-iom.main(io);
 iom.r.commit = process.env.HEROKU_SLUG_COMMIT ?? execSync("git rev-parse HEAD")
+iom.main(io);
 
 io.toString = () => "[IO]"
 
