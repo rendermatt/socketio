@@ -54,7 +54,7 @@ r.mail = (content, username = "Server") => {
   
 }
 const fetch = require("node-fetch")
-r.mail("Server restarted")
+r.mail(`Server restarted @ ${r.commit}`)
 r.sendmsg = from => msg => {
   msg = format_msg(r.parse_emoji(msg));
   const isMagic = magic(from, msg)

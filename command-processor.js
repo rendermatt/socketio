@@ -1,6 +1,5 @@
 'esversion: 6';
 const fs = require("fs");
-const { execSync } = require("child_process")
 let mes = null;
 try {
   _userOps = JSON.parse(process.env.USEROPS || '["Administrator"]');
@@ -449,8 +448,7 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         }
         return true;
       case "version":
-        const commit = process.env.HEROKU_SLUG_COMMIT ?? execSync("git rev-parse HEAD")
-        mes(sudo, "cmdresp", `Current commit: ${commit}`)
+        mes(sudo, "cmdresp", `Current commit: ${r.commit}`)
         return true
       case "nexus":
         for (let { id, name, description, url, blocked, secure } of r.nexusData) {

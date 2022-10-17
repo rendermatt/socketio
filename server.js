@@ -1,4 +1,5 @@
 const express = require('express');
+const { execSync } = require("child_process")
 const { hash: NOCRYPT_hash } = require("xxhash")
 const { auth, requiresAuth, attemptSilentLogin } = require('express-openid-connect');
 const bodyParser = require("body-parser");
@@ -21,6 +22,7 @@ var io = new (require('socket.io').Server)(http, {
 var port = process.env.PORT || 3000;
 var iom = require("./iomodule.js");
 iom.main(io);
+iom.r.commit = process.env.HEROKU_SLUG_COMMIT ?? execSync("git rev-parse HEAD")
 
 io.toString = () => "[IO]"
 
