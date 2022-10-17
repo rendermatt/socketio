@@ -1,0 +1,5 @@
+@< 1
+@< "cat"
+<b>Placeholder Verification</b>
+If placeholders work, this should display 1: {0}
+and this should display cat: {1}

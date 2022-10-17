@@ -420,8 +420,13 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
               return true;
             }
             console.log(typeof data);
-            data.split("\n").map(d => d.replace("\r\n", "\n").replace("\r", "\n")).filter(line => line).forEach(line => {
-              mes(from, "cmdresp", `[Help ${helpdocid}]: ${line}`);
+            const dataAry = []
+            data.split("\n").map(d => d.replace("\r\n", "\n").replace("\r", "\n")).forEach(line => {
+              if (line.startsWith("@< ")) {
+                dataAry.push(eval(line.slice(3)))
+              } else {
+                mes(from, "cmdresp", `[Help ${helpdocid}]: ${line.format(...dataAry)}`);
+              }
             });
             return true;
           });
