@@ -35,6 +35,7 @@ if (!String.prototype.format) {
       ;
     });
   };
+}
 
 const { default: jwt_decode } = require("jwt-decode")
 const { data, save, touch } = require("./db.js")
