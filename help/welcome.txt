@@ -1,6 +1,8 @@
-<b>Welcome to NoMoreNotes!</b><hr>
-Can't figure out how to chat? Just click near the bottom of the screen, to the left of the send button.<hr>
+<b>Welcome to NoMoreNotes!</b>
+Can't figure out how to chat? Just click near the bottom of the screen, to the left of the send button.
 Want to stop being a guest? Do /iam yourname. Sadly, you cannot have spaces.
 We have four servers! Pick which one you want to use by typing /nexus.
-Other things you can do are listed in help! Type /help commands for the entire list.<hr>
+Other things you can do are listed in help! Type /help commands for the entire list.
 We have dark mode! To turn on dark mode, press Ctrl-Alt-D. To turn it off, press it again.
+
+There's a few other help pages, documenting basic HTML and guest commands. To see them type or click <button onclick="sendCommand('/help')">/help</button>.

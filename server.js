@@ -24,6 +24,18 @@ iom.main(io);
 
 io.toString = () => "[IO]"
 
+// From https://stackoverflow.com/a/4673436
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+
 const { default: jwt_decode } = require("jwt-decode")
 const { data, save, touch } = require("./db.js")
 app.use(auth({

@@ -198,6 +198,7 @@ module.exports.main = (_io) => {
       //socket.id = session ? session : socket.id;
       socket.join("main");
       mes(socket, "alert", r.t.join_self(socket[r.s].name, session), SYS_ID);
+      mes(socket, "alert", r.t.help(), SYS_ID);
       mes(socket.broadcast, "alert", r.t.join(socket[r.s].name, require("./motd.js")), SYS_ID);
       socket.on("chat message", msg => console.log(`[CHAT ${socket[r.s].name}] ${msg}`)); // who doesn't love log spam
       socket.on('chat message', r.sendmsg(socket));
