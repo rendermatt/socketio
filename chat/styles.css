@@ -23,6 +23,11 @@ body {
   --shade: 60;
   border-top-color: white;
 }
+#stats {
+  position: absolute;
+  right: 0;
+  top: 0
+}
 #send input {
 	border: none;
   outline: none;
@@ -66,7 +71,7 @@ dialog {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
-li, button, input {
+li, button, input, body {
 	font-family: /*/32px Helvetica, Arial/**/monospace;
 }
 li.join {

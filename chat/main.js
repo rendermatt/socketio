@@ -55,7 +55,7 @@ else $(function () {
   });
   socket.on("reload", () => { history.go(0); });
   socket.on("linkout", (url) => { open(url); });
-  $.on("blur", () => { alert("blur"); });
+  // $(window).on("blur", () => { alert("blur"); });
   // document.getElementById('m').onpaste = function (event) {
   //   // use event.originalEvent.clipboard for newer chrome versions
   //   var items = (event.clipboardData || event.originalEvent.clipboardData).items;
@@ -88,5 +88,17 @@ document.addEventListener("keydown", e => {
 	}
 });
 
-alert("we got here")
+window.onerror = (_msg, _url, _line, _col, err) => {
+  alert(err.stack)
+}
+    
+detectConnection()
 setInterval(detectConnection, 100)
+function detectConnection() {
+  let { downlink = "?", type = "connection", effectiveType = "unknown" } = navigator.connection
+  if (downlink === 10) {
+    downlink = "≥10"
+  }
+  downlink += "Mbps"
+  stats.innerText = `${effectiveType} ${type} (${downlink})`
+}
