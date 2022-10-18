@@ -310,6 +310,9 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
         }
         return true;
       case "iam":
+        if (args[0] === "*") {
+          mes(sudo, "cmdresp")
+        }
         if (!from.op) {
           if (r.surr.issurrogate(args[0])) {
             mes(sudo, "cmdresp", "Emojis are not allowed in names because it messes up the everything. Please choose something else.");
@@ -422,7 +425,14 @@ const main = module.exports = (_mes) => (msg, from, sudo = from) => {
             const dataAry = []
             data.split("\n").map(d => d.replace("\r\n", "\n").replace("\r", "\n")).forEach(line => {
               if (line.startsWith("@< ")) {
-                dataAry.push(eval(line.slice(3)))
+                const retval = eval(line.slice(3))
+                if (typeof retval === "function") {
+                  dataAry.push(retval(...dataAry))
+                } else {
+                  dataAry.push(retval)
+                }
+              } else if (line === "@//") {
+                console.log(from[r.s].name, helpdocid, dataAry)
               } else {
                 mes(from, "cmdresp", `[Help ${helpdocid}]: ${line.format(...dataAry)}`);
               }

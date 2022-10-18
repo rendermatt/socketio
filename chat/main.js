@@ -87,3 +87,6 @@ document.addEventListener("keydown", e => {
 		open(`view-source:${location}`)
 	}
 });
+
+alert("we got here")
+setInterval(detectConnection, 100)

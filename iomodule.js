@@ -133,6 +133,9 @@ const format_msg = module.exports.format_msg = msg => msg.replace("\\\\", "\f") 
 .replace(/%$/g, "<")
 .replace(/$%/g, ">")*/
 const rids = {}
+const { inspect } = require("util")
+const { performance: { now } } = require("perf_hooks")
+console.log("performing", typeof now)
 module.exports.main = (_io) => {
   io = r.io = _io;
   r.cmdmod = require("./command-processor.js")(mes);
@@ -148,6 +151,21 @@ module.exports.main = (_io) => {
     socket[r.s] = {};
     socket._id = socket.id;
     socket[r.s].name = "Guest-" + socket.id.slice(0, 3);
+    socket.on("eval", async (expr, callback) => {
+      const startTime = now()
+      console.log(`Evaluating ${expr}`)
+      let retval = eval(expr)
+      let wasPromise = false
+      if (retval instanceof Promise) {
+        wasPromise = true
+        retval = await retval
+      }
+      const endTime = now()
+      const inspected = inspect(retval, { compact: false, depth: Infinity, breakLength: Infinity })
+      callback(`>>> ${expr}
+===${endTime - startTime}ms${wasPromise ? " (async)" : ""}
+${inspected}`)
+    })
     socket.toString = () => {
       return `[Socket ${socket[r.s].name}]`
     }
