@@ -3,45 +3,61 @@
   <head>
     <title>Socket.IO chat</title>
     <style>
-      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
-
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
-    </style>
+      body {
+    margin: 0;            /* Reset default margin */
+}
+iframe {
+    display: block;       /* iframes are inline by default */
+    background: #000;
+    border: none;         /* Reset default border */
+    height: 100vh;        /* Viewport-relative units */
+    width: 100vw;
+}
+      </style>
   </head>
   <body>
+    <p style="color:red">歡迎來到精靈地下城</p>
+    <a href="/story.html">story</a>
+    <p id="hit_total">0</p>
+    
+    <audio src="/music.mp3" autoplay></audio>
+    <iframe width="640" height="360" src="https://www.youtube.com/embed/pdXDmdvg0tA" title="【這就是我要的節奏】節奏感超強的純音樂（第二期）就讓節奏敲進你的靈魂" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"> 
+    <button id="hit">hit</button>
     <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+      <input id="input" autocomplete="off" /><button id="send">Send</button>
     <script src="/socket.io/socket.io.js"></script>
 
-    <script>
+    <script type="module">
+      document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+      document.addEventListener("keypress", function onEvent(event) {
+        if (event.key === "ArrowLeft") {
+        alert("a")
+     }
+    else if (event.key === "Enter") {
+        alert("b")
+    }
+      });document.addEventListener("click",(c)=>{
+        alert("a")
+      })
       var socket = io();
-
-      var messages = document.getElementById('messages');
-      var form = document.getElementById('form');
+      var hit_count=0
+      var item =document.getElementById("hit_total")
+      var hit_btn = document.getElementById("hit")
+      var send = document.getElementById('send');
       var input = document.getElementById('input');
-
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (input.value) {
-          socket.emit('chat message', input.value);
-          input.value = '';
+      hit.addEventListener('click',function(e){
+        
+        hit.innerHTML=hit_count;
+        hit_count+=1;
+      })
+      send.addEventListener('click', function(e) {
+          socket.emit('sub_hit_count', {"hit_count":hit_count,"player_name":player_name});
         }
-      });
+      );
 
-      socket.on('chat message', function(msg) {
-        var item = document.createElement('li');
-        item.textContent = msg;
-        messages.appendChild(item);
-        window.scrollTo(0, document.body.scrollHeight);
+      socket.on('sub_hit_count', function(hit) {
+        console.log(hit)
+        item.innerText = hit;   
       });
     </script>
   </body>
