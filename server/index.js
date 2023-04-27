@@ -1,4 +1,5 @@
 
+require("dotenv").config();
 const app = require("express")();
 const http = require("http").Server(app);
 const sio = require("socket.io");
@@ -29,23 +30,20 @@ io.on("connection", (socket) => {
   socket.on("botsent", (msg) => {
     io.emit("botreceive", `Message from frontend: ${msg}`);
     console.log(msg);
+    openai
+      .createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: msg}],
+      })
+      .then((completion) => {
+        console.log(completion.data.choices[0].message.content);
+        completion.data.choices.forEach((choice) => {
+          io.emit("botreceive", choice.message.content);
+        });
+      })
+      .catch((x) => console.error("catch:", x));
   });
-  socket.on("BotMessageReceived", (msg) => () => {
-    // io.emit("BotMessageSent", msg);
-    console.log(msg);
-    // openai
-    //   .createCompletion({
-    //     model: "gpt-3.5-turbo",
-    //     prompt: msg,
-    //   })
-    //   .then((completion) => {
-    //     console.log(completion);
-    //     io.emit("BotMessageSent", completion.data.choices[0].text);
-    //     console.log(completion.data.choices[0].text);
-    //   })
-    //   .catch((x) => console.error("catch:"))
-    //   .finally((x) => console.log("finalmente", x));
-  });
+
 });
 
 
