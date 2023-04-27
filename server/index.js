@@ -1,15 +1,21 @@
 const app = require("express")();
 const http = require("http").Server(app);
-const io = require("socket.io")(http);
+const sio = require("socket.io");
 const port = process.env.PORT || 4000;
 
-app.get("/", (req, res) => {
+const io = new sio.Server(http, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+app.get("/", (_req, res) => {
   res.status(200).json({ hola: "mundo" });
 });
 
 io.on("connection", (socket) => {
-  socket.on("chat message", (msg) => {
-    io.emit("chat message", msg);
+  socket.on("frontendToBackend", (msg) => {
+    io.emit("backendToFrontend", `Message from frontend: ${msg}`);
   });
 });
 
