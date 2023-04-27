@@ -1,0 +1,54 @@
+{
+    "users": [
+      {
+        "name": "Alice",
+        "years_of_experience": 8,
+        "skills": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "React"
+        ],
+        "soft_skills": [
+          "Communication",
+          "Teamwork",
+          "Problem-solving"
+        ],
+        "country": "United States",
+        "sector": "Technology"
+      },
+      {
+        "name": "Bob",
+        "years_of_experience": 5,
+        "skills": [
+          "Python",
+          "Django",
+          "PostgreSQL"
+        ],
+        "soft_skills": [
+          "Leadership",
+          "Time management",
+          "Adaptability"
+        ],
+        "country": "Canada",
+        "sector": "Finance"
+      },
+      {
+        "name": "Charlie",
+        "years_of_experience": 10,
+        "skills": [
+          "Java",
+          "Spring",
+          "Hibernate",
+          "MySQL"
+        ],
+        "soft_skills": [
+          "Critical thinking",
+          "Creativity",
+          "Attention to detail"
+        ],
+        "country": "Australia",
+        "sector": "Education"
+      }
+    ]
+  }
