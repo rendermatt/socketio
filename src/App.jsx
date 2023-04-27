@@ -17,7 +17,6 @@ function App() {
   };
 
   const onFooEvent = (value) => {
-    console.debug("value:", value);
     setMessages((previous) => [...previous, value]);
   };
 

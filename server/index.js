@@ -1,10 +1,10 @@
-
 require("dotenv").config();
 const app = require("express")();
 const http = require("http").Server(app);
 const sio = require("socket.io");
 const port = process.env.PORT || 4000;
-const { Configuration, OpenAIApi}  = require('openai')
+const { Configuration, OpenAIApi } = require("openai");
+const users = require("../users.json");
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -23,29 +23,29 @@ app.get("/", (_req, res) => {
 
 io.on("connection", (socket) => {
   socket.on("frontendToBackend", (msg) => {
-    io.emit("backendToFrontend", `Message from frontend: ${msg}`);
-    console.log(msg);
-  });
-
-  socket.on("botsent", (msg) => {
-    io.emit("botreceive", `Message from frontend: ${msg}`);
-    console.log(msg);
-    openai
-      .createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: msg}],
-      })
-      .then((completion) => {
-        console.log(completion.data.choices[0].message.content);
-        completion.data.choices.forEach((choice) => {
-          io.emit("botreceive", choice.message.content);
+    if (msg.indexOf("/users") !== 0) {
+      io.emit("backendToFrontend", `Message from frontend: ${msg}`);
+    } else {
+      openai
+        .createChatCompletion({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "user",
+              content: `Given the following user list ${JSON.stringify(
+                users
+              )} ${msg.replace("/users", "")}`,
+            },
+          ],
+        })
+        .then((completion) => {
+          completion.data.choices.forEach((choice) => {
+            io.emit("backendToFrontend", choice.message.content);
+          });
         });
-      })
-      .catch((x) => console.error("catch:", x));
+    }
   });
-
 });
-
 
 http.listen(port, () => {
   console.log(`Socket.IO server running at http://localhost:${port}/`);
