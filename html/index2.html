@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/welcome.css">
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script src="./js/client.js"></script>
+    <title>Welcome</title>
+</head>
+
+<body>
+    <div class="welcome-container">
+        <h1 style="color: white;">Welcome in gapshap</h1>
+        <div class="welcome-input">
+            <input type="text" name="name" placeholder="Enter Your Name">
+            <button>Join</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+    const name = document.querySelector('.welcome-input input');
+    const submit = document.querySelector('.welcome-input button');
+
+    name.addEventListener('keypress', (event) => {
+        if(event.key === 'Enter' && name.value.trim() !== '')
+            submit.click();
+    })
+
+    submit.addEventListener('click', () => {
+        if(name.value != ''){
+            new_user_joined(name.value);
+        }
+    })
+</script>

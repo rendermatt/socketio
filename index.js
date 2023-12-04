@@ -1,84 +1,83 @@
-import express from 'express';
-import { createServer } from 'node:http';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
-import { Server } from 'socket.io';
-import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
-import { availableParallelism } from 'node:os';
-import cluster from 'node:cluster';
-import { createAdapter, setupPrimary } from '@socket.io/cluster-adapter';
+const express = require('express');
 
-if (cluster.isPrimary) {
-  const numCPUs = availableParallelism();
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork({
-      PORT: 3000 + i
-    });
-  }
+const { createServer } = require('node:http');
 
-  setupPrimary();
-} else {
-  const db = await open({
-    filename: 'chat.db',
-    driver: sqlite3.Database
-  });
+const { Server } = require('socket.io');
 
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS messages (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      client_offset TEXT UNIQUE,
-      content TEXT
-    );
-  `);
+const path = require('path');
 
-  const app = express();
-  const server = createServer(app);
-  const io = new Server(server, {
-    connectionStateRecovery: {},
-    adapter: createAdapter()
-  });
+const port = process.env.PORT || 3000;
 
-  const __dirname = dirname(fileURLToPath(import.meta.url));
+const app = express();
 
-  app.get('/', (req, res) => {
-    res.sendFile(join(__dirname, 'index.html'));
-  });
+const server = createServer(app);
 
-  io.on('connection', async (socket) => {
-    socket.on('chat message', async (msg, clientOffset, callback) => {
-      let result;
-      try {
-        result = await db.run('INSERT INTO messages (content, client_offset) VALUES (?, ?)', msg, clientOffset);
-      } catch (e) {
-        if (e.errno === 19 /* SQLITE_CONSTRAINT */ ) {
-          callback();
+const io = new Server(server);
+
+const users = {};
+
+app.use(express.static(path.join(__dirname, "/html/public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + "/html/index.html");
+})
+
+app.post('/users', (req, res) => {
+    let id = req.body.id;
+    let otherUser = { ...users };
+    delete otherUser[id];
+    res.status(200).json(otherUser);
+})
+
+
+io.on('connection', (socket) => {
+    socket.on('new_user_joined', name => {
+        if (name !== 'me' && name != 'server') {
+            users[socket.id] = name;
+            console.log(`${name} is connected`);
+            socket.broadcast.emit('user_joined', name, socket.id);
+        } else io.to(socket.id).emit('reload');
+    })
+
+    socket.on('send', message => {
+        socket.broadcast.emit('message', { message: message, name: users[socket.id] });
+    })
+
+    socket.on('personal_send', data => {
+        const { message, id } = data;
+        if (io.sockets.sockets.has(id)) {
+            io.to(id).emit('personal_message', { message, id: socket.id });
         } else {
-          // nothing to do, just let the client retry
+            console.log('user not found');
         }
-        return;
-      }
-      io.emit('chat message', msg, result.lastID);
-      callback();
+    })
+
+    socket.on('typing', (id) => {
+        if (id === 'server') {
+            socket.broadcast.emit('typing_server');
+        } else {
+            io.to(id).emit('typing_individual', socket.id);
+        }
+    })
+
+    socket.on('typingOver', (id) => {
+        if (id === 'server') {
+            socket.broadcast.emit('typingOver_server');
+        } else {
+            io.to(id).emit('typingOver_individual', socket.id);
+        }
+    })
+
+    socket.on('disconnect', () => {
+        if (users[socket.id] != null) {
+            const disconnectedUserName = users[socket.id];
+            delete users[socket.id]; // Remove the user from the users object
+            socket.broadcast.emit('user_removed', disconnectedUserName, socket.id);
+            console.log(disconnectedUserName + ' is disconnected');
+        }
     });
+});
 
-    if (!socket.recovered) {
-      try {
-        await db.each('SELECT id, content FROM messages WHERE id > ?',
-          [socket.handshake.auth.serverOffset || 0],
-          (_err, row) => {
-            socket.emit('chat message', row.content, row.id);
-          }
-        )
-      } catch (e) {
-        // something went wrong
-      }
-    }
-  });
-
-  const port = process.env.PORT;
-
-  server.listen(port, () => {
-    console.log(`server running at http://localhost:${port}`);
-  });
-}
+server.listen(port, console.log(`Server Start on http://localhost:${port}`));

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" href="./image/gapshap.png">
+    <link rel="stylesheet" href="./css/welcome.css">
+
+    <!-- It is a Awasome Font Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="http://localhost:3000/socket.io/socket.io.js" defer></script>
+    <script src="./js/script.js" defer></script>
+    <script src="./js/client.js" defer></script>
+    <title>Gapshap</title>
+</head>
+
+<body>
+    <section id="welcome">
+        <div class="welcome-container">
+            <img src="./image/gapshap.gif" style="width: 100px; margin: auto;">
+            <h1 style="color: white; font-size: xx-large;">Welcome in gapshap</h1>
+            <div class="welcome-input">
+                <input type="text" name="name" placeholder="Enter Your Name">
+                <button>Join</button>
+            </div>
+            <div style="color: rgb(182, 2, 2);">
+                <p><b>NOTE : </b>Please don't use name as <b>"server"</b> and <b>"me"</b>. Otherwise, we won't be able
+                    to proceed.</p>
+            </div>
+        </div>
+    </section>
+    <section class="users" style="display: none;">
+        <div class="search-box">
+            <!-- <i class="fa fa-bars" id="bars"></i> -->
+            <img src="./image/gapshap.png" alt="" style='width: 40px; user-select: none;'>
+            <div class="search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search" id="search">
+            </div>
+        </div>
+        <div class="chat-users">
+            <div class="user select" id="server">
+                <div class="icon"><i class="fa fa-users"></i></div>
+                <div class="name">Our Server Group <p class="typing">someone is typing <span
+                            class="typing-indicator"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="chat-room" style="display: none;">
+        <div class="info">
+            <i class="fa fa-arrow-left" id="close"></i>
+            <div class="chat-room-user">
+                <div class="icon">
+                    <i class="fa fa-users"></i>
+                </div>
+                <div class="name">
+                    <p id="name">Our Server Group</p>
+                    <p class="typing">someone is typing <span class="typing-indicator"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="server">
+                <p>Welcome to the Gapshap Server</p>
+            </div>
+        </div>
+        <div class="message-box">
+            <div class="input">
+                <input type="text" class="message" placeholder="Message" id="message">
+                <button class="btn" id="send">SEND</button>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+
+<script>
+    const wname = document.querySelector('.welcome-input input');
+    const wsubmit = document.querySelector('.welcome-input button');
+
+    wname.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter' && wname.value.trim() !== '')
+            wsubmit.click();
+    })
+
+    wsubmit.addEventListener('click', () => {
+        if (wname.value != '') {
+            new_user_joined(wname.value);
+            document.querySelector('.users').style.display = 'flex';
+            document.querySelector('.chat-room').style.display = 'block';
+            document.getElementById('welcome').style.display = 'none';
+            document.body.classList.add('body');
+            wname.value = '';
+        }
+    })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
