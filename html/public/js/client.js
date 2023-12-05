@@ -51,11 +51,11 @@ socket.on('personal_message', data => {
 
 socket.on('user_removed', (name, id) => {
     if (name !== null) {
-        updateMessage('server', 'server', `${name} is left chat`);
         if (activeChat === id){
             loadChatRoom('server');
-            document.getElementById('server').classList.add('select');
+            document.getElementById('server').click();
         }
+        updateMessage('server', 'server', `${name} is left chat`);
         removeUser(id);
         delete chats[id];
         delete chaters[id];
