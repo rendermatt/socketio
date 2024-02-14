@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Kalam:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.users {
+    background-color: rgb(53, 29, 52);
+    height: 100vh;
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    overflow: hidden;
+    width: 500px;
+}
+
+.search-box {
+    padding: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#bars {
+    padding: 10px 12px;
+    text-align: center;
+    color: white;
+}
+
+#bars:hover {
+    background-color: #a911a9;
+    border-radius: 50%;
+}
+
+.search {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    gap: 20px;
+    border-radius: 30px;
+    border: 1px solid;
+    color: white;
+    padding: 10px 30px;
+}
+
+.search input {
+    outline: none;
+    width: 90%;
+    font-size: medium;
+    font-weight: bolder;
+    font-family: 'Courier New';
+    color: white;
+    border: none;
+    background-color: transparent;
+}
+
+.chat-users {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: 10px;
+}
+
+.user {
+    width: 90%;
+    margin: auto;
+    border-radius: 10px;
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    user-select: none;
+    padding: 10px;
+}
+
+.user i {
+    color: rgb(255, 255, 255);
+}
+
+.remain {
+    margin-left: auto;
+    padding: 5px;
+    background-color: rgb(51, 6, 37);
+    color: rgb(255, 225, 0);
+    font-weight: bolder;
+    font-size: small;
+    border-radius: 50%;
+}
+
+.user:hover {
+    background-color: rgb(93, 7, 96);
+}
+
+.select {
+    background-color: rgb(83, 5, 128);
+}
+
+.chat-room {
+    display: none;
+    background-color: rgb(117, 0, 128);
+    height: 100vh;
+    overflow: auto;
+    flex: 1;
+}
+
+.info {
+    padding: 10px 20px;
+    background-color: rgb(53, 29, 52);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 9999;
+}
+
+#close {
+    padding: 10px 12px;
+    text-align: center;
+    color: white;
+    display: none;
+}
+
+#close:hover {
+    background-color: #a911a9;
+    border-radius: 50%;
+}
+
+.name,
+.chat-room-user {
+    color: white;
+    display: flex;
+    font-size: medium;
+    gap: 10px;
+    font-weight: bold;
+    align-items: center;
+}
+
+.name{
+    flex-direction: column;
+    align-items: start;
+    gap: 0;
+}
+
+.icon {
+    background-color: rgb(236, 80, 80);
+    padding: 10px 12px;
+    color: white;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.sender {
+    margin-top: 5px;
+    display: flex;
+    left: 0;
+}
+
+.sender .chat,
+.personal {
+    background-color: rgb(84, 10, 76);
+    color: white;
+    border: 1px solid rgb(84, 10, 76);
+    padding: 3px 10px;
+    white-space: pre-wrap;
+    border-radius: 10px 10px 10px 0px;
+    max-width: 75%;
+}
+
+.chat span {
+    color: rgb(33, 253, 4);
+    padding: 0;
+    font-size: small;
+    font-weight: bolder;
+    text-transform: capitalize;
+    font-family: 'Gochi Hand';
+    margin: auto;
+
+}
+
+.server {
+    display: flex;
+    margin-top: 5px;
+    justify-content: center;
+}
+
+.me {
+    display: flex;
+    margin-top: 5px;
+    justify-content: flex-end;
+    right: 0;
+}
+
+.server p {
+    background-color: rgb(51, 6, 37);
+    color: rgb(255, 225, 0);
+    padding: 5px 10px;
+    font-weight: bolder;
+    font-family: 'Gochi Hand';
+    border-radius: 15px;
+}
+
+.me p {
+    background-color: rgb(171, 22, 164);
+    color: rgb(255, 255, 255);
+    font-family: sans-serif;
+    padding: 10px;
+    white-space: pre-wrap;
+    border-radius: 10px 10px 0px 10px;
+    max-width: 75%;
+}
+
+.container {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+    height: calc(80vh - 100px);
+}
+
+.message-box {
+    padding: 20px;
+    bottom: 0;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(117, 0, 128);
+    position: fixed;
+}
+
+.input {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    gap: 10px;
+}
+
+.message {
+    border: none;
+    color: white;
+    font-weight: bolder;
+    outline: none;
+    padding: 15px 20px;
+    width: 100%;
+    font-size: medium;
+    background-color: rgb(73, 4, 73);
+    border-radius: 20px;
+}
+
+.btn {
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bolder;
+    color: white;
+    background-color: rgb(73, 4, 73);
+}
+
+.btn:hover {
+    background-color: rgb(90, 5, 90);
+}
+
+@media (max-width: 1500px) {
+    .message-box {
+        display: block;
+        text-align: center;
+    }
+
+    .input {
+        width: 60%;
+    }
+}
+
+@media (max-width: 900px) {
+    .users {
+        transition: all .3s linear;
+        width: 100%;
+    }
+
+    .small {
+        transition: all .3s linear;
+        width: 0%;
+    }
+
+    .message-box {
+        width: 100%;
+        display: flex;
+    }
+
+    .input {
+        width: 80%;
+    }
+
+    #close {
+        position: relative;
+        display: block;
+        z-index: 9999;
+    }
+}
+
+/* Define styles for the scroll bar track */
+.chat-users::-webkit-scrollbar,
+.container::-webkit-scrollbar {
+    width: 3px;
+    /* Set the width of the entire scrollbar */
+}
+
+/* Define styles for the handle or thumb of the scrollbar */
+.chat-users::-webkit-scrollbar-thumb,
+.container::-webkit-scrollbar-thumb {
+    background-color: #a911a9;
+    /* Set the color of the thumb */
+    border-radius: 5px;
+    /* Set the rounded corners of the thumb */
+}
+
+/* Define styles for the track (the area where the thumb travels) */
+.chat-users::-webkit-scrollbar-track,
+.container::-webkit-scrollbar-track {
+    background-color: rgb(53, 2, 53);
+    /* Set the color of the track */
+}
+
+/* new feature to impement */
+
+.typing-indicator {
+    font-size: medium;
+    color: rgb(10, 250, 10);
+    font-weight: bolder;
+}
+
+.typing {
+    display: none;
+    font-size: small;
+    /* display: flex; */
+    font-family: 'Gochi Hand';
+    font-weight: bolder;
+    user-select: none;
+    color: rgb(10, 250, 10);
+}
